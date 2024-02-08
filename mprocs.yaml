@@ -1,0 +1,13 @@
+procs:
+  user:
+    shell: zsh
+    stop: SIGKILL
+  ai-to-ai:
+    shell: bun i && bun dev
+    stop: SIGINT
+  prisma-studio:
+    shell: bun prisma studio --browser none
+    stop: SIGINT
+  docker:
+    shell: docker-compose up
+    stop: SIGINT

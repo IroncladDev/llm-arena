@@ -2,26 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --root: #09090b;
+    --default: #18181b;
+    --higher: #27272a;
+    --highest: #303033;
+    --overlay: #18181b75;
+
+    --foreground-default: #fafafa;
+    --foreground-dimmer: #a1a1aa;
+    --foreground-dimmest: #70707e;
+
+    --accent-default: #f87171;
+    --accent-dimmer: #b53e3e;
+    --accent-dimmest: #8c2a2a;
+
+    --outline-default: #53535c;
+    --outline-dimmer: #3f3f46;
+    --outline-dimmest: #27272a;
+
+    --clear: transparent;
+
+    --radius: 8px;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  body {
+    @apply bg-root text-foreground;
+  }
+  code {
+    @apply border-outline-dimmer rounded px-1 py-0.5 text-sm bg-default;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid var(--outline-dimmer);
+  }
+  .markdown a {
+    @apply text-accent-dimmer underline hover:text-accent-dimmest;
+  }
+  .markdown strong {
+    @apply text-foreground;
+  }
+  .markdown code {
+    @apply text-sm font-mono bg-higher rounded px-1 py-0.5 text-foreground-dimmest;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }

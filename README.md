@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI to AI
 
-## Getting Started
+An open-source platform for comparing LLMs
 
-First, run the development server:
+[🔗 ai-to.ai](https://ai-to.ai)
+
+## Development
+
+Install dependencies and start the development environment.
+
+1. Ensure you have [Bun](https://bun.sh), [Docker](https://docker.com), and [Mprocs](https://github.com/pvolok/mprocs) installed
+2. Fill out the environment variables in `.env.example` and rename it to `.env`. You will need to create a separate [Github oath app](https://github.com/settings/developers) for local development and production.
+3. Run `mprocs` to start the development environment. This will install dependencies and spin up a postgres docker instance & database admin
+4. Run `bun prisma migrate deploy` apply pending database migrations
+5. Run `bun prisma generate` to generate the Prisma client types
+6. Run `bun db:seed` to seed the database with initial data. If this fails, try running `bun db:reset` and then `bun db:seed`
+
+## Database
+
+Seed, reset, and apply pending migrations to the database.
+
+### Apply pending migrations
+
+Applies pending migrations to the database.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun prisma migrate deploy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Seed the database
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Seeds the database with initial data.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+bun db:seed
+```
 
-## Learn More
+### Reset/Wipe the database
 
-To learn more about Next.js, take a look at the following resources:
+Resets the database and applies all pending migrations.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+bun db:reset
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+See the [Prisma Documentation](https://www.prisma.io/docs/orm/tools/prisma-cli) for more information on how to control the database.
 
-## Deploy on Vercel
+## Deploying to Production
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Set the environment variables in `.env` or in you hosting provider's environment settings.
+2. Run `bun run build` to create a production build
+3. Run `bun run start` to start the production server
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Todo
+
+- Comparison Page
+  - Model-to-model
+  - Graphs
+  - TBD
+- Landing Page
+- Contributor Docs
+- Animations for all pages
+- Seen Script
+
+## Aftermath / Considering
+
+- Better email templates
+- Notify contributors of suspensions/model removals

@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model User {
+  id        Int          @id @default(autoincrement())
+  handle    String       @unique
+  email     String       @unique
+  provider  AuthProvider @default(github)
+  role      UserRole     @default(user)
+  createdAt DateTime     @default(now())
+
+  // Relations
+  votes     Vote[]
+  llms      LLM[]
+}
+
+model Vote {
+  id        Int        @id @default(autoincrement())
+  userId    Int
+  llmId     Int
+  status    VoteStatus
+  comment   String?
+  createdAt DateTime   @default(now())
+
+  // Relations
+  user      User       @relation(fields: [userId], references: [id])
+  llm       LLM        @relation(fields: [llmId], references: [id])
+}
+
+model LLM {
+  id                 Int       @id @default(autoincrement())
+  name               String    @unique
+  sourceDescription  String
+  userId             Int
+  status             LLMStatus @default(pending)
+  createdAt          DateTime  @default(now())
+
+  // Relations
+  votes              Vote[]
+  user               User      @relation(fields: [userId], references: [id])
+  fields             Field[]
+}
+
+model MetaProperty {
+  id        Int        @id @default(autoincrement())
+  name      String
+  type      MetaPropertyType
+  useCount  Int        @default(1)
+  createdAt DateTime   @default(now())
+
+  // Relations
+  fields    Field[]
+}
+
+model Field {
+  id             Int          @id @default(autoincrement())
+  metaPropertyId Int
+  llmId          Int
+  value          String
+  createdAt      DateTime     @default(now())
+
+  // Relations
+  metaProperty   MetaProperty @relation(fields: [metaPropertyId], references: [id])
+  llm            LLM          @relation(fields: [llmId], references: [id])
+}
+
+enum AuthProvider {
+  github
+}
+
+enum UserRole {
+  user
+  pending
+  contributor
+  admin
+}
+
+enum VoteStatus {
+  approve
+  reject
+}
+
+enum LLMStatus {
+  pending
+  approved
+  rejected
+}
+
+enum MetaPropertyType {
+  String
+  Number
+  Boolean
+}
