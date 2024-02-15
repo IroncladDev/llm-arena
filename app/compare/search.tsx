@@ -5,16 +5,15 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
 import Text from "@/components/ui/text";
+import { Hexagon } from "lucide-react";
 
 export default function LLMSearch({
   llms,
   setLLMs,
-  onSelectedItemChange = () => {},
   ...props
 }: {
   llms: Array<LLMWithMetadata>;
   setLLMs: (llms: Array<LLMWithMetadata>) => void;
-  onSelectedItemChange?: (item: LLMWithMetadata) => void;
 } & Omit<React.ComponentProps<typeof Input>, "size">) {
   const [search, setSearch] = useState("");
 
@@ -28,7 +27,7 @@ export default function LLMSearch({
     },
   });
 
-  const items = results?.filter((x) => !llms.some((l) => l.id === x.id)) || [];
+  const items = results || [];
 
   const {
     isOpen,
@@ -47,8 +46,11 @@ export default function LLMSearch({
     itemToString: (item) => (item ? item.name : ""),
     onSelectedItemChange: ({ selectedItem }) => {
       if (selectedItem) {
-        onSelectedItemChange(selectedItem);
-        setLLMs([...llms, selectedItem]);
+        if (llms.some((x) => x.id === selectedItem.id)) {
+          setLLMs(llms.filter((x) => x.id !== selectedItem.id));
+        } else {
+          setLLMs([...llms, selectedItem]);
+        }
         setInputValue("");
         reset();
       }
@@ -66,7 +68,11 @@ export default function LLMSearch({
               highlighted={highlightedIndex === index}
               {...getItemProps({ item, index })}
             >
-              <Text color="dimmer">{item.name}</Text>
+              <ItemInfo>
+                <ItemIcon selected={llms.some((x) => x.id === item.id)} />
+                <Text color="dimmer">{item.name}</Text>
+              </ItemInfo>
+              <Text color="dimmest">{item.fields.length} fields</Text>
             </Item>
           ))}
         </ItemsContainer>
@@ -86,7 +92,7 @@ const Search = styled("div", {
 });
 
 const DownshiftPopover = styled("div", {
-  base: "w-full max-w-xs rounded-lg border-2 border-outline-dimmer/75 absolute top-12 left-0 bg-default z-10 shadow-lg",
+  base: "w-full rounded-lg border-2 border-outline-dimmer/75 absolute top-12 left-0 bg-default z-10 shadow-lg",
 });
 
 const ItemsContainer = styled("ul", {
@@ -99,10 +105,24 @@ const ItemsContainer = styled("ul", {
 });
 
 const Item = styled("li", {
-  base: "flex gap-2 justify-between px-2 py-1 first:rounded-t-md last:rounded-b-md",
+  base: "flex gap-2 justify-between p-2 first:rounded-t-md last:rounded-b-md",
   variants: {
     highlighted: {
       true: "bg-higher",
+    },
+  },
+});
+
+const ItemInfo = styled("div", {
+  base: "flex gap-2 items-center",
+});
+
+const ItemIcon = styled(Hexagon, {
+  base: "w-4 h-4",
+  variants: {
+    selected: {
+      true: "text-accent-dimmer fill-accent-dimmest/50",
+      false: "text-foreground-dimmest",
     },
   },
 });

@@ -40,7 +40,7 @@ export default function Sidebar() {
               {llms.map((llm) => (
                 <SelectedLLM key={llm.id}>
                   <SelectedLLMName>
-                    <Hexagon className="w-4 h-4 text-foreground-dimmest" />
+                    <Hexagon className="w-4 h-4 text-accent-dimmer fill-accent-dimmest/50" />
                     <Text color="dimmer">{llm.name}</Text>
                   </SelectedLLMName>
                   <RemoveSelectedLLMButton
@@ -78,14 +78,17 @@ export default function Sidebar() {
             AI to AI
           </Text>
           <Text multiline color="dimmer">
-            Beautiful side-by-side LLM comparisons
+            Create beautiful side-by-side LLM Comparisons
           </Text>
         </FooterSection>
         <FooterSection>
           <FooterLinks>
             <FooterLink href="/about">About</FooterLink>
             <FooterLink href="/contribute">Contribute</FooterLink>
-            <FooterLink href="/github" target="_blank">
+            <FooterLink
+              href="https://github.com/IroncladDev/ai-to-ai"
+              target="_blank"
+            >
               Github
             </FooterLink>
           </FooterLinks>
@@ -128,7 +131,7 @@ const FooterSection = styled("div", {
 });
 
 const FooterLinks = styled("div", {
-  base: "flex flex-wrap gap-2 items-center justify-center w-full",
+  base: "flex gap-4 items-center justify-center w-full",
 });
 
 const FooterLink = styled(Link, {

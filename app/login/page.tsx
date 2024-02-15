@@ -6,7 +6,7 @@ export default async function Login() {
   const { user } = await getSession();
 
   if (user) {
-    return redirect("/compare");
+    return redirect("/llms");
   }
 
   return <LoginPage />;

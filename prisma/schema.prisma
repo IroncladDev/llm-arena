@@ -16,7 +16,7 @@ model User {
   handle    String       @unique
   email     String       @unique
   provider  AuthProvider @default(github)
-  role      UserRole     @default(user)
+  role      UserRole     @default(pending)
   createdAt DateTime     @default(now())
 
   // Relations

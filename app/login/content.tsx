@@ -9,12 +9,13 @@ import { colors, tokens } from "@/tailwind.config";
 import { useAnimate, useMotionValue, useSpring } from "framer-motion";
 import { GithubIcon, Loader2Icon } from "lucide-react";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { styled } from "react-tailwind-variants";
+import Text from "@/components/ui/text";
 
 export default function LoginPage() {
   const [ref, box] = useClientRect<HTMLDivElement>();
-  const [scope, animate] = useAnimate();
   const [loading, setLoading] = useState(false);
 
   const gradient = useCallback(
@@ -71,18 +72,10 @@ export default function LoginPage() {
   });
 
   useEffect(() => {
-    if (box && background && scope.current) {
+    if (box && background) {
       background.set(gradient(1));
-      animate(
-        scope.current,
-        {
-          opacity: 1,
-          translateY: 0,
-        },
-        { duration: 1 },
-      );
     }
-  }, [gradient, background, box, scope, animate]);
+  }, [gradient, background, box]);
 
   return (
     <MotionContainer
@@ -94,41 +87,41 @@ export default function LoginPage() {
         background,
       }}
     >
-      <ContentBackdrop initial={{ opacity: 0, translateY: 25 }} ref={scope}>
-        <Content ref={ref}>
-          <Header>Cross the Threshold</Header>
-          <Button
-            onClick={async () => {
-              setLoading(true);
-              await signIn("github", {
-                callbackUrl: "/contribute",
-              });
-            }}
-            variant="highlightElevated"
-            className="w-full"
-            disabled={loading}
-          >
-            {loading ? (
-              <Loader2Icon className="w-6 h-6 animate-spin" />
-            ) : (
-              <GithubIcon className="w-6 h-6" />
-            )}
-            <span>Continue with Github</span>
-          </Button>
-        </Content>
-      </ContentBackdrop>
+      <Content ref={ref}>
+        <Text size="xl" weight="semibold">
+          Contribute
+        </Text>
+        <Text color="dimmer" multiline>
+          All comparable LLMs / AI Models on the platform are added manually by
+          contributors. Would you like to be a part of it?
+        </Text>
+        <Button
+          onClick={async () => {
+            setLoading(true);
+            await signIn("github", {
+              callbackUrl: "/contribute",
+            });
+          }}
+          variant="highlightElevated"
+          className="w-full"
+          disabled={loading}
+        >
+          {loading ? (
+            <Loader2Icon className="w-6 h-6 animate-spin" />
+          ) : (
+            <GithubIcon className="w-6 h-6" />
+          )}
+          <span>Continue with Github</span>
+        </Button>
+        <Button variant="outline" className="grow" asChild>
+          <Link href="/">No thanks</Link>
+        </Button>
+      </Content>
     </MotionContainer>
   );
 }
 
-const ContentBackdrop = styled(MotionDiv, {
-  base: "min-w-[320px] p-1.5 flex gap-4 items-center rounded-xl bg-gradient-to-br from-accent-dimmer to-red-900/50 shadow-xl shadow-red-800/25",
+const Content = styled(MotionDiv, {
+  base: "border-2 border-outline-dimmer bg-gradient-to-b from-higher to-root rounded-xl p-6 flex flex-col gap-3 shadow-lg shadow-black/50 max-w-sm",
 });
 
-const Content = styled("div", {
-  base: "flex flex-col grow gap-4 p-6 items-center bg-default bg-gradient-to-b from-red-900/15 to-red-900/40 rounded-lg shadow-inner shadow-red-600/25",
-});
-
-const Header = styled("h1", {
-  base: "text-2xl font-bold text-transparent bg-gradient-to-r from-zinc-300 to-zinc-500 bg-clip-text",
-});
