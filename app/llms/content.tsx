@@ -1,6 +1,6 @@
 "use client";
 
-import { Container } from "@/components/container";
+import { MotionContainer } from "@/components/container";
 import { Input } from "@/components/ui/input";
 import { styled } from "react-tailwind-variants";
 import { LLMWithRelations, SearchInput } from "../api/search/types";
@@ -63,14 +63,18 @@ export default function LLMsPage() {
   });
 
   return (
-    <Container>
+    <MotionContainer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <Content>
         <Header>
           <Text size="h2" weight="bold">
             LLMs
           </Text>
           <HeaderLinks>
-            <HeadLink href="/compare">Compare</HeadLink>
+            <HeadLink href="/">Compare</HeadLink>
             <HeadLink href="/docs">Contributor Docs</HeadLink>
             <div className="px-2 h-full">
               <Button size="sm" asChild>
@@ -100,7 +104,7 @@ export default function LLMsPage() {
         ))}
       </Content>
       <LLMOverlay />
-    </Container>
+    </MotionContainer>
   );
 }
 

@@ -16,8 +16,9 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
     elevated?: boolean;
+    small?: boolean;
   }
->(({ elevated, className, children, ...props }, ref) => (
+>(({ elevated, small, className, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
@@ -25,6 +26,7 @@ const SelectTrigger = React.forwardRef<
       elevated
         ? "bg-higher border-outline-dimmer focus:border-accent-dimmer data-[state=open]:border-accent-dimmer"
         : "bg-default border-outline-dimmest focus:border-accent-dimmest data-[state=open]:border-accent-dimmer",
+      small ? "h-8 py-1" : "h-10",
       className,
     )}
     {...props}

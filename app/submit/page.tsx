@@ -1,5 +1,4 @@
-import { redirect } from "next/navigation";
-import { getSession } from "@/lib/server/utils/session";
+import { redirect } from "next/navigation"; import { getSession } from "@/lib/server/utils/session";
 import Content from "./content";
 
 export default async function Page() {

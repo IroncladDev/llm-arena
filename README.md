@@ -54,13 +54,13 @@ See the [Prisma Documentation](https://www.prisma.io/docs/orm/tools/prisma-cli) 
 ## Todo
 
 - Comparison Page
-  - Model-to-model
-  - Graphs
-  - TBD
+  - Exporting
 - Landing Page
 - Contributor Docs
-- Animations for all pages
-- Seen Script
+- Login = contribute
+- Responsive
+  - Find LLMs (small screen) without opening sidebar
+- Color theme?
 
 ## Aftermath / Considering
 

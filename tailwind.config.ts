@@ -2,34 +2,34 @@ import type { Config } from "tailwindcss";
 import resolveConfig from "tailwindcss/resolveConfig";
 
 export const colors = {
-  root: "var(--root)",
-  default: "var(--default)",
-  higher: "var(--higher)",
-  highest: "var(--highest)",
-  overlay: "var(--overlay)",
+  root: "#09090b",
+  default: "#18181b",
+  higher: "#27272a",
+  highest: "#303033",
+  overlay: "#18181b75",
 
   foreground: {
-    DEFAULT: "var(--foreground-default)",
-    default: "var(--foreground-default)",
-    dimmer: "var(--foreground-dimmer)",
-    dimmest: "var(--foreground-dimmest)",
+    DEFAULT: "#fafafa",
+    default: "#fafafa",
+    dimmer: "#a1a1aa",
+    dimmest: "#70707e",
   },
 
   outline: {
-    DEFAULT: "var(--outline-default)",
-    default: "var(--outline-default)",
-    dimmer: "var(--outline-dimmer)",
-    dimmest: "var(--outline-dimmest)",
+    DEFAULT: "#53535c",
+    default: "#53535c",
+    dimmer: "#3f3f46",
+    dimmest: "#27272a",
   },
 
   accent: {
-    DEFAULT: "var(--accent-default)",
-    default: "var(--accent-default)",
-    dimmer: "var(--accent-dimmer)",
-    dimmest: "var(--accent-dimmest)",
+    DEFAULT: "#f87171",
+    default: "#f87171",
+    dimmer: "#b53e3e",
+    dimmest: "#8c2a2a",
   },
 
-  clear: "var(--clear)",
+  clear: "transparent",
 };
 
 const config = {

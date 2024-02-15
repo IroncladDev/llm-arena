@@ -43,6 +43,11 @@ export function formatNumber(input: number): {
   return { float, unit: unitIndex, symbol: unitKeys[unitIndex] };
 }
 
+export function roundFormatNumber(input: number): string {
+  let { float, symbol } = formatNumber(input);
+  return `${float % 1 === 0 ? float : float.toFixed(1)}${symbol === "-" ? "" : symbol}`;
+}
+
 export default function LargeNumberInput({
   value,
   onChange,

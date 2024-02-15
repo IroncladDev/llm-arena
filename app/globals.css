@@ -3,32 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --root: #09090b;
-    --default: #18181b;
-    --higher: #27272a;
-    --highest: #303033;
-    --overlay: #18181b75;
-
-    --foreground-default: #fafafa;
-    --foreground-dimmer: #a1a1aa;
-    --foreground-dimmest: #70707e;
-
-    --accent-default: #f87171;
-    --accent-dimmer: #b53e3e;
-    --accent-dimmest: #8c2a2a;
-
-    --outline-default: #53535c;
-    --outline-dimmer: #3f3f46;
-    --outline-dimmest: #27272a;
-
-    --clear: transparent;
-
-    --radius: 8px;
-  }
-}
-
-@layer base {
   body {
     @apply bg-root text-foreground;
   }
@@ -37,7 +11,7 @@
   }
   hr {
     border: none;
-    border-top: 2px solid var(--outline-dimmer);
+    border-top: 2px solid #3f3f46;
   }
   .markdown a {
     @apply text-accent-dimmer underline hover:text-accent-dimmest;

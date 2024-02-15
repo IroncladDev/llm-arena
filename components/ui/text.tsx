@@ -27,6 +27,7 @@ const TextBase = styled("span", {
       default: "text-foreground",
       dimmer: "text-foreground-dimmer",
       dimmest: "text-foreground-dimmest",
+      inherit: "text-inherit",
     },
     weight: {
       default: "font-normal",
