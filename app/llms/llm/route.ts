@@ -1,11 +1,13 @@
 import { formatError } from "@/lib/errors"
-import { requireContributorOrAdmin } from "@/lib/server/utils/auth"
-import { requireSession } from "@/lib/server/utils/session"
 import prisma from "@/lib/server/prisma"
+import { requireContributorOrAdmin } from "@/lib/server/utils/auth"
+import { getSession } from "@/lib/server/utils/session"
 
 export async function GET(req: Request) {
+  const res = await getSession()
   try {
-    const { user } = await requireSession()
+    if (!res?.user) throw new Error("Unauthorized")
+    const user = res.user
     requireContributorOrAdmin(user)
 
     const searchParams = new URL(req.url).searchParams

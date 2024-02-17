@@ -1,11 +1,11 @@
 "use server"
 
 import { formatError } from "@/lib/errors"
+import prisma from "@/lib/server/prisma"
 import { requireAdmin } from "@/lib/server/utils/auth"
 import { requireSession } from "@/lib/server/utils/session"
 import { UserRole } from "@prisma/client"
 import { z } from "zod"
-import prisma from "@/lib/server/prisma"
 
 const removeContributorInput = z.object({
   userId: z.number()

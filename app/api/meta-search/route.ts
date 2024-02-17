@@ -1,6 +1,6 @@
+import prisma from "@/lib/server/prisma"
 import { requireContributorOrAdmin } from "@/lib/server/utils/auth"
 import { requireSession } from "@/lib/server/utils/session"
-import prisma from "@/lib/server/prisma"
 
 export async function GET(request: Request) {
   try {
