@@ -1,6 +1,7 @@
 import { formatError } from "@/lib/errors"
 import { requireContributorOrAdmin } from "@/lib/server/utils/auth"
 import { requireSession } from "@/lib/server/utils/session"
+import prisma from "@/lib/server/prisma"
 
 export async function GET(req: Request) {
   try {
@@ -15,7 +16,7 @@ export async function GET(req: Request) {
       throw new Error("Invalid LLM Id")
     }
 
-    const llm = await prisma?.lLM.findFirst({
+    const llm = await prisma.lLM.findFirst({
       where: {
         id
       },

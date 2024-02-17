@@ -1,5 +1,6 @@
 import { requireContributorOrAdmin } from "@/lib/server/utils/auth"
 import { requireSession } from "@/lib/server/utils/session"
+import prisma from "@/lib/server/prisma"
 
 export async function GET(request: Request) {
   try {
@@ -10,7 +11,7 @@ export async function GET(request: Request) {
 
     const query = searchParams.get("query")
 
-    const mostUsed = await prisma?.metaProperty.findMany({
+    const mostUsed = await prisma.metaProperty.findMany({
       orderBy: {
         useCount: "desc"
       },
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
       return Response.json(mostUsed)
     }
 
-    const results = await prisma?.metaProperty.findMany({
+    const results = await prisma.metaProperty.findMany({
       where: {
         name: {
           contains: query

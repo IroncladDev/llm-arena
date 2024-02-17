@@ -5,6 +5,7 @@ import { requireAdmin } from "@/lib/server/utils/auth"
 import { requireSession } from "@/lib/server/utils/session"
 import { UserRole } from "@prisma/client"
 import { z } from "zod"
+import prisma from "@/lib/server/prisma"
 
 const removeContributorInput = z.object({
   userId: z.number()
@@ -19,7 +20,7 @@ export async function removeContributor(e: RemoveContributorInput) {
 
     const { userId } = removeContributorInput.parse(e)
 
-    const contributor = await prisma?.user.findFirst({
+    const contributor = await prisma.user.findFirst({
       where: {
         id: userId
       }
@@ -33,7 +34,7 @@ export async function removeContributor(e: RemoveContributorInput) {
     if (contributor.role !== UserRole.contributor)
       throw new Error("User is not a contributor")
 
-    await prisma?.user.update({
+    await prisma.user.update({
       where: { id: userId },
       data: {
         role: UserRole.user
