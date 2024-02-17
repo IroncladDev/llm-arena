@@ -1,10 +1,12 @@
 import prisma from "@/lib/server/prisma"
 import { requireContributorOrAdmin } from "@/lib/server/utils/auth"
-import { requireSession } from "@/lib/server/utils/session"
+import { getSession } from "@/lib/server/utils/session"
 
 export async function GET(request: Request) {
+  const res = await getSession()
   try {
-    const { user } = await requireSession()
+    if (!res.user) throw new Error("Unauthorized")
+    const user = res.user
     requireContributorOrAdmin(user)
 
     const { searchParams } = new URL(request.url)
@@ -28,11 +30,15 @@ export async function GET(request: Request) {
           contains: query
         }
       },
+      orderBy: {
+        useCount: "desc"
+      },
       take: 10
     })
 
     return Response.json(results)
-  } catch {
+  } catch (e) {
+    console.error(e)
     return Response.json([])
   }
 }

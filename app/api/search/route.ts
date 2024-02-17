@@ -1,12 +1,14 @@
 import { formatError } from "@/lib/errors"
 import prisma from "@/lib/server/prisma"
-import { requireSession } from "@/lib/server/utils/session"
+import { getSession } from "@/lib/server/utils/session"
 import { LLMStatus, Prisma, UserRole } from "@prisma/client"
 import { searchInput } from "./types"
 
 export async function POST(req: Request) {
+  const res = await getSession()
   try {
-    const { user } = await requireSession()
+    if (!res?.user) throw new Error("Unauthorized")
+    const user = res.user
 
     if (user.role !== UserRole.admin && user.role !== UserRole.contributor) {
       throw new Error("Unauthorized")
