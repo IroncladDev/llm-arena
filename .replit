@@ -1,0 +1,11 @@
+modules = ["bun-1.0:v1-20230911-f253fb1"]
+
+hidden = [".config", "bun.lockb"]
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+build = ["sh", "-c", "bun run build"]
+run = ["sh", "-c", "bun run start"]
+deploymentTarget = "cloudrun"
