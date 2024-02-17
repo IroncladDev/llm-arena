@@ -85,9 +85,7 @@ const Text = ({
         className={cn("markdown", props.className)}
         style={styleProp}
         dangerouslySetInnerHTML={{
-          __html: sanitize(
-            clean(marked(children.replace(/\r?\n/g, "<br/>")) as string)
-          )
+          __html: clean(marked(children.replace(/\r?\n/g, "<br/>")) as string)
         }}
       />
     )
