@@ -8,7 +8,7 @@ import { requireSession } from "@/lib/server/utils/session"
 import { User, VoteStatus } from "@prisma/client"
 import { z } from "zod"
 
-export const updatePendingContributorInput = z
+const updatePendingContributorInput = z
   .object({
     userId: z.string(),
     status: z.nativeEnum(VoteStatus)

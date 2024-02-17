@@ -9,3 +9,12 @@ channel = "stable-23_11"
 build = ["sh", "-c", "bun run build"]
 run = ["sh", "-c", "bun run start"]
 deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[env]
+# LD_LIBRARY_PATH="/nix/store/fq47cv26nb87hwz2678r6i8ym5b57lwf-openssl-3.0.7-bin/lib:${LD_LIBRARY_PATH}"
+NIXPKGS_ALLOW_INSECURE="1"
+PRISMA_CLI_QUERY_ENGINE_TYPE = "binary"
