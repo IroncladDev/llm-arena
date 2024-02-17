@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils"
-import { sanitize } from "isomorphic-dompurify"
 import { marked } from "marked"
 import { styled } from "react-tailwind-variants"
 import sanitizeHtml from "sanitize-html"
