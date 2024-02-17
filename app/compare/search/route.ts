@@ -1,9 +1,9 @@
-import prisma from "@/lib/server/prisma";
-import { LLMStatus, Prisma } from "@prisma/client";
+import prisma from "@/lib/server/prisma"
+import { LLMStatus, Prisma } from "@prisma/client"
 
 export async function GET(req: Request) {
   try {
-    const query = new URL(req.url).searchParams.get("query") || "";
+    const query = new URL(req.url).searchParams.get("query") || ""
 
     const results = await prisma.lLM.findMany({
       where: {
@@ -12,14 +12,14 @@ export async function GET(req: Request) {
           {
             name: {
               contains: query,
-              mode: "insensitive",
-            },
+              mode: "insensitive"
+            }
           },
           {
             sourceDescription: {
               contains: query,
-              mode: "insensitive",
-            },
+              mode: "insensitive"
+            }
           },
           {
             fields: {
@@ -27,28 +27,30 @@ export async function GET(req: Request) {
                 metaProperty: {
                   name: {
                     contains: query,
-                    mode: "insensitive",
-                  },
-                },
-              },
-            },
-          },
-        ].filter(Boolean) as Array<Prisma.LLMWhereInput>,
+                    mode: "insensitive"
+                  }
+                }
+              }
+            }
+          }
+        ].filter(Boolean) as Array<Prisma.LLMWhereInput>
       },
       take: 10,
       include: {
         fields: {
           include: {
-            metaProperty: true,
-          },
-        },
-      },
-    });
+            metaProperty: true
+          }
+        }
+      }
+    })
 
-    return Response.json(results);
+    return Response.json(results)
   } catch (err) {
-    console.error(err);
+    console.error(err)
 
-    return Response.json([]);
+    return Response.json([])
   }
 }
+
+export const dynamic = "force-dynamic"

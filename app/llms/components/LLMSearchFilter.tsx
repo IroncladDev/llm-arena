@@ -1,32 +1,32 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { SearchInput } from "@/app/api/search/types"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { InfoIcon, SlidersHorizontal } from "lucide-react";
-import { styled } from "react-tailwind-variants";
-import Text from "@/components/ui/text";
+  PopoverTrigger
+} from "@/components/ui/popover"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import Text from "@/components/ui/text"
 import {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
-} from "@/components/ui/tooltip";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { SearchInput } from "@/app/api/search/types";
-import { Dispatch, SetStateAction } from "react";
+  TooltipTrigger
+} from "@/components/ui/tooltip"
+import { InfoIcon, SlidersHorizontal } from "lucide-react"
+import { Dispatch, SetStateAction } from "react"
+import { styled } from "react-tailwind-variants"
 
 export default function LLMSearchFilter({
   search,
   setSearch,
   searchBy,
-  setSearchBy,
+  setSearchBy
 }: {
-  search: Omit<SearchInput, "searchBy" | "limit">;
-  setSearch: Dispatch<SetStateAction<Omit<SearchInput, "searchBy" | "limit">>>;
-  searchBy: SearchInput["searchBy"];
-  setSearchBy: Dispatch<SetStateAction<SearchInput["searchBy"]>>;
+  search: Omit<SearchInput, "searchBy" | "limit">
+  setSearch: Dispatch<SetStateAction<Omit<SearchInput, "searchBy" | "limit">>>
+  searchBy: SearchInput["searchBy"]
+  setSearchBy: Dispatch<SetStateAction<SearchInput["searchBy"]>>
 }) {
   return (
     <Popover>
@@ -42,7 +42,7 @@ export default function LLMSearchFilter({
             <Checkbox
               id="name"
               checked={searchBy.name}
-              onCheckedChange={(checked) =>
+              onCheckedChange={checked =>
                 setSearchBy({ ...searchBy, name: Boolean(checked) })
               }
             />
@@ -54,10 +54,10 @@ export default function LLMSearchFilter({
             <Checkbox
               id="description"
               checked={searchBy.sourceDescription}
-              onCheckedChange={(checked) =>
+              onCheckedChange={checked =>
                 setSearchBy({
                   ...searchBy,
-                  sourceDescription: Boolean(checked),
+                  sourceDescription: Boolean(checked)
                 })
               }
             />
@@ -69,7 +69,7 @@ export default function LLMSearchFilter({
             <Checkbox
               id="fields"
               checked={searchBy.fields}
-              onCheckedChange={(checked) =>
+              onCheckedChange={checked =>
                 setSearchBy({ ...searchBy, fields: Boolean(checked) })
               }
             />
@@ -110,7 +110,7 @@ export default function LLMSearchFilter({
             <Checkbox
               id="advanced"
               checked={search.advanced}
-              onCheckedChange={(checked) =>
+              onCheckedChange={checked =>
                 setSearch({ ...search, advanced: Boolean(checked) })
               }
             />
@@ -123,10 +123,10 @@ export default function LLMSearchFilter({
           <Text weight="medium">LLM Status</Text>
           <RadioGroup
             value={search.status}
-            onValueChange={(value) =>
+            onValueChange={value =>
               setSearch({
                 ...search,
-                status: value as SearchInput["status"],
+                status: value as SearchInput["status"]
               })
             }
           >
@@ -158,13 +158,13 @@ export default function LLMSearchFilter({
         </FilterGroup>
       </PopoverContent>
     </Popover>
-  );
+  )
 }
 
 const FilterGroup = styled("div", {
-  base: "flex flex-col gap-1",
-});
+  base: "flex flex-col gap-1"
+})
 
 const FilterField = styled("div", {
-  base: "flex items-center gap-2 pl-2",
-});
+  base: "flex items-center gap-2 pl-2"
+})

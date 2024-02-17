@@ -1,34 +1,34 @@
-import prisma from "@/lib/server/prisma";
-import { getServerSession } from "next-auth";
+import prisma from "@/lib/server/prisma"
+import { getServerSession } from "next-auth"
 
 /**
  * Requires a session and user for an API route or Server Action.
  * If no session, email, or user, throws an error.
  */
 export async function requireSession() {
-  const session = await getServerSession();
+  const session = await getServerSession()
 
   if (!session) {
-    throw new Error("Unauthorized");
+    throw new Error("Unauthorized")
   }
 
-  const email = session.user?.email;
+  const email = session.user?.email
 
   if (!email) {
-    throw new Error("No email found");
+    throw new Error("No email found")
   }
 
   const user = await prisma.user.findFirst({
     where: {
-      email,
-    },
-  });
+      email
+    }
+  })
 
   if (!user) {
-    throw new Error("User not found");
+    throw new Error("User not found")
   }
 
-  return { session, user };
+  return { session, user }
 }
 
 /**
@@ -36,17 +36,17 @@ export async function requireSession() {
  * Returns nullable user and session fields.
  */
 export async function getSession() {
-  const session = await getServerSession();
+  const session = await getServerSession()
 
-  const email = session?.user?.email;
+  const email = session?.user?.email
 
   const user = email
     ? await prisma.user.findFirst({
         where: {
-          email,
-        },
+          email
+        }
       })
-    : null;
+    : null
 
-  return { session, user };
+  return { session, user }
 }

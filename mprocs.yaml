@@ -4,10 +4,10 @@ procs:
     stop: SIGKILL
   ai-to-ai:
     shell: bun i && bun dev
-    stop: SIGINT
+    stop: SIGTERM
   prisma-studio:
     shell: bun prisma studio --browser none
-    stop: SIGINT
+    stop: SIGTERM
   docker:
     shell: docker-compose up
-    stop: SIGINT
+    stop: SIGTERM

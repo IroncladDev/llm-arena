@@ -1,6 +1,6 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import Header from "./Header";
-import { ContentContainer } from ".";
+import { Skeleton } from "@/components/ui/skeleton"
+import { ContentContainer } from "."
+import Header from "./Header"
 
 export default function Loading() {
   return (
@@ -9,5 +9,5 @@ export default function Loading() {
         <Skeleton className="grow h-4" />
       </Header>
     </ContentContainer>
-  );
+  )
 }

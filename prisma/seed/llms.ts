@@ -1,46 +1,45 @@
-import { UserRole, Vote, VoteStatus } from "@prisma/client";
-import { prisma } from "./client";
+import determineConsensus from "@/lib/consensus"
+import { UserRole, Vote, VoteStatus } from "@prisma/client"
 import {
   adjectives,
   animals,
   languages,
   starWars,
-  uniqueNamesGenerator,
-} from "unique-names-generator";
-import determineConsensus from "@/lib/consensus";
+  uniqueNamesGenerator
+} from "unique-names-generator"
+import { prisma } from "./client"
 
 export default async function seedLLMs() {
   const contributors = await prisma.user.findMany({
     where: {
-      role: UserRole.contributor,
-    },
-  });
+      role: UserRole.contributor
+    }
+  })
 
   const generateName = () =>
     uniqueNamesGenerator({
       dictionaries: [adjectives, animals],
       separator: " ",
-      style: "capital",
-    }) +
-    ` v${Math.floor(Math.random() * 10)}.${Math.floor(Math.random() * 10)}`;
+      style: "capital"
+    }) + ` v${Math.floor(Math.random() * 10)}.${Math.floor(Math.random() * 10)}`
 
   const generateDescription = () =>
     uniqueNamesGenerator({
       dictionaries: [adjectives, languages, starWars],
       separator: " ",
-      style: "lowerCase",
-    });
+      style: "lowerCase"
+    })
 
   const generateVotes = () => {
-    const length = 3 + Math.floor(Math.random() * 5);
+    const length = 3 + Math.floor(Math.random() * 5)
 
     const votes = new Array(length).fill(null).map(() => {
       const status =
-        Math.random() > 0.5 ? VoteStatus.reject : VoteStatus.approve;
+        Math.random() > 0.5 ? VoteStatus.reject : VoteStatus.approve
 
       const commentText = uniqueNamesGenerator({
-        dictionaries: [adjectives],
-      });
+        dictionaries: [adjectives]
+      })
 
       return {
         userId:
@@ -51,17 +50,17 @@ export default async function seedLLMs() {
             ? commentText
             : Math.random() > 0.5
               ? commentText
-              : undefined,
-      };
-    }) as Array<Vote>;
+              : undefined
+      }
+    }) as Array<Vote>
 
-    return votes;
-  };
+    return votes
+  }
 
   for (const contributor of contributors) {
     for (let i = 2; i--; ) {
-      const votes = generateVotes();
-      const { status } = determineConsensus(votes);
+      const votes = generateVotes()
+      const { status } = determineConsensus(votes)
 
       await prisma.lLM.create({
         data: {
@@ -70,10 +69,10 @@ export default async function seedLLMs() {
           userId: contributor.id,
           status,
           votes: {
-            create: votes,
-          },
-        },
-      });
+            create: votes
+          }
+        }
+      })
     }
   }
 }

@@ -1,16 +1,16 @@
-import Text from "@/components/ui/text";
-import { ComparableField } from "@/lib/comparison";
-import { snakeToTitleCase } from "@/lib/utils";
-import { MetaPropertyType } from "@prisma/client";
-import { styled } from "react-tailwind-variants";
-import StringTable from "./string-table";
-import NumericChart from "./numeric-chart";
-import BooleanTable from "./boolean-table";
-import { useAtom } from "jotai";
-import { optionsAtom } from "../state";
+import Text from "@/components/ui/text"
+import { ComparableField } from "@/lib/comparison"
+import { snakeToTitleCase } from "@/lib/utils"
+import { MetaPropertyType } from "@prisma/client"
+import { useAtom } from "jotai"
+import { styled } from "react-tailwind-variants"
+import { optionsAtom } from "../state"
+import BooleanTable from "./boolean-table"
+import NumericChart from "./numeric-chart"
+import StringTable from "./string-table"
 
 export default function CompareItem({ field }: { field: ComparableField }) {
-  const [{ view }] = useAtom(optionsAtom);
+  const [{ view }] = useAtom(optionsAtom)
   return (
     <Container variant={view}>
       <Text size="lg" weight="bold">
@@ -24,7 +24,7 @@ export default function CompareItem({ field }: { field: ComparableField }) {
         <BooleanTable field={field} />
       )}
     </Container>
-  );
+  )
 }
 
 const Container = styled("div", {
@@ -32,7 +32,7 @@ const Container = styled("div", {
   variants: {
     variant: {
       grid: "",
-      list: "self-center",
-    },
-  },
-});
+      list: "self-center"
+    }
+  }
+})

@@ -1,7 +1,7 @@
-import { InfoIcon } from "lucide-react";
-import Header from "./Header";
-import Text from "@/components/ui/text";
-import { styled } from "react-tailwind-variants";
+import Text from "@/components/ui/text"
+import { InfoIcon } from "lucide-react"
+import { styled } from "react-tailwind-variants"
+import Header from "./Header"
 
 export default function ErrorState({ error }: { error: string }) {
   return (
@@ -17,13 +17,13 @@ export default function ErrorState({ error }: { error: string }) {
         </Text>
       </ErrorContainer>
     </ContentContainer>
-  );
+  )
 }
 
 const ErrorContainer = styled("div", {
-  base: "flex items-center justify-center grow w-full h-full flex-col gap-4",
-});
+  base: "flex items-center justify-center grow w-full h-full flex-col gap-4"
+})
 
 const ContentContainer = styled("div", {
-  base: "flex flex-col grow h-full",
-});
+  base: "flex flex-col grow h-full"
+})

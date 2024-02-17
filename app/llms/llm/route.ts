@@ -1,51 +1,51 @@
-import { formatError } from "@/lib/errors";
-import { requireContributorOrAdmin } from "@/lib/server/utils/auth";
-import { requireSession } from "@/lib/server/utils/session";
+import { formatError } from "@/lib/errors"
+import { requireContributorOrAdmin } from "@/lib/server/utils/auth"
+import { requireSession } from "@/lib/server/utils/session"
 
 export async function GET(req: Request) {
   try {
-    const { user } = await requireSession();
-    requireContributorOrAdmin(user);
+    const { user } = await requireSession()
+    requireContributorOrAdmin(user)
 
-    const searchParams = new URL(req.url).searchParams;
+    const searchParams = new URL(req.url).searchParams
 
-    const id = Number(searchParams.get("id"));
+    const id = Number(searchParams.get("id"))
 
     if (isNaN(id)) {
-      throw new Error("Invalid LLM Id");
+      throw new Error("Invalid LLM Id")
     }
 
     const llm = await prisma?.lLM.findFirst({
       where: {
-        id,
+        id
       },
       include: {
         fields: {
           include: {
-            metaProperty: true,
-          },
+            metaProperty: true
+          }
         },
         votes: {
           include: {
-            user: true,
-          },
+            user: true
+          }
         },
-        user: true,
-      },
-    });
+        user: true
+      }
+    })
 
     if (!llm) {
-      throw new Error("LLM not found");
+      throw new Error("LLM not found")
     }
 
     return Response.json({
       data: llm,
-      success: true,
-    });
+      success: true
+    })
   } catch (e) {
     return Response.json({
       message: formatError(e),
-      success: false,
-    });
+      success: false
+    })
   }
 }

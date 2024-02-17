@@ -1,35 +1,35 @@
-import { LLMWithRelations } from "@/app/api/search/types";
-import { User, Vote, VoteStatus } from "@prisma/client";
-import { styled } from "react-tailwind-variants";
-import Text from "@/components/ui/text";
-import { MoreVerticalIcon, ThumbsDown, ThumbsUp } from "lucide-react";
-import determineConsensus from "@/lib/consensus";
-import { MotionDiv } from "@/components/motion";
-import { useCurrentUser } from "@/components/providers/CurrentUserProvider";
-import { Button } from "@/components/ui/button";
-import { useAdminActions } from "@/app/admin/useAdminActions";
+import { removeVote } from "@/app/admin/actions/remove-vote"
+import { LLMWithRelations } from "@/app/api/search/types"
+import { MotionDiv } from "@/components/motion"
+import { useCurrentUser } from "@/components/providers/CurrentUserProvider"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import Text from "@/components/ui/text"
+import determineConsensus from "@/lib/consensus"
+import { User, Vote, VoteStatus } from "@prisma/client"
+import { MoreVerticalIcon, ThumbsDown, ThumbsUp } from "lucide-react"
+import { styled } from "react-tailwind-variants"
 
 export default function Votes({
   llm,
-  refetch,
+  refetch
 }: {
-  llm: LLMWithRelations<Vote & { user: User }>;
-  refetch: () => void;
+  llm: LLMWithRelations<Vote & { user: User }>
+  refetch: () => void
 }) {
   const { status, approvals, rejections, ...consensus } = determineConsensus(
-    llm.votes,
-  );
+    llm.votes
+  )
 
-  const comments = llm.votes.filter((x) => x.comment);
+  const comments = llm.votes.filter(x => x.comment)
 
-  const approvePercent = Math.round((approvals / llm.votes.length) * 100);
-  const rejectPercent = Math.round((rejections / llm.votes.length) * 100);
+  const approvePercent = Math.round((approvals / llm.votes.length) * 100)
+  const rejectPercent = Math.round((rejections / llm.votes.length) * 100)
 
   return (
     <Container>
@@ -47,10 +47,10 @@ export default function Votes({
                 <IndicatorBar
                   status="approve"
                   animate={{
-                    width: `${approvePercent}%`,
+                    width: `${approvePercent}%`
                   }}
                   initial={{
-                    width: `0%`,
+                    width: `0%`
                   }}
                 />
               </Indicator>
@@ -68,10 +68,10 @@ export default function Votes({
                 <IndicatorBar
                   status="reject"
                   animate={{
-                    width: `${rejectPercent}%`,
+                    width: `${rejectPercent}%`
                   }}
                   initial={{
-                    width: `0%`,
+                    width: `0%`
                   }}
                 />
               </Indicator>
@@ -114,20 +114,19 @@ export default function Votes({
         </>
       )}
     </Container>
-  );
+  )
 }
 
 function VoteComment({
   vote,
   status,
-  refetch,
+  refetch
 }: {
-  vote: Vote & { user: User };
-  status: VoteStatus;
-  refetch: () => void;
+  vote: Vote & { user: User }
+  status: VoteStatus
+  refetch: () => void
 }) {
-  const user = useCurrentUser();
-  const { removeVote } = useAdminActions();
+  const user = useCurrentUser()
 
   return (
     <VoteContainer status={status}>
@@ -160,12 +159,12 @@ function VoteComment({
           <DropdownMenuContent>
             <DropdownMenuItem
               onSelect={async () => {
-                const res = await removeVote({ voteId: vote.id });
+                const res = await removeVote({ voteId: vote.id })
 
                 if (res.success) {
-                  refetch();
+                  refetch()
                 } else {
-                  alert(res.message);
+                  alert(res.message)
                 }
               }}
             >
@@ -175,7 +174,7 @@ function VoteComment({
         </DropdownMenu>
       )}
     </VoteContainer>
-  );
+  )
 }
 
 const VoteStats = styled("div", {
@@ -184,43 +183,43 @@ const VoteStats = styled("div", {
     status: {
       approved: "border-emerald-500/30",
       rejected: "border-rose-500/30",
-      pending: "border-outline-dimmest",
-    },
-  },
-});
+      pending: "border-outline-dimmest"
+    }
+  }
+})
 
 const VoteStat = styled("div", {
-  base: "flex items-center gap-2 justify-between",
-});
+  base: "flex items-center gap-2 justify-between"
+})
 
 const Indicator = styled("div", {
-  base: "grow rounded-lg h-2 max-w-[240px] bg-higher",
-});
+  base: "grow rounded-lg h-2 max-w-[240px] bg-higher"
+})
 
 const IndicatorBar = styled(MotionDiv, {
   base: "h-2 rounded-lg",
   variants: {
     status: {
       approve: "bg-emerald-500",
-      reject: "bg-rose-500",
-    },
-  },
-});
+      reject: "bg-rose-500"
+    }
+  }
+})
 
 const Container = styled("div", {
-  base: "flex flex-col gap-2",
-});
+  base: "flex flex-col gap-2"
+})
 
 const VoteContainer = styled("div", {
   base: "flex gap-2 px-2 pt-1 pb-2 rounded-lg border-2 bg-higher",
   variants: {
     status: {
       approve: "border-emerald-500/30",
-      reject: "border-rose-500/30",
-    },
-  },
-});
+      reject: "border-rose-500/30"
+    }
+  }
+})
 
 const PendingBadge = styled("div", {
-  base: "rounded-md px-1.5 py-0.5 text-xs bg-amber-500/25 text-amber-300/75",
-});
+  base: "rounded-md px-1.5 py-0.5 text-xs bg-amber-500/25 text-amber-300/75"
+})

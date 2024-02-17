@@ -1,37 +1,37 @@
-"use client";
+"use client"
 
-import { MotionContainer } from "@/components/container";
-import { Input } from "@/components/ui/input";
-import Text from "@/components/ui/text";
-import gr from "@/lib/gradients";
-import { colors, tokens } from "@/tailwind.config";
-import { MetaProperty, MetaPropertyType } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { MetaFieldRow } from "./components/MetaField";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
-import { submit } from "./actions";
-import { useFormState, useFormStatus } from "react-dom";
-import { useRouter } from "next/navigation";
-import { styled } from "react-tailwind-variants";
+import { MotionContainer } from "@/components/container"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import Text from "@/components/ui/text"
+import { Textarea } from "@/components/ui/textarea"
+import gr from "@/lib/gradients"
+import { colors, tokens } from "@/tailwind.config"
+import { MetaProperty, MetaPropertyType } from "@prisma/client"
+import { PlusIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useFormState, useFormStatus } from "react-dom"
+import { styled } from "react-tailwind-variants"
+import { submit } from "./actions"
+import { MetaFieldRow } from "./components/MetaField"
 
 export type MetaField = {
-  property?: MetaProperty | null;
-  type: MetaPropertyType;
-  name: string;
-  value: number | string | boolean;
-};
+  property?: MetaProperty | null
+  type: MetaPropertyType
+  name: string
+  value: number | string | boolean
+}
 
 export default function Content({
-  commonMeta,
+  commonMeta
 }: {
-  commonMeta: MetaProperty[];
+  commonMeta: MetaProperty[]
 }) {
-  const router = useRouter();
-  const [state, formAction] = useFormState(submit, null);
+  const router = useRouter()
+  const [state, formAction] = useFormState(submit, null)
   const [metadata, setMetadata] = useState<Array<MetaField>>(
-    commonMeta.map((m) => ({
+    commonMeta.map(m => ({
       property: m,
       type: m.type,
       name: m.name,
@@ -40,27 +40,27 @@ export default function Content({
           ? ""
           : m.type === MetaPropertyType.Boolean
             ? true
-            : 0,
-    })),
-  );
+            : 0
+    }))
+  )
 
   const appendNewField = () => {
-    setMetadata((md) => [
+    setMetadata(md => [
       ...md,
       {
         name: "",
         type: MetaPropertyType.Number,
         value: "",
-        property: null,
-      },
-    ]);
-  };
+        property: null
+      }
+    ])
+  }
 
   useEffect(() => {
     if (state && state.success && state.data) {
-      router.push("/llms?llm=" + state.data.llm.id);
+      router.push("/llms?llm=" + state.data.llm.id)
     }
-  }, [state, router]);
+  }, [state, router])
 
   return (
     <MotionContainer
@@ -75,10 +75,10 @@ export default function Content({
             tokens.colors.red[600] + "aa",
             tokens.colors.red[600] + "65 20%",
             "transparent 70%",
-            "transparent",
+            "transparent"
           ),
-          gr.linear(75, colors.root, "#292524"),
-        ),
+          gr.linear(75, colors.root, "#292524")
+        )
       }}
     >
       <FormContainer>
@@ -137,16 +137,16 @@ export default function Content({
                         field={field}
                         metadata={metadata}
                         onChange={(args: Partial<MetaField>) => {
-                          setMetadata((newMetadata) => {
+                          setMetadata(newMetadata => {
                             return newMetadata.map((m, j) =>
-                              j === i ? { ...m, ...args } : m,
-                            );
-                          });
+                              j === i ? { ...m, ...args } : m
+                            )
+                          })
                         }}
                         onDelete={() => {
-                          setMetadata((newMetadata) => {
-                            return newMetadata.filter((_, j) => j !== i);
-                          });
+                          setMetadata(newMetadata => {
+                            return newMetadata.filter((_, j) => j !== i)
+                          })
                         }}
                       />
                     ))}
@@ -206,7 +206,7 @@ export default function Content({
         </FormContent>
       </FormContainer>
     </MotionContainer>
-  );
+  )
 }
 
 const LabelDescription = ({ children }: { children: React.ReactNode }) => {
@@ -214,11 +214,11 @@ const LabelDescription = ({ children }: { children: React.ReactNode }) => {
     <Text multiline color="dimmest" className="px-3 mb-2">
       {children}
     </Text>
-  );
-};
+  )
+}
 
 const SubmitButton = () => {
-  const { pending } = useFormStatus();
+  const { pending } = useFormStatus()
 
   return (
     <Button
@@ -229,35 +229,35 @@ const SubmitButton = () => {
     >
       Submit
     </Button>
-  );
-};
+  )
+}
 
 const MetaHeaders = styled("div", {
-  base: "flex items-center ml-3 w-[calc(100%-70px)]",
-});
+  base: "flex items-center ml-3 w-[calc(100%-70px)]"
+})
 
 const MetaPropertyContainer = styled("div", {
-  base: "flex flex-col border border-outline-dimmest mx-3",
-});
+  base: "flex flex-col border border-outline-dimmest mx-3"
+})
 
 const EmptyMetaContainer = styled("div", {
-  base: "flex flex-col p-4 items-center justify-center border-2 border-dashed border-outline-dimmer min-h-[160px] rounded-lg gap-2",
-});
+  base: "flex flex-col p-4 items-center justify-center border-2 border-dashed border-outline-dimmer min-h-[160px] rounded-lg gap-2"
+})
 
 const FormContainer = styled("div", {
-  base: "w-full flex justify-center py-16 max-sm:py-0",
-});
+  base: "w-full flex justify-center py-16 max-sm:py-0"
+})
 
 const FormContent = styled("form", {
-  base: "w-full max-w-3xl flex flex-col gap-4 py-6 px-4 bg-default border-2 border-outline-dimmest rounded-lg shadow-lg max-sm:border-none",
-});
+  base: "w-full max-w-3xl flex flex-col gap-4 py-6 px-4 bg-default border-2 border-outline-dimmest rounded-lg shadow-lg max-sm:border-none"
+})
 
-const FormFields = styled("div", { base: "flex flex-col" });
+const FormFields = styled("div", { base: "flex flex-col" })
 
 const FormField = styled("div", {
-  base: "flex flex-col gap-1 p-2 w-full border-x-2 last:border-b-2 last:rounded-b-lg last:pb-6 first:border-t-2 first:!rounded-t-lg first:pt-6 border-higher focus-within:border-accent-dimmest transition-colors max-sm:px-0 max-sm:border-0 last:max-sm:rounded-b-none first:max-sm:rounded-t-none last:max-sm:border-b-0 first:max-sm:border-t-0",
-});
+  base: "flex flex-col gap-1 p-2 w-full border-x-2 last:border-b-2 last:rounded-b-lg last:pb-6 first:border-t-2 first:!rounded-t-lg first:pt-6 border-higher focus-within:border-accent-dimmest transition-colors max-sm:px-0 max-sm:border-0 last:max-sm:rounded-b-none first:max-sm:rounded-t-none last:max-sm:border-b-0 first:max-sm:border-t-0"
+})
 
 const Label = styled("label", {
-  base: "text-lg font-medium text-foreground-dimmer pl-2",
-});
+  base: "text-lg font-medium text-foreground-dimmer pl-2"
+})

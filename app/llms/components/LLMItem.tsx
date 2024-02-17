@@ -1,51 +1,48 @@
-import { LLMWithRelations } from "@/app/api/search/types";
-import { formatNumber } from "@/components/LargeNumberInput";
-import Text from "@/components/ui/text";
-import useClientRect from "@/hooks/useElementSize";
-import { Fragment } from "react";
-import { styled } from "react-tailwind-variants";
-import { usePathname, useRouter } from "next/navigation";
-import { VoteStatus } from "@prisma/client";
+import { LLMWithRelations } from "@/app/api/search/types"
+import { formatNumber } from "@/components/LargeNumberInput"
+import Text from "@/components/ui/text"
+import useClientRect from "@/hooks/useElementSize"
+import { VoteStatus } from "@prisma/client"
+import { usePathname, useRouter } from "next/navigation"
+import { Fragment } from "react"
+import { styled } from "react-tailwind-variants"
 
 export default function LLMItem({
   query,
-  llm,
+  llm
 }: {
-  query: string;
-  llm: LLMWithRelations;
+  query: string
+  llm: LLMWithRelations
 }) {
-  const router = useRouter();
-  const pathname = usePathname();
+  const router = useRouter()
+  const pathname = usePathname()
 
-  const [ref, box] = useClientRect<HTMLDivElement>();
+  const [ref, box] = useClientRect<HTMLDivElement>()
 
   const searchNodes = (string: string) => {
-    const regex = new RegExp(
-      query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-      "ig",
-    );
-    const splitText = string.split(regex);
-    const matches = string.match(regex);
+    const regex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "ig")
+    const splitText = string.split(regex)
+    const matches = string.match(regex)
 
     return splitText.reduce(
       (acc, node, i) => {
         acc.push({
           text: node,
-          highlighted: false,
-        });
+          highlighted: false
+        })
         if (i < splitText.length - 1 && matches) {
-          acc.push({ text: matches[i], highlighted: true });
+          acc.push({ text: matches[i], highlighted: true })
         }
-        return acc;
+        return acc
       },
-      [] as Array<{ text: string; highlighted: boolean }>,
-    );
-  };
+      [] as Array<{ text: string; highlighted: boolean }>
+    )
+  }
 
   return (
     <Container
       onClick={() => {
-        router.push(pathname + "?llm=" + llm.id, { scroll: false });
+        router.push(pathname + "?llm=" + llm.id, { scroll: false })
       }}
     >
       <Header>
@@ -57,7 +54,7 @@ export default function LLMItem({
               </span>
             ) : (
               <Fragment key={i}>{text}</Fragment>
-            ),
+            )
           )}
         </Text>
         <Text color="dimmer" size="sm">
@@ -68,7 +65,7 @@ export default function LLMItem({
             .sort(
               (a, b) =>
                 Number(b.status === VoteStatus.approve) -
-                Number(a.status === VoteStatus.approve),
+                Number(a.status === VoteStatus.approve)
             )
             .map((vote, i) => (
               <StatusVote key={i} status={vote.status} />
@@ -99,7 +96,7 @@ export default function LLMItem({
                           </span>
                         ) : (
                           <Fragment key={i}>{text}</Fragment>
-                        ),
+                        )
                     )}
                   </Text>
                 </FieldItem>
@@ -136,23 +133,23 @@ export default function LLMItem({
                   </span>
                 ) : (
                   <Fragment key={i}>{text}</Fragment>
-                ),
+                )
             )}
           </Text>
         </ContentSection>
         <ContentOverlay />
       </Content>
     </Container>
-  );
+  )
 }
 
 const Container = styled("div", {
-  base: "flex flex-col gap-2 p-2 rounded-lg border-2 border-outline-dimmest bg-default hover:border-accent-dimmer cursor-pointer transition-colors",
-});
+  base: "flex flex-col gap-2 p-2 rounded-lg border-2 border-outline-dimmest bg-default hover:border-accent-dimmer cursor-pointer transition-colors"
+})
 
 const Header = styled("div", {
-  base: "flex gap-2 items-center",
-});
+  base: "flex gap-2 items-center"
+})
 
 const StatusBadge = styled("div", {
   base: "rounded-md px-1.5 py-0.5 text-xs",
@@ -160,45 +157,45 @@ const StatusBadge = styled("div", {
     status: {
       pending: "bg-amber-500/25 text-amber-300/75",
       approved: "bg-emerald-500/25 text-emerald-300/75",
-      rejected: "bg-rose-500/25 text-rose-300/75",
-    },
-  },
-});
+      rejected: "bg-rose-500/25 text-rose-300/75"
+    }
+  }
+})
 
 export const StatusBar = styled("div", {
-  base: "rounded-full h-1.5 w-[120px] bg-higher flex",
-});
+  base: "rounded-full h-1.5 w-[120px] bg-higher flex"
+})
 
 export const StatusVote = styled("div", {
   base: "grow basis-0 h-full first:rounded-l-full last:rounded-r-full shadow-[2px_0_0_2px,-2px_0_0_2px]",
   variants: {
     status: {
       approve: "bg-emerald-600 shadow-emerald-600/10",
-      reject: "bg-rose-600 shadow-rose-600/10",
-    },
-  },
-});
+      reject: "bg-rose-600 shadow-rose-600/10"
+    }
+  }
+})
 
 const Content = styled("div", {
-  base: "flex gap-2 items-start w-full overflow-hidden relative max-h-[200px]",
-});
+  base: "flex gap-2 items-start w-full overflow-hidden relative max-h-[200px]"
+})
 
 const ContentOverlay = styled("div", {
-  base: `absolute inset-0 bg-gradient-to-t from-default via-transparent via-transparent to-transparent flex flex-col justify-end max-h-[200px]`,
-});
+  base: `absolute inset-0 bg-gradient-to-t from-default via-transparent via-transparent to-transparent flex flex-col justify-end max-h-[200px]`
+})
 
 const ContentSection = styled("div", {
-  base: "flex flex-col gap-2 grow basis-0",
-});
+  base: "flex flex-col gap-2 grow basis-0"
+})
 
 export const FieldRows = styled("div", {
-  base: "flex flex-col",
-});
+  base: "flex flex-col"
+})
 
 export const FieldRow = styled("div", {
-  base: "flex items-center border-t-2 last:border-b-2 border-outline-dimmest",
-});
+  base: "flex items-center border-t-2 last:border-b-2 border-outline-dimmest"
+})
 
 export const FieldItem = styled("div", {
-  base: "grow basis-0 p-1 border-l-2 last:border-r-2 border-outline-dimmest",
-});
+  base: "grow basis-0 p-1 border-l-2 last:border-r-2 border-outline-dimmest"
+})

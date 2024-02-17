@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "bun i && next dev",
-    "build": "next build",
+    "dev": "bun i && bun db:sync && next dev",
+    "build": "bun db:sync && next build",
     "start": "next start",
     "lint": "next lint",
     "db:seed": "bun prisma/seed/index.ts",
-    "db:reset": "prisma migrate reset"
+    "db:sync": "prisma migrate deploy && prisma generate",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.{js,ts,tsx}\" --plugin=prettier-plugin-organize-imports"
   },
   "dependencies": {
     "@prisma/client": "5.9.1",
@@ -52,6 +53,8 @@
     "eslint-config-next": "14.0.4",
     "inquirer": "^9.2.14",
     "postcss": "^8",
+    "prettier": "^3.2.5",
+    "prettier-plugin-organize-imports": "^3.2.4",
     "prisma": "^5.9.1",
     "tailwindcss": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",

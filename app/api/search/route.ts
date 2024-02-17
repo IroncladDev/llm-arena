@@ -1,21 +1,21 @@
-import prisma from "@/lib/server/prisma";
-import { LLMStatus, Prisma, UserRole } from "@prisma/client";
-import { searchInput } from "./types";
-import { requireSession } from "@/lib/server/utils/session";
-import { formatError } from "@/lib/errors";
+import { formatError } from "@/lib/errors"
+import prisma from "@/lib/server/prisma"
+import { requireSession } from "@/lib/server/utils/session"
+import { LLMStatus, Prisma, UserRole } from "@prisma/client"
+import { searchInput } from "./types"
 
 export async function POST(req: Request) {
   try {
-    const { user } = await requireSession();
+    const { user } = await requireSession()
 
     if (user.role !== UserRole.admin && user.role !== UserRole.contributor) {
-      throw new Error("Unauthorized");
+      throw new Error("Unauthorized")
     }
 
-    const body = await req.json();
+    const body = await req.json()
 
     const { query, advanced, status, skip, limit, searchBy } =
-      searchInput.parse(body);
+      searchInput.parse(body)
 
     const results = await prisma.lLM.findMany({
       where: {
@@ -31,22 +31,22 @@ export async function POST(req: Request) {
           searchBy.name && {
             name: advanced
               ? {
-                  search: query,
+                  search: query
                 }
               : {
                   contains: query,
-                  mode: "insensitive",
-                },
+                  mode: "insensitive"
+                }
           },
           searchBy.sourceDescription && {
             sourceDescription: advanced
               ? {
-                  search: query,
+                  search: query
                 }
               : {
                   contains: query,
-                  mode: "insensitive",
-                },
+                  mode: "insensitive"
+                }
           },
           searchBy.fields && {
             fields: {
@@ -54,44 +54,44 @@ export async function POST(req: Request) {
                 metaProperty: {
                   name: advanced
                     ? {
-                        search: query,
+                        search: query
                       }
                     : {
                         contains: query,
-                        mode: "insensitive",
-                      },
-                },
-              },
-            },
-          },
-        ].filter(Boolean) as Array<Prisma.LLMWhereInput>,
+                        mode: "insensitive"
+                      }
+                }
+              }
+            }
+          }
+        ].filter(Boolean) as Array<Prisma.LLMWhereInput>
       },
       take: Math.min(limit, 100),
       skip,
       include: {
         fields: {
           include: {
-            metaProperty: true,
-          },
+            metaProperty: true
+          }
         },
         votes: true,
-        user: true,
+        user: true
       },
       orderBy: {
-        createdAt: status === LLMStatus.pending ? "asc" : "desc",
-      },
-    });
+        createdAt: status === LLMStatus.pending ? "asc" : "desc"
+      }
+    })
 
     return Response.json({
       success: true,
-      data: results,
-    });
+      data: results
+    })
   } catch (err) {
-    console.error(err);
+    console.error(err)
 
     return Response.json({
       success: false,
-      error: formatError(err),
-    });
+      error: formatError(err)
+    })
   }
 }

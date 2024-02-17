@@ -1,83 +1,80 @@
-"use client";
+"use client"
 
-import { LLMWithRelations } from "@/app/api/search/types";
-import { formatNumber } from "@/components/LargeNumberInput";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import Text from "@/components/ui/text";
-import { useQuery } from "@tanstack/react-query";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { styled } from "react-tailwind-variants";
-import Header from "./Header";
-import ErrorState from "./Error";
-import Loading from "./Loading";
-import { FieldItem, FieldRow, FieldRows } from "../LLMItem";
-import { User, Vote } from "@prisma/client";
-import VoteSection from "./VoteSection";
-import { Tabs, TabsTrigger, TabsContent, TabsList } from "@/components/ui/tabs";
-import Votes from "./Votes";
-import { useCurrentUser } from "@/components/providers/CurrentUserProvider";
+import { removeContributor } from "@/app/admin/actions/remove-contributor"
+import { removeLLM } from "@/app/admin/actions/remove-llm"
+import { LLMWithRelations } from "@/app/api/search/types"
+import { formatNumber } from "@/components/LargeNumberInput"
+import { useCurrentUser } from "@/components/providers/CurrentUserProvider"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuTrigger,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { ExternalLinkIcon, MoreVerticalIcon } from "lucide-react";
-import { useAdminActions } from "@/app/admin/useAdminActions";
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import { Sheet, SheetContent } from "@/components/ui/sheet"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Text from "@/components/ui/text"
+import { User, Vote } from "@prisma/client"
+import { useQuery } from "@tanstack/react-query"
+import { ExternalLinkIcon, MoreVerticalIcon } from "lucide-react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import { styled } from "react-tailwind-variants"
+import { FieldItem, FieldRow, FieldRows } from "../LLMItem"
+import ErrorState from "./Error"
+import Header from "./Header"
+import Loading from "./Loading"
+import VoteSection from "./VoteSection"
+import Votes from "./Votes"
 
 export default function LLMOverlay() {
-  const params = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
-  const currentUser = useCurrentUser();
+  const params = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+  const currentUser = useCurrentUser()
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [tab, setTab] = useState<"votes" | "vote">("votes");
+  const [isOpen, setIsOpen] = useState(false)
+  const [tab, setTab] = useState<"votes" | "vote">("votes")
 
-  const { removeLLM, removeContributor } = useAdminActions();
-
-  const llmId = params.get("llm");
+  const llmId = params.get("llm")
 
   const {
     data: llm,
     isLoading,
     error,
-    refetch,
+    refetch
   } = useQuery<LLMWithRelations<Vote & { user: User }>>({
     queryKey: ["llmSheet", llmId],
     queryFn: async () => {
       try {
-        const res = await fetch(`/llms/llm?id=${llmId}`).then((res) =>
-          res.json(),
-        );
+        const res = await fetch(`/llms/llm?id=${llmId}`).then(res => res.json())
 
         if (res.success) {
-          return res.data;
+          return res.data
         } else {
-          throw new Error(res.message);
+          throw new Error(res.message)
         }
       } catch (err) {
-        throw err;
+        throw err
       }
     },
-    retry: false,
-  });
+    retry: false
+  })
 
   useEffect(() => {
     if (Boolean(llmId && !isNaN(Number(llmId)))) {
-      setIsOpen(true);
+      setIsOpen(true)
     }
-  }, [llmId]);
+  }, [llmId])
 
   return (
     <Sheet
       open={isOpen}
-      onOpenChange={(open) => {
+      onOpenChange={open => {
         if (!open) {
-          setIsOpen(false);
-          router.push(pathname, { scroll: false });
+          setIsOpen(false)
+          router.push(pathname, { scroll: false })
         }
       }}
     >
@@ -107,11 +104,11 @@ export default function LLMOverlay() {
                   <DropdownMenuContent>
                     <DropdownMenuItem
                       onSelect={async () => {
-                        const res = await removeLLM({ llmId: llm.id });
+                        const res = await removeLLM({ llmId: llm.id })
                         if (res.success) {
-                          setIsOpen(false);
-                          window.location.href = "/llms";
-                        } else alert(res.message);
+                          setIsOpen(false)
+                          window.location.href = "/llms"
+                        } else alert(res.message)
                       }}
                     >
                       Remove
@@ -119,22 +116,22 @@ export default function LLMOverlay() {
                     <DropdownMenuItem
                       onSelect={async () => {
                         const res1 = await removeContributor({
-                          userId: llm.user.id,
-                        });
+                          userId: llm.user.id
+                        })
 
                         if (res1.message) {
-                          alert(res1.message);
-                          return;
+                          alert(res1.message)
+                          return
                         }
 
-                        const res2 = await removeLLM({ llmId: llm.id });
+                        const res2 = await removeLLM({ llmId: llm.id })
 
                         if (res2.message) {
-                          alert(res2.message);
-                          return;
+                          alert(res2.message)
+                          return
                         }
 
-                        window.location.href = "/llms";
+                        window.location.href = "/llms"
                       }}
                     >
                       Remove & Revoke Contributor
@@ -191,7 +188,7 @@ export default function LLMOverlay() {
             <ContentSection>
               <Tabs
                 value={tab}
-                onValueChange={(t) => setTab(t as "votes" | "vote")}
+                onValueChange={t => setTab(t as "votes" | "vote")}
               >
                 <TabsList>
                   <TabsTrigger value="votes">
@@ -211,13 +208,13 @@ export default function LLMOverlay() {
         )}
       </SheetContent>
     </Sheet>
-  );
+  )
 }
 
 const ContentSection = styled("div", {
-  base: "flex flex-col gap-2",
-});
+  base: "flex flex-col gap-2"
+})
 
 export const ContentContainer = styled("div", {
-  base: "flex flex-col gap-4 h-full",
-});
+  base: "flex flex-col gap-4 h-full"
+})

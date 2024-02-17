@@ -1,13 +1,25 @@
-import LoginPage from "./content";
-import { redirect } from "next/navigation";
-import { getSession } from "@/lib/server/utils/session";
+import { getSession } from "@/lib/server/utils/session"
+import { redirect } from "next/navigation"
+import LoginPage from "./content"
 
 export default async function Login() {
-  const { user } = await getSession();
+  const { user } = await getSession()
 
-  if (user) {
-    return redirect("/llms");
+  if (user?.role === "contributor") {
+    return redirect("/llms")
   }
 
-  return <LoginPage />;
+  if (user?.role === "admin") {
+    return redirect("/admin")
+  }
+
+  if (user?.role === "pending") {
+    return redirect("/contribute/waitlist")
+  }
+
+  if (user?.role === "user") {
+    return redirect("/contribute/join")
+  }
+
+  return <LoginPage />
 }

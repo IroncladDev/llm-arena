@@ -7,24 +7,24 @@ function stack(...stops: Array<[string, number | string]>): Array<string> {
   return stops
     .reduce(
       (acc, [color, stop]) => {
-        const last = acc.at(-1);
+        const last = acc.at(-1)
 
         if (last) {
-          acc.push([color, last[1]]);
-          acc.push([color, stop]);
+          acc.push([color, last[1]])
+          acc.push([color, stop])
         } else {
-          acc.push([color, 0]);
-          acc.push([color, stop]);
+          acc.push([color, 0])
+          acc.push([color, stop])
         }
 
-        return acc;
+        return acc
       },
-      [] as Array<[string, number | string]>,
+      [] as Array<[string, number | string]>
     )
     .map(
       ([color, stop]) =>
-        `${color} ${stop + (typeof stop === "number" ? "px" : "")}`,
-    );
+        `${color} ${stop + (typeof stop === "number" ? "px" : "")}`
+    )
 }
 
 /**
@@ -33,14 +33,14 @@ function stack(...stops: Array<[string, number | string]>): Array<string> {
  * @param {string[]} ...stops The color stops.
  * @returns {string} - The linear gradient.
  */
-function linear(angle: number, ...stops: Array<string>): string;
-function linear(...stops: Array<string>): string;
+function linear(angle: number, ...stops: Array<string>): string
+function linear(...stops: Array<string>): string
 function linear(stopOrAngle: number | string, ...stops: Array<string>): string {
   if (typeof stopOrAngle === "number") {
-    return `linear-gradient(${stopOrAngle}deg, ${stops.join(", ")})`;
+    return `linear-gradient(${stopOrAngle}deg, ${stops.join(", ")})`
   }
 
-  return `linear-gradient(${stops.join(",")})`;
+  return `linear-gradient(${stops.join(",")})`
 }
 
 /**
@@ -49,7 +49,7 @@ function linear(stopOrAngle: number | string, ...stops: Array<string>): string {
  * @returns {string} - The radial gradient.
  */
 function radial(...stops: Array<string>): string {
-  return `radial-gradient(${stops.join(",")})`;
+  return `radial-gradient(${stops.join(",")})`
 }
 
 /**
@@ -58,17 +58,17 @@ function radial(...stops: Array<string>): string {
  * @param {string[]} ...stops The color stops.
  * @returns {string} - The radial gradient.
  */
-function rLinear(angle: number, ...stops: Array<string>): string;
-function rLinear(...stops: Array<string>): string;
+function rLinear(angle: number, ...stops: Array<string>): string
+function rLinear(...stops: Array<string>): string
 function rLinear(
   stopOrAngle: number | string,
   ...stops: Array<string>
 ): string {
   if (typeof stopOrAngle === "number") {
-    return `repeating-linear-gradient(${stopOrAngle}deg, ${stops.join(", ")})`;
+    return `repeating-linear-gradient(${stopOrAngle}deg, ${stops.join(", ")})`
   }
 
-  return `repeating-linear-gradient(${[stopOrAngle, ...stops].join(",")})`;
+  return `repeating-linear-gradient(${[stopOrAngle, ...stops].join(",")})`
 }
 
 /**
@@ -77,14 +77,14 @@ function rLinear(
  * @param {string[]} ...stops The color stops.
  * @returns {string} - The radial gradient.
  */
-function rRadial(position: string, ...stops: Array<string>): string;
-function rRadial(...stops: Array<string>): string;
+function rRadial(position: string, ...stops: Array<string>): string
+function rRadial(...stops: Array<string>): string
 function rRadial(positionOrStop: string, ...stops: Array<string>): string {
   if (typeof positionOrStop === "string") {
-    return `repeating-radial-gradient(${positionOrStop}, ${stops.join(", ")})`;
+    return `repeating-radial-gradient(${positionOrStop}, ${stops.join(", ")})`
   }
 
-  return `repeating-radial-gradient(${stops.join(",")})`;
+  return `repeating-radial-gradient(${stops.join(",")})`
 }
 
 /**
@@ -93,7 +93,7 @@ function rRadial(positionOrStop: string, ...stops: Array<string>): string {
  * @returns {string} - The merged gradient.
  */
 function merge(...gradients: Array<string>): string {
-  return gradients.join(",");
+  return gradients.join(",")
 }
 
 const gr = {
@@ -102,7 +102,7 @@ const gr = {
   merge,
   radial,
   rLinear,
-  rRadial,
-};
+  rRadial
+}
 
-export default gr;
+export default gr
