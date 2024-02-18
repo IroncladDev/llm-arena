@@ -87,6 +87,7 @@ export default function About({
                 field={{
                   type: MetaPropertyType.Number,
                   name: "Humaneval Performance",
+                  nonNullCount: 5,
                   values: [
                     ["code-llama", 28.8],
                     ["mistral-7b", 30.5],
@@ -100,6 +101,7 @@ export default function About({
                 field={{
                   type: MetaPropertyType.Number,
                   name: "Context Tokens",
+                  nonNullCount: 5,
                   values: [
                     ["gpt-4", 8192],
                     ["gpt-3.5-turbo", 4096],
@@ -113,6 +115,7 @@ export default function About({
                 field={{
                   type: MetaPropertyType.String,
                   name: "Use Case",
+                  nonNullCount: 5,
                   values: [
                     ["gpt-4", "text generation"],
                     ["dalle-2", "text-to-image"],

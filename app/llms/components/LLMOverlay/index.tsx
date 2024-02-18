@@ -165,7 +165,7 @@ export default function LLMOverlay() {
 
             <ContentSection>
               <Text weight="medium">Source Description</Text>
-              <Text multiline color="dimmer">
+              <Text multiline markdown color="dimmer">
                 {llm.sourceDescription}
               </Text>
             </ContentSection>
@@ -175,6 +175,7 @@ export default function LLMOverlay() {
                 Uploaded by{" "}
                 <a
                   href={`https://github.com/${llm.user.handle}`}
+                  target="_blank"
                   className="text-accent-dimmer border-b border-accent-dimmer"
                 >
                   {llm.user.handle}

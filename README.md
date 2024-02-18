@@ -20,11 +20,3 @@ See the [Prisma Documentation](https://www.prisma.io/docs/orm/tools/prisma-cli) 
 1. Set the environment variables in `.env` or in you hosting provider's environment variable settings.
 2. Run `bun run build` to create a production build
 3. Run `bun run start` to start the production server
-
-## Unimplemented Features (considering)
-
-- Exporting as images
-  - Customizing color theme?
-- Better email templates
-- Notify contributors of suspensions/model removals
-- Change requests (adding/editing/removing an LLM's metadata field)

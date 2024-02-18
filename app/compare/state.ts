@@ -1,4 +1,4 @@
-import { Field, LLM, MetaProperty } from "@prisma/client"
+import { Field, LLM, MetaProperty, MetaPropertyType } from "@prisma/client"
 import { atom } from "jotai"
 
 export type LLMWithMetadata = LLM & {
@@ -17,12 +17,27 @@ export type FieldSort =
 
 export interface ControlOptions {
   view: "grid" | "list"
-  showNullFields: boolean
   sort: FieldSort
+  filter: Array<FilterType>
 }
+
+export const filterOptions = {
+  [MetaPropertyType.Number]: "Numeric fields",
+  [MetaPropertyType.String]: "String fields",
+  [MetaPropertyType.Boolean]: "Boolean fields",
+  nullFields: "Null fields",
+  standalone: "Standalone fields"
+}
+
+export type FilterType = keyof typeof filterOptions
 
 export const optionsAtom = atom<ControlOptions>({
   view: "grid",
-  showNullFields: true,
-  sort: "default"
+  sort: "default",
+  filter: [
+    MetaPropertyType.String,
+    MetaPropertyType.Number,
+    MetaPropertyType.Boolean,
+    "nullFields"
+  ]
 })

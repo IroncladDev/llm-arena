@@ -6,11 +6,31 @@ import { styled } from "react-tailwind-variants"
 import Controls from "./controls"
 import CompareItem from "./item"
 import { llmsAtom, optionsAtom, sidebarAtom } from "./state"
+import { MetaPropertyType } from "@prisma/client"
 
 export default function Comparison() {
   const [llms] = useAtom(llmsAtom)
   const [, setOpen] = useAtom(sidebarAtom)
-  const [{ view }] = useAtom(optionsAtom)
+  const [{ view, filter }] = useAtom(optionsAtom)
+
+  const items = toMutualMetadata(llms)
+    .filter(l => (filter.includes("standalone") ? true : l.nonNullCount > 1))
+    .filter(l =>
+      filter.includes(MetaPropertyType.Number)
+        ? true
+        : l.type !== MetaPropertyType.Number
+    )
+    .filter(l =>
+      filter.includes(MetaPropertyType.String)
+        ? true
+        : l.type !== MetaPropertyType.String
+    )
+    .filter(l =>
+      filter.includes(MetaPropertyType.Boolean)
+        ? true
+        : l.type !== MetaPropertyType.Boolean
+    )
+    .filter(l => (filter.includes("nullFields") ? true : l.nonNullCount > 0))
 
   return (
     <Container>
@@ -18,7 +38,7 @@ export default function Comparison() {
       <ContainerOverflow>
         {llms.length > 1 ? (
           <ItemsContainer view={view}>
-            {toMutualMetadata(llms).map((x, i) => (
+            {items.map((x, i) => (
               <CompareItem key={i} field={x} />
             ))}
           </ItemsContainer>
