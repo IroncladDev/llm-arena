@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button"
 import Text from "@/components/ui/text"
 import { toMutualMetadata } from "@/lib/comparison"
+import { MetaPropertyType } from "@prisma/client"
 import { useAtom } from "jotai"
 import { styled } from "react-tailwind-variants"
 import Controls from "./controls"
 import CompareItem from "./item"
 import { llmsAtom, optionsAtom, sidebarAtom } from "./state"
-import { MetaPropertyType } from "@prisma/client"
 
 export default function Comparison() {
   const [llms] = useAtom(llmsAtom)

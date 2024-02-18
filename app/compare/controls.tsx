@@ -1,4 +1,10 @@
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from "@/components/ui/popover"
 import {
   Select,
   SelectContent,
@@ -16,6 +22,7 @@ import {
   ListIcon,
   MenuIcon
 } from "lucide-react"
+import { useState } from "react"
 import { styled } from "react-tailwind-variants"
 import {
   FieldSort,
@@ -24,13 +31,6 @@ import {
   optionsAtom,
   sidebarAtom
 } from "./state"
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent
-} from "@/components/ui/popover"
-import { Checkbox } from "@/components/ui/checkbox"
-import { useState } from "react"
 
 const sortLabels: Record<FieldSort, string> = {
   "alpha-asc": "Alphabetical (A-Z)",
@@ -43,10 +43,7 @@ const sortLabels: Record<FieldSort, string> = {
 export default function Controls() {
   const [open, setOpen] = useAtom(sidebarAtom)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [
-    { view, sort, filter },
-    setOptions
-  ] = useAtom(optionsAtom)
+  const [{ view, sort, filter }, setOptions] = useAtom(optionsAtom)
 
   const setFilterValue = (type: FilterType, value: boolean) => {
     setOptions(op => {
