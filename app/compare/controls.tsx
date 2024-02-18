@@ -6,12 +6,31 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
 import Text from "@/components/ui/text"
 import { useAtom } from "jotai"
-import { GridIcon, ListIcon, MenuIcon } from "lucide-react"
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  FilterIcon,
+  GridIcon,
+  ListIcon,
+  MenuIcon
+} from "lucide-react"
 import { styled } from "react-tailwind-variants"
-import { FieldSort, optionsAtom, sidebarAtom } from "./state"
+import {
+  FieldSort,
+  FilterType,
+  filterOptions,
+  optionsAtom,
+  sidebarAtom
+} from "./state"
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent
+} from "@/components/ui/popover"
+import { Checkbox } from "@/components/ui/checkbox"
+import { useState } from "react"
 
 const sortLabels: Record<FieldSort, string> = {
   "alpha-asc": "Alphabetical (A-Z)",
@@ -23,15 +42,28 @@ const sortLabels: Record<FieldSort, string> = {
 
 export default function Controls() {
   const [open, setOpen] = useAtom(sidebarAtom)
-  const [{ view, sort, showNullFields }, setOptions] = useAtom(optionsAtom)
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [
+    { view, sort, filter },
+    setOptions
+  ] = useAtom(optionsAtom)
+
+  const setFilterValue = (type: FilterType, value: boolean) => {
+    setOptions(op => {
+      const newFilter = value
+        ? [...op.filter, type]
+        : op.filter.filter(f => f !== type)
+      return { ...op, filter: newFilter }
+    })
+  }
 
   return (
     <ControlsContainer>
       <SidebarButton size="icon" onClick={() => setOpen(!open)}>
         <MenuIcon className="w-4 h-4 text-foreground-dimmer" />
       </SidebarButton>
-      <ControlItem>
-        <Text weight="medium" color="dimmest">
+      <ControlItem className="max-sm:hidden">
+        <Text weight="medium" color="dimmest" size="xs">
           View
         </Text>
         <OptionsContainer>
@@ -56,18 +88,40 @@ export default function Controls() {
         </OptionsContainer>
       </ControlItem>
       <ControlItem>
-        <Text weight="medium" color="dimmest">
-          Show null fields
+        <Text weight="medium" color="dimmest" size="xs">
+          Filter
         </Text>
-        <Switch
-          checked={showNullFields}
-          onCheckedChange={checked =>
-            setOptions(op => ({ ...op, showNullFields: checked }))
-          }
-        />
+        <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+          <PopoverTrigger asChild>
+            <Button size="sm">
+              <FilterIcon className="w-4 h-4 text-foreground-dimmer" />
+              <Text size="xs" color="dimmer">
+                ({filter.length})
+              </Text>
+              {isFilterOpen ? (
+                <ChevronDownIcon className="w-4 h-4 text-foreground-dimmer" />
+              ) : (
+                <ChevronRightIcon className="w-4 h-4 text-foreground-dimmer" />
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="flex flex-col gap-2" align="start">
+            {Object.entries(filterOptions).map(([key, label], i) => (
+              <label key={i} className="flex gap-2 items-center">
+                <Checkbox
+                  checked={filter.includes(key as FilterType)}
+                  onCheckedChange={checked =>
+                    setFilterValue(key as FilterType, Boolean(checked))
+                  }
+                />
+                <Text size="xs">{label}</Text>
+              </label>
+            ))}
+          </PopoverContent>
+        </Popover>
       </ControlItem>
       <ControlItem>
-        <Text weight="medium" color="dimmest">
+        <Text weight="medium" color="dimmest" size="xs">
           Sort
         </Text>
         <Select
@@ -93,11 +147,11 @@ export default function Controls() {
 }
 
 const ControlsContainer = styled("div", {
-  base: "flex gap-8 max-sm:gap-4 p-4 max-sm:overflow-x-auto max-w-screen max-sm:w-screen bg-root/50 border-b-2 border-outline-dimmest sm:justify-center"
+  base: "flex gap-8 max-sm:gap-4 p-4 max-sm:overflow-x-auto max-w-screen max-sm:w-screen bg-root/50 border-b-2 border-outline-dimmest justify-center relative"
 })
 
 const SidebarButton = styled(Button, {
-  base: "md:hidden shrink-0 self-center"
+  base: "md:hidden shrink-0 self-center absolute left-4"
 })
 
 const ControlItem = styled("div", {

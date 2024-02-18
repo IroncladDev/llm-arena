@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "bun db:sync && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "tsc --noEmit && next lint",
     "db:seed": "bun prisma/seed/index.ts",
     "db:sync": "prisma migrate deploy && prisma generate",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{js,ts,tsx}\" --plugin=prettier-plugin-organize-imports"

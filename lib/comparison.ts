@@ -4,16 +4,19 @@ import { MetaPropertyType } from "@prisma/client"
 export type ComparableField =
   | {
       name: string
+      nonNullCount: number
       type: typeof MetaPropertyType.String
       values: [string, string | null][]
     }
   | {
       name: string
+      nonNullCount: number
       type: typeof MetaPropertyType.Number
       values: [string, number | null][]
     }
   | {
       name: string
+      nonNullCount: number
       type: typeof MetaPropertyType.Boolean
       values: [string, boolean | null][]
     }
@@ -69,12 +72,7 @@ export function toMutualMetadata(
               : MetaPropertyType.String
       }
     })
-    .sort((a, b) => b.nonNullCount - a.nonNullCount)
-    .map(({ name, values, type }) => ({
-      name,
-      values,
-      type
-    })) as Array<ComparableField>
+    .sort((a, b) => b.nonNullCount - a.nonNullCount) as Array<ComparableField>
 
   return sortedFields
 }

@@ -22,11 +22,11 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-10 min-w-36 items-center justify-between rounded-lg border-2 px-4 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 outline-none",
+      "flex min-w-36 items-center justify-between border-2 px-4 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 outline-none",
       elevated
         ? "bg-higher border-outline-dimmer focus:border-accent-dimmer data-[state=open]:border-accent-dimmer"
         : "bg-default border-outline-dimmest focus:border-accent-dimmest data-[state=open]:border-accent-dimmer",
-      small ? "h-8 py-1" : "h-10",
+      small ? "h-8 rounded-md" : "h-10 py-2 rounded-lg",
       className
     )}
     {...props}

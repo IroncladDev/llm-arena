@@ -5,10 +5,12 @@ import { styled } from "react-tailwind-variants"
 import { optionsAtom } from "../state"
 
 export default function StringTable({ field }: { field: ComparableField }) {
-  const [{ showNullFields, sort }] = useAtom(optionsAtom)
+  const [{ filter, sort }] = useAtom(optionsAtom)
 
   const fields = (
-    showNullFields ? field.values : field.values.filter(([, v]) => v !== null)
+    filter.includes("nullFields")
+      ? field.values
+      : field.values.filter(([, v]) => v !== null)
   ).toSorted((a, b) => {
     switch (sort) {
       case "value-asc":
