@@ -9,7 +9,8 @@
     "lint": "tsc --noEmit && next lint",
     "db:seed": "bun prisma/seed/index.ts",
     "db:sync": "prisma migrate deploy && prisma generate",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.{js,ts,tsx}\" --plugin=prettier-plugin-organize-imports"
+    "format": "prettier --ignore-path .gitignore --write \"**/*.{js,ts,tsx}\" --plugin=prettier-plugin-organize-imports",
+    "format:check": "prettier --ignore-path .gitignore --check \"**/*.{js,ts,tsx}\" --plugin=prettier-plugin-organize-imports"
   },
   "dependencies": {
     "@prisma/client": "5.9.1",
