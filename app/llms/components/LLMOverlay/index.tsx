@@ -14,6 +14,7 @@ import {
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Text from "@/components/ui/text"
+import { abbrNumber } from "@/lib/numbers"
 import { User, Vote } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
 import { ExternalLinkIcon, MoreVerticalIcon } from "lucide-react"
@@ -26,7 +27,6 @@ import Header from "./Header"
 import Loading from "./Loading"
 import VoteSection from "./VoteSection"
 import Votes from "./Votes"
-import { abbrNumber } from "@/lib/numbers"
 
 export default function LLMOverlay() {
   const params = useSearchParams()

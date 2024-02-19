@@ -1,9 +1,9 @@
 import Text from "@/components/ui/text"
 import { ComparableField } from "@/lib/comparison"
+import { abbrNumber } from "@/lib/numbers"
 import { useAtom } from "jotai"
 import { styled } from "react-tailwind-variants"
 import { optionsAtom } from "../state"
-import { abbrNumber } from "@/lib/numbers"
 
 export default function NumericChart({ field }: { field: ComparableField }) {
   const [{ filter, sort }] = useAtom(optionsAtom)

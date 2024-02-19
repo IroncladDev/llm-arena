@@ -1,3 +1,4 @@
+import NumberInput from "@/components/NumberInput"
 import { Button } from "@/components/ui/button"
 import { Input as InputComponent } from "@/components/ui/input"
 import {
@@ -15,7 +16,6 @@ import { XIcon } from "lucide-react"
 import { useMemo, useRef } from "react"
 import { styled } from "react-tailwind-variants"
 import { MetaField } from "../content"
-import NumberInput from "@/components/NumberInput"
 
 export function MetaFieldRow({
   onChange,

@@ -1,9 +1,9 @@
+import { parseAbbrNumber } from "@/lib/numbers"
+import { AlertTriangleIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { styled } from "react-tailwind-variants"
 import { Input } from "./ui/input"
-import { parseAbbrNumber } from "@/lib/numbers"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
-import { AlertTriangleIcon } from "lucide-react"
 
 export default function NumberInput({
   value,
