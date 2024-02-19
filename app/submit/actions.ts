@@ -1,6 +1,7 @@
 "use server"
 
 import { formatError } from "@/lib/errors"
+import { parseAbbrNumber } from "@/lib/numbers"
 import prisma from "@/lib/server/prisma"
 import { requireSession } from "@/lib/server/utils/session"
 import { LLM, MetaProperty, MetaPropertyType, UserRole } from "@prisma/client"
@@ -28,6 +29,11 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
 
     if (meta.some(x => String(x.value).length === 0))
       throw new Error("Empty values are not allowed")
+
+    const numeric = meta.filter(x => x.type === MetaPropertyType.Number)
+
+    if (numeric.some(x => !parseAbbrNumber(String(x.value)).success))
+      throw new Error("Invalid number format found")
 
     const { hasDuplicates } = meta.reduce(
       (acc, { name }) => {
@@ -113,7 +119,8 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
             data: {
               value: String(field.value),
               metaPropertyId: property.id,
-              llmId: llm.id
+              llmId: llm.id,
+              note: field.note
             }
           })
         }
@@ -151,12 +158,13 @@ const property = z.object({
 const metaField = z.object({
   type: metaProperty,
   value: z.union([z.string(), z.number(), z.boolean()]),
-  name: z.string(),
-  property: property.nullish()
+  name: z.string().min(1).max(64),
+  property: property.nullish(),
+  note: z.string().min(1).max(64).optional()
 })
 
 const formInput = z.object({
-  name: z.string(),
+  name: z.string().min(3).max(64),
   metadata: z.string(),
-  description: z.string()
+  description: z.string().min(16).max(2048)
 })

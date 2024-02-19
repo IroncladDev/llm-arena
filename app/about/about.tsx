@@ -89,11 +89,23 @@ export default function About({
                   name: "Humaneval Performance",
                   nonNullCount: 5,
                   values: [
-                    ["code-llama", 28.8],
-                    ["mistral-7b", 30.5],
-                    ["gemini pro", 67.7],
-                    ["PaLM 8b", 3.6],
-                    ["code-davinci-002", 65.8]
+                    [
+                      "code-llama",
+                      { value: 28.8, type: MetaPropertyType.Number }
+                    ],
+                    [
+                      "mistral-7b",
+                      { value: 30.5, type: MetaPropertyType.Number }
+                    ],
+                    [
+                      "gemini pro",
+                      { value: 67.7, type: MetaPropertyType.Number }
+                    ],
+                    ["PaLM 8b", { value: 3.6, type: MetaPropertyType.Number }],
+                    [
+                      "code-davinci-002",
+                      { value: 65.8, type: MetaPropertyType.Number }
+                    ]
                   ]
                 }}
               />
@@ -103,11 +115,23 @@ export default function About({
                   name: "Context Tokens",
                   nonNullCount: 5,
                   values: [
-                    ["gpt-4", 8192],
-                    ["gpt-3.5-turbo", 4096],
-                    ["gpt-4-turbo-preview", 128000],
-                    ["replit-code-v1-3b", 32000],
-                    ["llama-2-7b", 4000]
+                    ["gpt-4", { value: 8192, type: MetaPropertyType.Number }],
+                    [
+                      "gpt-3.5-turbo",
+                      { value: 4096, type: MetaPropertyType.Number }
+                    ],
+                    [
+                      "gpt-4-turbo-preview",
+                      { value: 128000, type: MetaPropertyType.Number }
+                    ],
+                    [
+                      "replit-code-v1-3b",
+                      { value: 32000, type: MetaPropertyType.Number }
+                    ],
+                    [
+                      "llama-2-7b",
+                      { value: 4000, type: MetaPropertyType.Number }
+                    ]
                   ]
                 }}
               />
@@ -117,11 +141,32 @@ export default function About({
                   name: "Use Case",
                   nonNullCount: 5,
                   values: [
-                    ["gpt-4", "text generation"],
-                    ["dalle-2", "text-to-image"],
-                    ["sora", "text-to-video"],
-                    ["CodeLlama-70b-hf", "code generation"],
-                    ["musicgen-small", "text-to-music"]
+                    [
+                      "gpt-4",
+                      {
+                        value: "text generation",
+                        type: MetaPropertyType.String
+                      }
+                    ],
+                    [
+                      "dalle-2",
+                      { value: "text-to-image", type: MetaPropertyType.String }
+                    ],
+                    [
+                      "sora",
+                      { value: "text-to-video", type: MetaPropertyType.String }
+                    ],
+                    [
+                      "CodeLlama-70b-hf",
+                      {
+                        value: "code generation",
+                        type: MetaPropertyType.String
+                      }
+                    ],
+                    [
+                      "musicgen-small",
+                      { value: "text-to-music", type: MetaPropertyType.String }
+                    ]
                   ]
                 }}
               />

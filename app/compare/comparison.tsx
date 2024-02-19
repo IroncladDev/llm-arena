@@ -2,16 +2,15 @@ import { Button } from "@/components/ui/button"
 import Text from "@/components/ui/text"
 import { toMutualMetadata } from "@/lib/comparison"
 import { MetaPropertyType } from "@prisma/client"
-import { useAtom } from "jotai"
 import { styled } from "react-tailwind-variants"
 import Controls from "./controls"
 import CompareItem from "./item"
-import { llmsAtom, optionsAtom, sidebarAtom } from "./state"
+import { useCompareState } from "./state"
 
 export default function Comparison() {
-  const [llms] = useAtom(llmsAtom)
-  const [, setOpen] = useAtom(sidebarAtom)
-  const [{ view, filter }] = useAtom(optionsAtom)
+  const { view, filter, llms, setSidebar } = useCompareState(
+    ({ view, filter, llms, setSidebar }) => ({ view, filter, llms, setSidebar })
+  )
 
   const items = toMutualMetadata(llms)
     .filter(l => (filter.includes("standalone") ? true : l.nonNullCount > 1))
@@ -53,7 +52,7 @@ export default function Comparison() {
             <Button
               asChild
               onClick={() => {
-                setOpen(true)
+                setSidebar(true)
               }}
             >
               <label htmlFor="llm-sidebar-search">Show me</label>

@@ -69,6 +69,7 @@ model Field {
   llmId          Int
   value          String
   createdAt      DateTime     @default(now())
+  note           String?
 
   // Relations
   metaProperty   MetaProperty @relation(fields: [metaPropertyId], references: [id])

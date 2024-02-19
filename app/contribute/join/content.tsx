@@ -107,6 +107,7 @@ export default function ContributorLoginPage() {
             if (!res.success) {
               setLoading(false)
               alert(res.message)
+
               return
             }
 

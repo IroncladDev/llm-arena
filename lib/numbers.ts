@@ -37,6 +37,7 @@ export const parseAbbrNumber = (
 export const abbrNumber = (input: number): string => {
   if (input > 0 && input < 1) {
     const percentage = Math.round(input * 1000) / 10
+
     return `${percentage}%`
   }
 
@@ -52,6 +53,7 @@ export const abbrNumber = (input: number): string => {
   if (unit) {
     let value = input / unit.threshold
     value = Math.round(value * 10) / 10
+
     return `${value}${unit.symbol}`
   }
 

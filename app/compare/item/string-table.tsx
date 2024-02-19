@@ -1,16 +1,21 @@
 import Text from "@/components/ui/text"
 import { ComparableField } from "@/lib/comparison"
-import { useAtom } from "jotai"
-import { styled } from "react-tailwind-variants"
-import { optionsAtom } from "../state"
+import { FieldSort, FilterType } from "../state"
+import { TableCell, TableCellContent, TableContainer, TableRow } from "./tables"
 
-export default function StringTable({ field }: { field: ComparableField }) {
-  const [{ filter, sort }] = useAtom(optionsAtom)
-
+export default function StringTable({
+  field,
+  filter,
+  sort
+}: {
+  field: ComparableField
+  filter: Array<FilterType>
+  sort: FieldSort
+}) {
   const fields = (
     filter.includes("nullFields")
       ? field.values
-      : field.values.filter(([, v]) => v !== null)
+      : field.values.filter(([, v]) => v.value !== null)
   ).toSorted((a, b) => {
     switch (sort) {
       case "value-asc":
@@ -27,30 +32,29 @@ export default function StringTable({ field }: { field: ComparableField }) {
   })
 
   return (
-    <Container>
-      {fields.map(([key, value], i) => (
-        <div className="table-row" key={i}>
-          <Td>
-            <Text color="dimmer">{key}</Text>
-          </Td>
-          <Td>
+    <TableContainer>
+      {fields.map(([key, { value, note }], i) => (
+        <TableRow key={i}>
+          <TableCell>
+            <TableCellContent>
+              <Text color="dimmer">{key}</Text>
+              {note && (
+                <Text size="xs" color="dimmest">
+                  {note}
+                </Text>
+              )}
+            </TableCellContent>
+          </TableCell>
+          <TableCell>
             <Text
               color={value === null ? "dimmest" : "dimmer"}
               size={value === null ? "xs" : "sm"}
             >
               {value === null ? "N/A" : value}
             </Text>
-          </Td>
-        </div>
+          </TableCell>
+        </TableRow>
       ))}
-    </Container>
+    </TableContainer>
   )
 }
-
-const Container = styled("div", {
-  base: "w-full table"
-})
-
-const Td = styled("div", {
-  base: "align-middle h-6 px-2 first:pl-0 last:pr-0 last:w-full relative last:border-l-2 last:border-outline-dimmest table-cell"
-})

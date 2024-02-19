@@ -1,17 +1,23 @@
 import Text from "@/components/ui/text"
 import { ComparableField } from "@/lib/comparison"
 import { abbrNumber } from "@/lib/numbers"
-import { useAtom } from "jotai"
 import { styled } from "react-tailwind-variants"
-import { optionsAtom } from "../state"
+import { FieldSort, FilterType } from "../state"
+import { TableCell, TableCellContent, TableContainer, TableRow } from "./tables"
 
-export default function NumericChart({ field }: { field: ComparableField }) {
-  const [{ filter, sort }] = useAtom(optionsAtom)
-
+export default function NumericChart({
+  field,
+  filter,
+  sort
+}: {
+  field: ComparableField
+  filter: Array<FilterType>
+  sort: FieldSort
+}) {
   const rows = (
     filter.includes("nullFields")
       ? field.values
-      : field.values.filter(([, v]) => v !== null)
+      : field.values.filter(([, v]) => v.value !== null)
   ).toSorted((a, b) => {
     switch (sort) {
       case "value-asc":
@@ -27,16 +33,23 @@ export default function NumericChart({ field }: { field: ComparableField }) {
     }
   })
 
-  const greatestValue = Math.max(...rows.map(([, value]) => Number(value)))
+  const greatestValue = Math.max(...rows.map(([, { value }]) => Number(value)))
 
   return (
-    <div className="w-full table">
-      {rows.map(([key, value], i) => (
-        <div className="table-row" key={i}>
-          <Td className="table-cell">
-            <Text color="dimmer">{key}</Text>
-          </Td>
-          <Td className="table-cell">
+    <TableContainer>
+      {rows.map(([key, { value, note }], i) => (
+        <TableRow key={i}>
+          <TableCell>
+            <TableCellContent>
+              <Text color="dimmer">{key}</Text>
+              {note && (
+                <Text size="xs" color="dimmest">
+                  {note}
+                </Text>
+              )}
+            </TableCellContent>
+          </TableCell>
+          <TableCell>
             <BarContainer>
               <Bar
                 key={i}
@@ -46,26 +59,18 @@ export default function NumericChart({ field }: { field: ComparableField }) {
                 isNullValue={value === null}
               />
               <Text size="xs" color="dimmest" multiline>
-                {typeof value === "number"
-                  ? abbrNumber(value)
-                  : value === null
-                    ? "N/A"
-                    : value}
+                {value === null ? "N/A" : abbrNumber(value as number)}
               </Text>
             </BarContainer>
-          </Td>
-        </div>
+          </TableCell>
+        </TableRow>
       ))}
-    </div>
+    </TableContainer>
   )
 }
 
-const Td = styled("div", {
-  base: "align-middle h-6 px-2 first:pl-0 last:pr-0 last:w-full relative last:border-l-2 last:border-outline-dimmest"
-})
-
 const Bar = styled("div", {
-  base: "h-4 rounded-r-lg my-0.5",
+  base: "h-6 rounded-r-lg my-0.5",
   variants: {
     isNullValue: {
       true: "bg-gradient-to-r from-higher/0 to-higher border-2 border-l-0 border-outline-dimmer rounded-r-md",

@@ -9,10 +9,15 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import Text from "@/components/ui/text"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from "@/components/ui/tooltip"
 import { MetaProperty, MetaPropertyType } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
 import { useCombobox } from "downshift"
-import { XIcon } from "lucide-react"
+import { FileMinus2, FilePlus2, XIcon } from "lucide-react"
 import { useMemo, useRef } from "react"
 import { styled } from "react-tailwind-variants"
 import { MetaField } from "../content"
@@ -21,7 +26,7 @@ export function MetaFieldRow({
   onChange,
   onDelete,
   metadata,
-  field: { value, name, type, property }
+  field: { value, name, type, property, note }
 }: {
   onChange: (args: Partial<MetaField>) => void
   onDelete: () => void
@@ -38,6 +43,7 @@ export function MetaFieldRow({
       const res = await fetch(
         "/api/meta-search?query=" + encodeURIComponent(name)
       )
+
       return await res.json()
     }
   })
@@ -68,6 +74,7 @@ export function MetaFieldRow({
     } else if (name.length > 2) {
       return [customResult]
     }
+
     return []
   }, [results, name, metadata, property, type])
 
@@ -107,6 +114,7 @@ export function MetaFieldRow({
             type: selectedItem.type,
             property: selectedItem
           })
+
           if (selectedItem.type === MetaPropertyType.Boolean) {
             selectValueRef.current?.focus()
           } else {
@@ -118,117 +126,173 @@ export function MetaFieldRow({
   })
 
   return (
-    <MetaFieldContainer>
-      <Input
-        {...getInputProps({ value: name })}
-        placeholder="key_name"
-        required
-      />
-      <DownshiftPopover hidden={!isOpen}>
-        <ItemsContainer visible={items?.length > 0} {...getMenuProps()}>
-          {items.map((item, index) => (
-            <Item
-              key={index}
-              highlighted={highlightedIndex === index}
-              {...getItemProps({ item, index })}
+    <>
+      <MetaFieldContainer>
+        <InputContainer className="group">
+          <Input
+            {...getInputProps({ value: name })}
+            placeholder="key_name"
+            required
+            className="group/item"
+          />
+
+          {typeof note === "string" ? null : (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <AddNoteButton
+                  type="button"
+                  onClick={() => onChange({ note: "" })}
+                >
+                  <FilePlus2 className="w-4 h-4" />
+                </AddNoteButton>
+              </TooltipTrigger>
+              <TooltipContent side="right">Add note</TooltipContent>
+            </Tooltip>
+          )}
+        </InputContainer>
+
+        <DownshiftPopover hidden={!isOpen}>
+          <ItemsContainer visible={items?.length > 0} {...getMenuProps()}>
+            {items.map((item, index) => (
+              <Item
+                key={index}
+                highlighted={highlightedIndex === index}
+                {...getItemProps({ item, index })}
+              >
+                {item.id === 0 ? (
+                  <Text size="sm">Create &quot;{item.name}&quot;</Text>
+                ) : (
+                  <>
+                    <Text size="sm">{item.name}</Text>
+                    <Text color="dimmer" size="sm">
+                      {item.type}
+                    </Text>
+                    <Text color="dimmest" size="sm">
+                      +{item.useCount}
+                    </Text>
+                  </>
+                )}
+              </Item>
+            ))}
+          </ItemsContainer>
+
+          <EmptyContainer visible={items?.length === 0}>
+            <Text color="dimmer">No results.</Text>
+          </EmptyContainer>
+        </DownshiftPopover>
+
+        <InputContainer>
+          <Select
+            value={property ? property.type : type}
+            disabled={!!property}
+            onValueChange={(v: MetaPropertyType) => {
+              if (property) return
+
+              onChange({
+                type: v,
+                value:
+                  v === MetaPropertyType.Boolean
+                    ? Boolean(value)
+                    : v === MetaPropertyType.Number
+                      ? Number(value) || 0
+                      : String(value)
+              })
+            }}
+          >
+            <Trigger ref={selectRef} className="w-full">
+              <SelectValue placeholder="type" />
+            </Trigger>
+            <SelectContent>
+              <SelectItem value={MetaPropertyType.String}>String</SelectItem>
+              <SelectItem value={MetaPropertyType.Number}>Number</SelectItem>
+              <SelectItem value={MetaPropertyType.Boolean}>Boolean</SelectItem>
+            </SelectContent>
+          </Select>
+        </InputContainer>
+
+        <InputContainer>
+          {type === MetaPropertyType.Boolean ? (
+            <Select
+              value={value ? "true" : "false"}
+              onValueChange={value =>
+                onChange({ value: value === "true" ? true : false })
+              }
+              required
             >
-              {item.id === 0 ? (
-                <Text size="sm">Create &quot;{item.name}&quot;</Text>
-              ) : (
-                <>
-                  <Text size="sm">{item.name}</Text>
-                  <Text color="dimmer" size="sm">
-                    {item.type}
-                  </Text>
-                  <Text color="dimmest" size="sm">
-                    +{item.useCount}
-                  </Text>
-                </>
-              )}
-            </Item>
-          ))}
-        </ItemsContainer>
-
-        <EmptyContainer visible={items?.length === 0}>
-          <Text color="dimmer">No results.</Text>
-        </EmptyContainer>
-      </DownshiftPopover>
-      <Select
-        value={property ? property.type : type}
-        disabled={!!property}
-        onValueChange={(v: MetaPropertyType) => {
-          if (property) return
-
-          onChange({
-            type: v,
-            value:
-              v === MetaPropertyType.Boolean
-                ? Boolean(value)
-                : v === MetaPropertyType.Number
-                  ? Number(value) || 0
-                  : String(value)
-          })
-        }}
-      >
-        <Trigger ref={selectRef}>
-          <SelectValue placeholder="type" />
-        </Trigger>
-        <SelectContent>
-          <SelectItem value={MetaPropertyType.String}>String</SelectItem>
-          <SelectItem value={MetaPropertyType.Number}>Number</SelectItem>
-          <SelectItem value={MetaPropertyType.Boolean}>Boolean</SelectItem>
-        </SelectContent>
-      </Select>
-      {type === MetaPropertyType.Boolean ? (
-        <Select
-          value={value ? "true" : "false"}
-          onValueChange={value =>
-            onChange({ value: value === "true" ? true : false })
-          }
-          required
+              <Trigger ref={selectValueRef} className="w-full">
+                <SelectValue placeholder="true" />
+              </Trigger>
+              <SelectContent>
+                <SelectItem value="true">true</SelectItem>
+                <SelectItem value="false">false</SelectItem>
+              </SelectContent>
+            </Select>
+          ) : type === MetaPropertyType.String ? (
+            <Input
+              value={String(value)}
+              ref={valueRef}
+              onChange={e =>
+                onChange({
+                  value: e.target.value
+                })
+              }
+              placeholder="value"
+              required
+            />
+          ) : (
+            <NumberInput
+              value={String(value)}
+              onChange={({ value }) => onChange({ value })}
+              required
+              className="border rounded-none grow shrink-0 basis-0 w-full"
+            />
+          )}
+        </InputContainer>
+        <Button
+          className="border border-outline-dimmest rounded-none h-full"
+          size="icon"
+          type="button"
+          onClick={onDelete}
         >
-          <Trigger ref={selectValueRef}>
-            <SelectValue placeholder="true" />
-          </Trigger>
-          <SelectContent>
-            <SelectItem value="true">true</SelectItem>
-            <SelectItem value="false">false</SelectItem>
-          </SelectContent>
-        </Select>
-      ) : type === MetaPropertyType.String ? (
-        <Input
-          value={String(value)}
-          ref={valueRef}
-          onChange={e =>
-            onChange({
-              value: e.target.value
-            })
-          }
-          placeholder="value"
-          required
-        />
-      ) : (
-        <NumberInput
-          value={String(value)}
-          onChange={({ value }) => onChange({ value })}
-          required
-          className="border rounded-none grow shrink-0 basis-0 w-full"
-        />
+          <XIcon className="w-4 h-4 text-foreground-dimmer" />
+        </Button>
+      </MetaFieldContainer>
+      {typeof note === "string" && (
+        <NoteContainer>
+          <Input
+            value={note}
+            onChange={e => onChange({ note: e.target.value })}
+            placeholder="Add note..."
+            className="h-full text-xs z-10 text-foreground-dimmer"
+          />
+          <Button
+            className="border border-outline-dimmest rounded-none h-full z-10"
+            size="icon"
+            type="button"
+            onClick={() => onChange({ note: undefined })}
+          >
+            <FileMinus2 className="w-4 h-4 text-foreground-dimmest" />
+          </Button>
+        </NoteContainer>
       )}
-      <Button
-        className="border border-outline-dimmest rounded-none h-full"
-        size="icon"
-        type="button"
-        onClick={onDelete}
-      >
-        <XIcon className="w-4 h-4 text-foreground-dimmer" />
-      </Button>
-    </MetaFieldContainer>
+    </>
   )
 }
 
+const NoteContainer = styled("div", {
+  base: "flex justify-start h-6 relative w-[calc(100%/3+32px/3*2)] outline outline-outline-dimmest"
+})
+
+const AddNoteButton = styled("button", {
+  base: "absolute right-2 top-1/2 -translate-y-1/2 flex p-1 rounded text-foreground-dimmest hidden group-focus-within:block"
+})
+
 const MetaFieldContainer = styled("div", {
-  base: "flex items-center w-full relative"
+  base: "flex items-center w-full relative border-outline-dimmest outline outline-outline-dimmest"
+})
+
+const InputContainer = styled("div", {
+  base: "grow shrink-0 basis-0 w-full !inline-block relative"
 })
 
 const Trigger = styled(SelectTrigger, {

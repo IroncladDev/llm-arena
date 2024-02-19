@@ -3,14 +3,13 @@
 import { MotionContainer } from "@/components/container"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
-import { useAtom } from "jotai"
 import { styled } from "react-tailwind-variants"
 import Comparison from "./comparison"
 import Sidebar from "./sidebar"
-import { sidebarAtom } from "./state"
+import { useCompareState } from "./state"
 
 export default function Content() {
-  const [open] = useAtom(sidebarAtom)
+  const sidebar = useCompareState(state => state.sidebar)
 
   return (
     <MotionContainer
@@ -37,7 +36,7 @@ export default function Content() {
         )
       }}
     >
-      <SidebarContainer open={open}>
+      <SidebarContainer open={sidebar}>
         <Sidebar />
       </SidebarContainer>
       <ContentContainer>

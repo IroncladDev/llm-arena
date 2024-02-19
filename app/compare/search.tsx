@@ -23,6 +23,7 @@ export default function LLMSearch({
       const res = await fetch(
         "/compare/search?query=" + encodeURIComponent(search)
       )
+
       return await res.json()
     }
   })

@@ -2,26 +2,26 @@ import Text from "@/components/ui/text"
 import { ComparableField } from "@/lib/comparison"
 import { snakeToTitleCase } from "@/lib/utils"
 import { MetaPropertyType } from "@prisma/client"
-import { useAtom } from "jotai"
 import { styled } from "react-tailwind-variants"
-import { optionsAtom } from "../state"
+import { useCompareState } from "../state"
 import BooleanTable from "./boolean-table"
 import NumericChart from "./numeric-chart"
 import StringTable from "./string-table"
 
 export default function CompareItem({ field }: { field: ComparableField }) {
-  const [{ view }] = useAtom(optionsAtom)
+  const { view, filter, sort } = useCompareState()
+
   return (
     <Container variant={view}>
       <Text size="lg" weight="bold">
         {snakeToTitleCase(field.name)}
       </Text>
       {field.type === MetaPropertyType.String ? (
-        <StringTable field={field} />
+        <StringTable field={field} filter={filter} sort={sort} />
       ) : field.type === MetaPropertyType.Number ? (
-        <NumericChart field={field} />
+        <NumericChart field={field} filter={filter} sort={sort} />
       ) : (
-        <BooleanTable field={field} />
+        <BooleanTable field={field} filter={filter} sort={sort} />
       )}
     </Container>
   )

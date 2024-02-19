@@ -59,6 +59,7 @@ export default function WaitlistPage({ position }: { position: number }) {
       animate(scope.current, { opacity: 1, translateY: 0 }, { duration: 1 })
     }
   }, [background, gradient, animate, scope])
+
   return (
     <MotionContainer
       center
