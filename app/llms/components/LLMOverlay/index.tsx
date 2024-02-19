@@ -3,7 +3,6 @@
 import { removeContributor } from "@/app/admin/actions/remove-contributor"
 import { removeLLM } from "@/app/admin/actions/remove-llm"
 import { LLMWithRelations } from "@/app/api/search/types"
-import { formatNumber } from "@/components/LargeNumberInput"
 import { useCurrentUser } from "@/components/providers/CurrentUserProvider"
 import { Button } from "@/components/ui/button"
 import {
@@ -15,6 +14,7 @@ import {
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Text from "@/components/ui/text"
+import { abbrNumber } from "@/lib/numbers"
 import { User, Vote } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
 import { ExternalLinkIcon, MoreVerticalIcon } from "lucide-react"
@@ -151,10 +151,8 @@ export default function LLMOverlay() {
                     </FieldItem>
                     <FieldItem>
                       <Text>
-                        {field.metaProperty.type === "Number" &&
-                        Number(field.value) >= 1000000
-                          ? formatNumber(Number(field.value)).float.toFixed(1) +
-                            formatNumber(Number(field.value)).symbol
+                        {field.metaProperty.type === "Number"
+                          ? abbrNumber(Number(field.value))
                           : field.value}
                       </Text>
                     </FieldItem>

@@ -1,4 +1,4 @@
-import LargeNumberInput from "@/components/LargeNumberInput"
+import NumberInput from "@/components/NumberInput"
 import { Button } from "@/components/ui/button"
 import { Input as InputComponent } from "@/components/ui/input"
 import {
@@ -208,9 +208,9 @@ export function MetaFieldRow({
           required
         />
       ) : (
-        <LargeNumberInput
-          value={Number(value)}
-          onChange={v => onChange({ value: v })}
+        <NumberInput
+          value={String(value)}
+          onChange={({ value }) => onChange({ value })}
           required
           className="border rounded-none grow shrink-0 basis-0 w-full"
         />

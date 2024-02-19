@@ -27,7 +27,10 @@ export default function LLMSearch({
     }
   })
 
-  const items = results || []
+  const sortSelected = (llm: LLMWithMetadata) =>
+    llms.some(x => x.id === llm.id) ? 1 : -1
+
+  const items = results?.sort((a, b) => sortSelected(b) - sortSelected(a)) || []
 
   const {
     isOpen,

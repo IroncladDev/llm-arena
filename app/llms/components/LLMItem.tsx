@@ -1,7 +1,7 @@
 import { LLMWithRelations } from "@/app/api/search/types"
-import { formatNumber } from "@/components/LargeNumberInput"
 import Text from "@/components/ui/text"
 import useClientRect from "@/hooks/useElementSize"
+import { abbrNumber } from "@/lib/numbers"
 import { VoteStatus } from "@prisma/client"
 import { usePathname, useRouter } from "next/navigation"
 import { Fragment } from "react"
@@ -102,10 +102,8 @@ export default function LLMItem({
                 </FieldItem>
                 <FieldItem>
                   <Text>
-                    {field.metaProperty.type === "Number" &&
-                    Number(field.value) >= 1000000
-                      ? formatNumber(Number(field.value)).float.toFixed(1) +
-                        formatNumber(Number(field.value)).symbol
+                    {field.metaProperty.type === "Number"
+                      ? abbrNumber(Number(field.value))
                       : field.value}
                   </Text>
                 </FieldItem>
