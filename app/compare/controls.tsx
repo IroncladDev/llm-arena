@@ -13,7 +13,6 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import Text from "@/components/ui/text"
-import { useAtom } from "jotai"
 import {
   ChevronDownIcon,
   ChevronRightIcon,
@@ -24,13 +23,7 @@ import {
 } from "lucide-react"
 import { useState } from "react"
 import { styled } from "react-tailwind-variants"
-import {
-  FieldSort,
-  FilterType,
-  filterOptions,
-  optionsAtom,
-  sidebarAtom
-} from "./state"
+import { FieldSort, FilterType, filterOptions, useCompareState } from "./state"
 
 const sortLabels: Record<FieldSort, string> = {
   "alpha-asc": "Alphabetical (A-Z)",
@@ -41,22 +34,41 @@ const sortLabels: Record<FieldSort, string> = {
 }
 
 export default function Controls() {
-  const [open, setOpen] = useAtom(sidebarAtom)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [{ view, sort, filter }, setOptions] = useAtom(optionsAtom)
-
-  const setFilterValue = (type: FilterType, value: boolean) => {
-    setOptions(op => {
-      const newFilter = value
-        ? [...op.filter, type]
-        : op.filter.filter(f => f !== type)
-      return { ...op, filter: newFilter }
+  const {
+    view,
+    sort,
+    filter,
+    setFilterValue,
+    sidebar,
+    setSidebar,
+    setView,
+    setSort
+  } = useCompareState(
+    ({
+      view,
+      sort,
+      filter,
+      setFilterValue,
+      sidebar,
+      setSidebar,
+      setView,
+      setSort
+    }) => ({
+      view,
+      sort,
+      filter,
+      setFilterValue,
+      sidebar,
+      setSidebar,
+      setView,
+      setSort
     })
-  }
+  )
 
   return (
     <ControlsContainer>
-      <SidebarButton size="icon" onClick={() => setOpen(!open)}>
+      <SidebarButton size="icon" onClick={() => setSidebar(!sidebar)}>
         <MenuIcon className="w-4 h-4 text-foreground-dimmer" />
       </SidebarButton>
       <ControlItem className="max-sm:hidden">
@@ -66,7 +78,7 @@ export default function Controls() {
         <OptionsContainer>
           <OptionButton
             selected={view === "grid"}
-            onClick={() => setOptions(op => ({ ...op, view: "grid" }))}
+            onClick={() => setView("grid")}
           >
             <GridIcon size={16} />
             <Text size="xs" color="inherit">
@@ -75,7 +87,7 @@ export default function Controls() {
           </OptionButton>
           <OptionButton
             selected={view === "list"}
-            onClick={() => setOptions(op => ({ ...op, view: "list" }))}
+            onClick={() => setView("list")}
           >
             <ListIcon size={16} />
             <Text size="xs" color="inherit">
@@ -123,9 +135,7 @@ export default function Controls() {
         </Text>
         <Select
           value={sort}
-          onValueChange={value =>
-            setOptions(op => ({ ...op, sort: value as FieldSort }))
-          }
+          onValueChange={value => setSort(value as FieldSort)}
         >
           <SelectTrigger small>
             <SelectValue />

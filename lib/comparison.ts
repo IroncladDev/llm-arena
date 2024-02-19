@@ -6,50 +6,64 @@ export type ComparableField =
       name: string
       nonNullCount: number
       type: typeof MetaPropertyType.String
-      values: [string, string | null][]
+      values: [string, ValuesValue<string>][]
     }
   | {
       name: string
       nonNullCount: number
       type: typeof MetaPropertyType.Number
-      values: [string, number | null][]
+      values: [string, ValuesValue<number>][]
     }
   | {
       name: string
       nonNullCount: number
       type: typeof MetaPropertyType.Boolean
-      values: [string, boolean | null][]
+      values: [string, ValuesValue<boolean>][]
     }
+
+type ValuesValue<
+  T extends string | number | boolean = string | number | boolean
+> = {
+  value: T | null
+  note?: string
+  type: MetaPropertyType
+}
 
 export function toMutualMetadata(
   llms: LLMWithMetadata[]
 ): Array<ComparableField> {
-  const fieldsMap = new Map<
-    string,
-    Map<string, string | number | boolean | null>
-  >()
+  const fieldsMap = new Map<string, Map<string, ValuesValue>>()
 
   llms.forEach(llm => {
-    llm.fields.forEach(({ value, metaProperty }) => {
-      let llmValuesMap: Map<string, string | number | boolean | null>
+    llm.fields.forEach(({ value, metaProperty, note }) => {
+      let llmValuesMap: Map<string, ValuesValue>
 
       if (fieldsMap.has(metaProperty.name)) {
         llmValuesMap = fieldsMap.get(metaProperty.name)!
       } else {
-        llmValuesMap = new Map<string, string | number | boolean | null>()
-        llms.forEach(innerLlm => llmValuesMap.set(innerLlm.name, null))
+        llmValuesMap = new Map<string, ValuesValue>()
+        llms.forEach(innerLlm =>
+          llmValuesMap.set(innerLlm.name, {
+            value: null,
+            type: metaProperty.type
+          })
+        )
 
         fieldsMap.set(metaProperty.name, llmValuesMap)
       }
 
-      llmValuesMap.set(
-        llm.name,
+      const fieldValue =
         metaProperty.type === MetaPropertyType.Number
           ? Number(value)
           : metaProperty.type === MetaPropertyType.Boolean
             ? value.toLowerCase() === "true"
             : String(value)
-      )
+
+      llmValuesMap.set(llm.name, {
+        value: fieldValue,
+        note: note || undefined,
+        type: metaProperty.type
+      })
     })
   })
 
@@ -64,12 +78,7 @@ export function toMutualMetadata(
         name,
         values: valuesArray,
         nonNullCount,
-        type:
-          typeof valuesArray[0][1] === "number"
-            ? MetaPropertyType.Number
-            : typeof valuesArray[0][1] === "boolean"
-              ? MetaPropertyType.Boolean
-              : MetaPropertyType.String
+        type: valuesArray[0][1].type
       }
     })
     .sort((a, b) => b.nonNullCount - a.nonNullCount) as Array<ComparableField>

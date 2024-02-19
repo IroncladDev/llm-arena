@@ -22,6 +22,7 @@ export async function send(args: sendgrid.MailDataRequired): SendReturn {
     .then(() => ({ success: true as true }))
     .catch((e: Error) => {
       console.log(e)
+
       return { success: false, message: e.message }
     })
 }

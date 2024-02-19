@@ -56,6 +56,7 @@ export default function LLMsPage() {
         }
       } catch (err) {
         console.error(err)
+
         return []
       }
     },

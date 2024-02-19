@@ -18,6 +18,7 @@ import { MetaFieldRow } from "./components/MetaField"
 
 export type MetaField = {
   property?: MetaProperty | null
+  note?: string
   type: MetaPropertyType
   name: string
   value: number | string | boolean
@@ -237,7 +238,7 @@ const MetaHeaders = styled("div", {
 })
 
 const MetaPropertyContainer = styled("div", {
-  base: "flex flex-col border border-outline-dimmest mx-3"
+  base: "flex flex-col mx-3"
 })
 
 const EmptyMetaContainer = styled("div", {

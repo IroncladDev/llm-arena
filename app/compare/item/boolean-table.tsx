@@ -1,17 +1,22 @@
 import Text from "@/components/ui/text"
 import { ComparableField } from "@/lib/comparison"
-import { useAtom } from "jotai"
 import { CheckIcon, XIcon } from "lucide-react"
-import { styled } from "react-tailwind-variants"
-import { optionsAtom } from "../state"
+import { FieldSort, FilterType } from "../state"
+import { TableCell, TableCellContent, TableContainer, TableRow } from "./tables"
 
-export default function BooleanTable({ field }: { field: ComparableField }) {
-  const [{ filter, sort }] = useAtom(optionsAtom)
-
+export default function BooleanTable({
+  field,
+  filter,
+  sort
+}: {
+  field: ComparableField
+  filter: Array<FilterType>
+  sort: FieldSort
+}) {
   const fields = (
     filter.includes("nullFields")
       ? field.values
-      : field.values.filter(([, v]) => v !== null)
+      : field.values.filter(([, v]) => v.value !== null)
   ).toSorted((a, b) => {
     switch (sort) {
       case "value-asc":
@@ -28,13 +33,20 @@ export default function BooleanTable({ field }: { field: ComparableField }) {
   })
 
   return (
-    <Container>
-      {fields.map(([key, value], i) => (
-        <div className="table-row" key={i}>
-          <Td>
-            <Text color="dimmer">{key}</Text>
-          </Td>
-          <Td>
+    <TableContainer>
+      {fields.map(([key, { value, note }], i) => (
+        <TableRow key={i}>
+          <TableCell>
+            <TableCellContent>
+              <Text color="dimmer">{key}</Text>
+              {note && (
+                <Text size="xs" color="dimmest">
+                  {note}
+                </Text>
+              )}
+            </TableCellContent>
+          </TableCell>
+          <TableCell>
             {value === null ? (
               <Text color="dimmest" size="xs">
                 N/A
@@ -44,17 +56,9 @@ export default function BooleanTable({ field }: { field: ComparableField }) {
             ) : (
               <XIcon className="w-4 h-4 text-foreground-dimmer" />
             )}
-          </Td>
-        </div>
+          </TableCell>
+        </TableRow>
       ))}
-    </Container>
+    </TableContainer>
   )
 }
-
-const Container = styled("div", {
-  base: "w-full table"
-})
-
-const Td = styled("div", {
-  base: "align-middle h-6 px-2 first:pl-0 last:pr-0 last:w-full relative last:border-l-2 last:border-outline-dimmest table-cell"
-})

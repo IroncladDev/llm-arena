@@ -17,6 +17,7 @@ export default function Header({
     const rotateFactor = p * 60
     const sizeFactor = p * 200
     const lightY = p * 100
+
     return gr.merge(
       gr.linear(0, tokens.colors.root, "transparent"),
       gr.radial(

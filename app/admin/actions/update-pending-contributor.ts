@@ -69,6 +69,7 @@ export async function updatePendingContributor(
     throw new Error("User not found")
   } catch (e) {
     console.log(e)
+
     return users
   }
 }

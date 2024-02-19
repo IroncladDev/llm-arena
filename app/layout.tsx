@@ -31,7 +31,7 @@ export default async function RootLayout({
         <QueryClientProvider>
           <SessionProvider session={session}>
             <CurrentUserProvider user={currentUserSession?.user || null}>
-              <TooltipProvider>
+              <TooltipProvider delayDuration={500}>
                 <AnimatePresence>{children}</AnimatePresence>
               </TooltipProvider>
             </CurrentUserProvider>

@@ -1,16 +1,19 @@
 import OverflowScroll from "@/components/overflow"
 import { Button } from "@/components/ui/button"
 import Text from "@/components/ui/text"
-import { useAtom } from "jotai"
 import { Hexagon, PlusIcon, XIcon } from "lucide-react"
 import Link from "next/link"
 import { styled } from "react-tailwind-variants"
 import LLMSearch from "./search"
-import { llmsAtom, sidebarAtom } from "./state"
+import { useCompareState } from "./state"
 
 export default function Sidebar() {
-  const [llms, setLLMs] = useAtom(llmsAtom)
-  const [open, setOpen] = useAtom(sidebarAtom)
+  const {
+    llms,
+    sidebar: open,
+    setLLMs,
+    setSidebar: setOpen
+  } = useCompareState()
 
   return (
     <Container>

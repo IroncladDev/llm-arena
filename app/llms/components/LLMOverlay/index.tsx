@@ -14,14 +14,13 @@ import {
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Text from "@/components/ui/text"
-import { abbrNumber } from "@/lib/numbers"
 import { User, Vote } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
 import { ExternalLinkIcon, MoreVerticalIcon } from "lucide-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { styled } from "react-tailwind-variants"
-import { FieldItem, FieldRow, FieldRows } from "../LLMItem"
+import FieldTable from "../FieldTable"
 import ErrorState from "./Error"
 import Header from "./Header"
 import Loading from "./Loading"
@@ -105,6 +104,7 @@ export default function LLMOverlay() {
                     <DropdownMenuItem
                       onSelect={async () => {
                         const res = await removeLLM({ llmId: llm.id })
+
                         if (res.success) {
                           setIsOpen(false)
                           window.location.href = "/llms"
@@ -121,6 +121,7 @@ export default function LLMOverlay() {
 
                         if (res1.message) {
                           alert(res1.message)
+
                           return
                         }
 
@@ -128,6 +129,7 @@ export default function LLMOverlay() {
 
                         if (res2.message) {
                           alert(res2.message)
+
                           return
                         }
 
@@ -143,22 +145,7 @@ export default function LLMOverlay() {
 
             <ContentSection>
               <Text weight="medium">Metadata Fields</Text>
-              <FieldRows>
-                {llm.fields.map((field, i) => (
-                  <FieldRow key={i}>
-                    <FieldItem>
-                      <Text color="dimmer">{field.metaProperty.name}</Text>
-                    </FieldItem>
-                    <FieldItem>
-                      <Text>
-                        {field.metaProperty.type === "Number"
-                          ? abbrNumber(Number(field.value))
-                          : field.value}
-                      </Text>
-                    </FieldItem>
-                  </FieldRow>
-                ))}
-              </FieldRows>
+              <FieldTable fields={llm.fields} />
             </ContentSection>
 
             <ContentSection>

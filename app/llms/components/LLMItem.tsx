@@ -1,11 +1,11 @@
 import { LLMWithRelations } from "@/app/api/search/types"
 import Text from "@/components/ui/text"
 import useClientRect from "@/hooks/useElementSize"
-import { abbrNumber } from "@/lib/numbers"
 import { VoteStatus } from "@prisma/client"
 import { usePathname, useRouter } from "next/navigation"
 import { Fragment } from "react"
 import { styled } from "react-tailwind-variants"
+import FieldTable from "./FieldTable"
 
 export default function LLMItem({
   query,
@@ -30,9 +30,11 @@ export default function LLMItem({
           text: node,
           highlighted: false
         })
+
         if (i < splitText.length - 1 && matches) {
           acc.push({ text: matches[i], highlighted: true })
         }
+
         return acc
       },
       [] as Array<{ text: string; highlighted: boolean }>
@@ -83,42 +85,7 @@ export default function LLMItem({
       <Content>
         <ContentSection ref={ref}>
           <Text weight="medium">Metadata Fields</Text>
-          <FieldRows>
-            {llm.fields.slice(0, 4).map((field, i) => (
-              <FieldRow key={i}>
-                <FieldItem>
-                  <Text color="dimmer">
-                    {searchNodes(field.metaProperty.name).map(
-                      ({ text, highlighted }, i) =>
-                        highlighted ? (
-                          <span key={i} className="text-foreground">
-                            {text}
-                          </span>
-                        ) : (
-                          <Fragment key={i}>{text}</Fragment>
-                        )
-                    )}
-                  </Text>
-                </FieldItem>
-                <FieldItem>
-                  <Text>
-                    {field.metaProperty.type === "Number"
-                      ? abbrNumber(Number(field.value))
-                      : field.value}
-                  </Text>
-                </FieldItem>
-              </FieldRow>
-            ))}
-            {llm.fields.length > 4 && (
-              <FieldRow>
-                <FieldItem className="flex justify-center">
-                  <Text center color="dimmer">
-                    {llm.fields.length - 4} more
-                  </Text>
-                </FieldItem>
-              </FieldRow>
-            )}
-          </FieldRows>
+          <FieldTable fields={llm.fields} capLength={3} />
         </ContentSection>
         <ContentSection style={{ maxHeight: box?.height || "unset" }}>
           <Text weight="medium">Source Description</Text>
@@ -184,16 +151,4 @@ const ContentOverlay = styled("div", {
 
 const ContentSection = styled("div", {
   base: "flex flex-col gap-2 grow basis-0"
-})
-
-export const FieldRows = styled("div", {
-  base: "flex flex-col"
-})
-
-export const FieldRow = styled("div", {
-  base: "flex items-center border-t-2 last:border-b-2 border-outline-dimmest"
-})
-
-export const FieldItem = styled("div", {
-  base: "grow basis-0 p-1 border-l-2 last:border-r-2 border-outline-dimmest"
 })
