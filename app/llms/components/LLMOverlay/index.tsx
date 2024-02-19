@@ -3,7 +3,6 @@
 import { removeContributor } from "@/app/admin/actions/remove-contributor"
 import { removeLLM } from "@/app/admin/actions/remove-llm"
 import { LLMWithRelations } from "@/app/api/search/types"
-import { formatNumber } from "@/components/LargeNumberInput"
 import { useCurrentUser } from "@/components/providers/CurrentUserProvider"
 import { Button } from "@/components/ui/button"
 import {
@@ -27,6 +26,7 @@ import Header from "./Header"
 import Loading from "./Loading"
 import VoteSection from "./VoteSection"
 import Votes from "./Votes"
+import { abbrNumber } from "@/lib/numbers"
 
 export default function LLMOverlay() {
   const params = useSearchParams()
@@ -151,10 +151,8 @@ export default function LLMOverlay() {
                     </FieldItem>
                     <FieldItem>
                       <Text>
-                        {field.metaProperty.type === "Number" &&
-                        Number(field.value) >= 1000000
-                          ? formatNumber(Number(field.value)).float.toFixed(1) +
-                            formatNumber(Number(field.value)).symbol
+                        {field.metaProperty.type === "Number"
+                          ? abbrNumber(Number(field.value))
                           : field.value}
                       </Text>
                     </FieldItem>
