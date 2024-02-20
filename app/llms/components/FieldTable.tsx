@@ -16,12 +16,21 @@ export default function FieldTable({
         <TableRow key={i}>
           <TableCell>
             <TableCellContent>
-              <Text weight="medium">{field.metaProperty.name}</Text>
+              <Text weight="medium" color="dimmer">
+                {field.metaProperty.name}
+              </Text>
               {field.note && (
                 <Text size="xs" color="dimmest">
                   {field.note}
                 </Text>
               )}
+            </TableCellContent>
+          </TableCell>
+          <TableCell>
+            <TableCellContent>
+              <Text weight="medium" color="dimmer">
+                {field.metaProperty.type}
+              </Text>
             </TableCellContent>
           </TableCell>
           <TableCell>

@@ -1,3 +1,4 @@
+import { removeContributor } from "@/app/admin/actions/remove-contributor"
 import { removeVote } from "@/app/admin/actions/remove-vote"
 import { LLMWithRelations } from "@/app/api/search/types"
 import { MotionDiv } from "@/components/motion"
@@ -169,6 +170,27 @@ function VoteComment({
               }}
             >
               Remove
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={async () => {
+                const res = await removeVote({ voteId: vote.id })
+
+                if (!res.success) {
+                  return alert(res.message)
+                }
+
+                const revokeRes = await removeContributor({
+                  userId: vote.userId
+                })
+
+                if (!revokeRes.success) {
+                  return alert(revokeRes.message)
+                }
+
+                refetch()
+              }}
+            >
+              Remove and Revoke Contributor
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

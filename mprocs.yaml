@@ -10,4 +10,4 @@ procs:
     stop: SIGTERM
   docker:
     shell: docker-compose up
-    stop: SIGTERM
+    stop: SIGKILL
