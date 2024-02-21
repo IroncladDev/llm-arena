@@ -7,29 +7,6 @@ export default function Intro() {
     <Container id="intro">
       <Content>
         <FadeIn>
-          <Text
-            size="display"
-            color="dimmest"
-            weight="semibold"
-            multiline
-            className="leading-tight"
-          >
-            Collecting information is{" "}
-            <strong className="text-foreground-dimmer">Hard</strong>
-          </Text>
-        </FadeIn>
-        <FadeIn>
-          <Text size="h2" color="dimmest" weight="medium" multiline>
-            And at the rate AI is accelerating,
-          </Text>
-        </FadeIn>
-        <FadeIn>
-          <Text size="h1" color="dimmer" weight="bold" multiline>
-            You can&apos;t catch &apos;em all.
-          </Text>
-        </FadeIn>
-        <hr />
-        <FadeIn>
           <Text size="lg" weight="medium" color="dimmest" multiline>
             <strong className="text-foreground-dimmer">
               You can&apos;t out-accelerate AI
@@ -52,9 +29,10 @@ export default function Intro() {
             .
           </Text>
           <Text size="lg" weight="medium" color="dimmest" multiline>
-            The time and effort it takes one to collect the right information
-            for just <strong className="text-foreground-dimmer">one</strong> of
-            these LLMs.
+            We are all familliar with the significant time and effort it takes
+            one to collect the right information for just{" "}
+            <strong className="text-foreground-dimmer">one</strong> of these
+            LLMs.
           </Text>
           <Text size="lg" weight="medium" color="dimmest" multiline>
             And then it is forgotten.
