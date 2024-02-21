@@ -5,13 +5,12 @@ import { Button } from "@/components/ui/button"
 import Text from "@/components/ui/text"
 import { User, VoteStatus } from "@prisma/client"
 import { ExternalLink, GithubIcon } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
-import { useFormState } from "react-dom"
+import { useState } from "react"
 import { styled } from "react-tailwind-variants"
 import { updatePendingContributor } from "./actions/update-pending-contributor"
 
 export default function AdminPage({ waitlist }: { waitlist: Array<User> }) {
-  const [users, action] = useFormState(updatePendingContributor, waitlist)
+  const [users, setUsers] = useState(waitlist)
 
   return (
     <MotionContainer
@@ -30,7 +29,7 @@ export default function AdminPage({ waitlist }: { waitlist: Array<User> }) {
         </Text>
         <UserContainer>
           {users.map((user, i) => (
-            <UserRow key={i} user={user} action={action} />
+            <UserRow key={i} user={user} setUsers={setUsers} />
           ))}
         </UserContainer>
       </Content>
@@ -40,49 +39,46 @@ export default function AdminPage({ waitlist }: { waitlist: Array<User> }) {
 
 const UserRow = ({
   user,
-  action
+  setUsers
 }: {
   user: User
-  action: (payload: FormData) => void
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>
 }) => {
-  const [status, setStatus] = useState<VoteStatus | null>(null)
-  const formRef = useRef<HTMLFormElement>(null)
+  const submit = async (status: VoteStatus) => {
+    const res = await updatePendingContributor({
+      status,
+      userId: user.id
+    })
 
-  useEffect(() => {
-    if (status !== null) {
-      formRef.current?.requestSubmit()
+    if (res.success) {
+      setUsers(prev => prev.filter(u => u.id !== user.id))
+    } else {
+      alert(res.message)
     }
-  }, [status])
+  }
 
   return (
-    <form action={action} ref={formRef}>
-      <input type="hidden" name="status" value={status || ""} />
-      <input type="hidden" name="userId" value={user.id} />
-      <UserRowContainer>
-        <UserRowStart>
-          <Button asChild variant="highlight">
-            <a href={"https://github.com/" + user.handle} target="_blank">
-              <GithubIcon size={16} />
-              <Text>{user.handle}</Text>
-              <ExternalLink size={16} />
-            </a>
-          </Button>
-        </UserRowStart>
-        <Button
-          onClick={() => setStatus(VoteStatus.approve)}
-          variant="highlight"
-        >
-          Approve
+    <UserRowContainer>
+      <UserRowStart>
+        <Button asChild variant="highlight">
+          <a href={"https://github.com/" + user.handle} target="_blank">
+            <GithubIcon size={16} />
+            <Text>{user.handle}</Text>
+            <ExternalLink size={16} />
+          </a>
         </Button>
-        <Button
-          type="button"
-          onClick={() => setStatus(VoteStatus.reject)}
-          variant="outline"
-        >
-          Reject
-        </Button>
-      </UserRowContainer>
-    </form>
+      </UserRowStart>
+      <Button onClick={() => submit(VoteStatus.approve)} variant="highlight">
+        Approve
+      </Button>
+      <Button
+        type="button"
+        onClick={() => submit(VoteStatus.reject)}
+        variant="outline"
+      >
+        Reject
+      </Button>
+    </UserRowContainer>
   )
 }
 

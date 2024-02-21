@@ -1,11 +1,15 @@
 "use server"
 
 import prisma from "@/lib/server/prisma"
-import { requireSession } from "@/lib/server/utils/session"
+import { getSession } from "@/lib/server/utils/session"
 
 export async function joinAsContributor() {
+  const res = await getSession()
+
   try {
-    const { user } = await requireSession()
+    if (!res?.user) throw new Error("Unauthorized")
+
+    const { user } = res
 
     if (user.role !== "user") throw new Error("User role not in a user state")
 
