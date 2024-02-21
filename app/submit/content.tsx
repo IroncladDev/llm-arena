@@ -134,7 +134,7 @@ export default function Content({
                   <MetaPropertyContainer>
                     {metadata.map((field, i) => (
                       <MetaFieldRow
-                        key={i}
+                        key={`meta-${field.name}`}
                         field={field}
                         metadata={metadata}
                         onChange={(args: Partial<MetaField>) => {

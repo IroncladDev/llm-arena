@@ -60,11 +60,10 @@ Values **must** be numeric and expressed as a percentage (e.g. `0.85`, `85%`). I
 
 #### Recommended Fields
 
-The following fields are recommended for all uploaded LLMs. Optional for LLMs that don't have a value for the field (e.g. Image/Video generation models)
+The following fields are recommended for all uploaded LLMs, if applicable.
 
 - `use_case`: The intended use case of the LLM (e.g. code generation, summarization, etc.)
-- `context_tokens`: The number of context tokens the LLM can process
-- `completion_tokens`: The number of tokens the LLM can generate
+- `context_window_tokens`: The number of context tokens the LLM can process
 
 ### Numeric Values
 
