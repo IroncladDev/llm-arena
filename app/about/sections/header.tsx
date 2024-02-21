@@ -22,7 +22,7 @@ export default function Header({
         `transparent ${20 + p * 20}%`
       ),
       gr.radial(
-        `circle at 50% ${110 - 90 * p}%`,
+        `circle at 50% ${100 - 90 * p}%`,
         tokens.colors.red[500] + "55",
         tokens.colors.red[500] + "25 30%",
         "transparent 70%",
