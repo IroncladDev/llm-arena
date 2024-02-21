@@ -42,23 +42,3 @@ export const baseEmail = (args: BaseEmailArgs) =>
       fs.readFileSync("emails/base.html", "utf8")
     )(args)
   )
-
-// console.log(
-//   await send({
-//     from: "noreply@ai-to.ai",
-//     replyTo: "conner@connerow.dev",
-//     to: "connerow1115@gmail.com",
-//     subject: "Testing",
-//     text: `This is a test`,
-//     html: baseEmail({
-//       title: "Test",
-//       paragraphs: ["this is a test one", "this is a test two"],
-//       buttonLinks: [
-//         {
-//           text: "Test",
-//           href: "https://ai-to.ai"
-//         }
-//       ]
-//     })
-//   })
-// )
