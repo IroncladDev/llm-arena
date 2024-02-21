@@ -16,7 +16,7 @@ export default function FieldTable({
         <TableRow key={i}>
           <TableCell>
             <TableCellContent>
-              <Text weight="medium" color="dimmer">
+              <Text weight="medium" color="dimmer" size="sm">
                 {field.metaProperty.name}
               </Text>
               {field.note && (
@@ -35,7 +35,7 @@ export default function FieldTable({
           </TableCell>
           <TableCell>
             <TableCellContent>
-              <Text color="dimmer">
+              <Text color="dimmer" multiline>
                 {field.metaProperty.type === MetaPropertyType.Number
                   ? abbrNumber(Number(field.value))
                   : field.value}
@@ -56,7 +56,7 @@ export default function FieldTable({
 }
 
 const TableContainer = styled("div", {
-  base: "table border border-outline-dimmer"
+  base: "table border border-outline-dimmer w-full max-w-[640px]"
 })
 
 const TableRow = styled("div", {
@@ -64,9 +64,9 @@ const TableRow = styled("div", {
 })
 
 const TableCell = styled("div", {
-  base: "table-cell h-10 last:w-full border border-outline-dimmer align-middle"
+  base: "table-cell min-h-10 first:max-w-[200px] last:w-full border border-outline-dimmer align-middle"
 })
 
 const TableCellContent = styled("div", {
-  base: "flex flex-col h-10 px-2 justify-center"
+  base: "flex flex-col h-full min-h-10 px-2 justify-center"
 })
