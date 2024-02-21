@@ -3,7 +3,7 @@ import { AlertTriangleIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { styled } from "react-tailwind-variants"
 import { Input } from "./ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 
 export default function NumberInput({
   value,
@@ -46,16 +46,16 @@ export default function NumberInput({
       />
 
       {!isValid && (
-        <Popover>
-          <PopoverTrigger asChild>
+        <Tooltip>
+          <TooltipTrigger asChild>
             <AlertButton>
               <AlertTriangleIcon className="w-4 h-4" />
             </AlertButton>
-          </PopoverTrigger>
-          <PopoverContent align="start">
+          </TooltipTrigger>
+          <TooltipContent align="center" side="right">
             Invalid abbreviated number value
-          </PopoverContent>
-        </Popover>
+          </TooltipContent>
+        </Tooltip>
       )}
     </Container>
   )

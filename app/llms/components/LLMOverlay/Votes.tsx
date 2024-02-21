@@ -169,7 +169,7 @@ function VoteComment({
                 }
               }}
             >
-              Remove
+              Remove Vote
             </DropdownMenuItem>
             <DropdownMenuItem
               onSelect={async () => {
@@ -190,7 +190,7 @@ function VoteComment({
                 refetch()
               }}
             >
-              Remove and Revoke Contributor
+              Remove & Revoke Contributor
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

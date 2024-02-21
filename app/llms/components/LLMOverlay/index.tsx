@@ -111,7 +111,7 @@ export default function LLMOverlay() {
                         } else alert(res.message)
                       }}
                     >
-                      Remove
+                      Remove LLM
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onSelect={async () => {

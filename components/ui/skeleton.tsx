@@ -1,15 +1,7 @@
-import { cn } from "@/lib/utils"
+import { styled } from "react-tailwind-variants"
 
-function Skeleton({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      className={cn("animate-pulse rounded-md bg-higher", className)}
-      {...props}
-    />
-  )
-}
+const Skeleton = styled("div", {
+  base: `animate-pulse rounded-md bg-higher`
+})
 
 export { Skeleton }
