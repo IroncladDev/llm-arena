@@ -72,7 +72,9 @@ export function toMutualMetadata(
       const valuesArray = Array.from(values).sort(([, a], [, b]) =>
         a !== null && b === null ? -1 : a === null && b !== null ? 1 : 0
       )
-      const nonNullCount = valuesArray.filter(([, v]) => v !== null).length
+      const nonNullCount = valuesArray.filter(
+        ([, v]) => v.value !== null
+      ).length
 
       return {
         name,
