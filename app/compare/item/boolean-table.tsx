@@ -1,5 +1,5 @@
 import Text from "@/components/ui/text"
-import { ComparableField } from "@/lib/comparison"
+import { ComparableFieldGroup } from "@/lib/comparison"
 import { CheckIcon, XIcon } from "lucide-react"
 import { FieldSort, FilterType } from "../state"
 import { TableCell, TableCellContent, TableContainer, TableRow } from "./tables"
@@ -9,7 +9,7 @@ export default function BooleanTable({
   filter,
   sort
 }: {
-  field: ComparableField
+  field: ComparableFieldGroup
   filter: Array<FilterType>
   sort: FieldSort
 }) {
@@ -48,7 +48,7 @@ export default function BooleanTable({
           </TableCell>
           <TableCell>
             {value === null ? (
-              <Text color="dimmest" size="xs">
+              <Text color="dimmest" size="xs" className="opacity-50">
                 N/A
               </Text>
             ) : value ? (

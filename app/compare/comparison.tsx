@@ -12,7 +12,9 @@ export default function Comparison() {
     ({ view, filter, llms, setSidebar }) => ({ view, filter, llms, setSidebar })
   )
 
-  const items = toMutualMetadata(llms)
+  const allItems = toMutualMetadata(llms)
+
+  const items = allItems
     .filter(l => (filter.includes("standalone") ? true : l.nonNullCount > 1))
     .filter(l =>
       filter.includes(MetaPropertyType.Number)
@@ -35,12 +37,22 @@ export default function Comparison() {
     <Container>
       <Controls />
       <ContainerOverflow>
-        {llms.length > 1 ? (
+        {llms.length > 1 && items.length > 0 && allItems.length > 0 ? (
           <ItemsContainer view={view}>
             {items.map((x, i) => (
               <CompareItem key={i} field={x} />
             ))}
           </ItemsContainer>
+        ) : items.length === 0 && allItems.length > 0 && llms.length > 1 ? (
+          <EmptyStateContainer>
+            <Text size="lg" weight="medium" className="text-center">
+              Nothing to Compare
+            </Text>
+            <Text color="dimmer" multiline>
+              No items match the current filters. Try clearing them or adding
+              more from the sidebar
+            </Text>
+          </EmptyStateContainer>
         ) : (
           <EmptyStateContainer>
             <Text size="lg" weight="medium" className="text-center">

@@ -86,25 +86,28 @@ export default function About({
               <CompareItem
                 field={{
                   type: MetaPropertyType.Number,
-                  name: "Humaneval Performance",
+                  name: "Humaneval Benchmark",
                   nonNullCount: 5,
                   values: [
                     [
                       "code-llama",
-                      { value: 28.8, type: MetaPropertyType.Number }
+                      { value: 0.288, type: MetaPropertyType.Number }
                     ],
                     [
                       "mistral-7b",
-                      { value: 30.5, type: MetaPropertyType.Number }
+                      { value: 0.305, type: MetaPropertyType.Number }
                     ],
                     [
                       "gemini pro",
-                      { value: 67.7, type: MetaPropertyType.Number }
+                      { value: 0.677, type: MetaPropertyType.Number }
                     ],
-                    ["PaLM 8b", { value: 3.6, type: MetaPropertyType.Number }],
+                    [
+                      "PaLM 8b",
+                      { value: 0.036, type: MetaPropertyType.Number }
+                    ],
                     [
                       "code-davinci-002",
-                      { value: 65.8, type: MetaPropertyType.Number }
+                      { value: 0.658, type: MetaPropertyType.Number }
                     ]
                   ]
                 }}
@@ -112,7 +115,7 @@ export default function About({
               <CompareItem
                 field={{
                   type: MetaPropertyType.Number,
-                  name: "Context Tokens",
+                  name: "Context Window Tokens",
                   nonNullCount: 5,
                   values: [
                     ["gpt-4", { value: 8192, type: MetaPropertyType.Number }],
@@ -144,7 +147,7 @@ export default function About({
                     [
                       "gpt-4",
                       {
-                        value: "text generation",
+                        value: "text generation, image generation/recognition",
                         type: MetaPropertyType.String
                       }
                     ],
@@ -221,10 +224,6 @@ export default function About({
             tool.
           </Text>
           <Text multiline paragraph color="dimmest" size="lg">
-            The first challenge was getting the necessary data from a bunch of
-            LLMs. It would have been a painful task to manually import the data.
-          </Text>
-          <Text multiline paragraph color="dimmest" size="lg">
             I decided to do something similar to{" "}
             <a
               href="https://x.com/CommunityNotes"
@@ -233,7 +232,7 @@ export default function About({
             >
               Community Notes
             </a>{" "}
-            where sources and approvals were required.
+            where sources and approvals were required to upload an LLM.
           </Text>
           <Text multiline paragraph color="dimmest" size="lg">
             It was time to build.
@@ -264,27 +263,32 @@ export default function About({
             Challenges
           </Text>
           <Text multiline paragraph color="dimmest" size="base">
-            I had never spent so much time brainstorming over a single project.
-            I spent countless hours thinking about how to build this project
-            out. For a while, I wasn&apos;t sure if I could do it.
+            I spent countless hours brainstorming and two months of 64-hour work
+            weeks getting this project across the line.
           </Text>
           <Text multiline paragraph color="dimmest" size="base">
-            The hardest part to design and implement was how different LLMs with
-            different metadata fields could be compared. For example, a
-            text-generation and a text-to-video model wouldn&apos;t have much in
-            common.
+            My newfound knowledge in Next.js Server Actions and Hydration errors
+            is priceless.
           </Text>
           <Text multiline paragraph color="dimmest" size="base">
-            I ended up implementing a typed key-value model where a boolean,
-            string, or number is implemented. It wasn&apos;t exact, but it
-            scaled and was flexible.
-          </Text>
-          <Text multiline paragraph color="dimmest" size="base">
-            Aside from a few bumps in the road concerning the{" "}
-            <Link href="/contribute" className="text-accent-dimmer">
+            The project consisted of two major parts: The{" "}
+            <strong className="text-foreground-dimmer">
               contribution system
-            </Link>
-            , building this project was a breeze.
+            </strong>{" "}
+            and the{" "}
+            <strong className="text-foreground-dimmer">
+              comparison system
+            </strong>
+            .
+          </Text>
+          <Text multiline paragraph color="dimmest" size="base">
+            Designing and implementing the comparison system was the biggest
+            challenge. A text-generation and text-to-video model wouldn&apos;t
+            have much in common.
+          </Text>
+          <Text multiline paragraph color="dimmest" size="base">
+            The contribution/voting system was tedious to build, but wasn&apos;t
+            nearly as difficult.
           </Text>
         </Content>
       </Sheet>
@@ -341,7 +345,7 @@ export default function About({
 }
 
 const WidgetGutter = styled("div", {
-  base: "w-screen overflow-hidden h-[226px] relative"
+  base: "w-screen overflow-hidden h-[256px] relative"
 })
 
 const WidgetContainer = styled(MotionDiv, {
