@@ -58,6 +58,18 @@ Values **must** be numeric and expressed as a percentage (e.g. `0.85`, `85%`). I
 - If a benchmark has a note attached to it (e.g. 0-shot), you must apply the note to the metadata field
 - Notes should **not** be used to describe a metadata field
 
+##### Duplicate Fields
+
+Occasionally, a single benchmark is evaluated multiple times with slightly different conditions. Duplicate metadata fields can be used, each with a different note.
+
+Example: An LLM is evaluated on `HumanEval` with a different programming language each time, the same key `humaneval_benchmark` is used multiple times, but each with a different note.
+
+| Key                 | Note       | Type   | Value |
+| ------------------- | ---------- | ------ | ----- |
+| humaneval_benchmark | Python     | Number | 76.5% |
+| humaneval_benchmark | JavaScript | Number | 74.7% |
+| humaneval_benchmark | Rust       | Number | 62%   |
+
 #### Recommended Fields
 
 The following fields are recommended for all uploaded LLMs, if applicable.

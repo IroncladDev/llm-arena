@@ -27,6 +27,44 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <meta property="og:title" content="AI to AI" />
+        <meta name="twitter:title" content="AI to AI" />
+        <meta property="og:site_name" content="AI to AI" />
+
+        <meta name="robots" content="max-image-preview:large" />
+        <meta
+          name="copyright"
+          content="Copyright 2024 IroncladDev. All rights reserved."
+        />
+
+        <meta
+          property="og:description"
+          content="Create beautiful side-by-side LLM Comparisons."
+        />
+        <meta
+          name="description"
+          content="Create beautiful side-by-side LLM Comparisons."
+        />
+        <meta
+          name="twitter:description"
+          content="Create beautiful side-by-side LLM Comparisons."
+        />
+
+        <meta property="og:image" content="https://ai-to.ai/cover.png" />
+        <meta name="twitter:image" content="https://ai-to.ai/cover.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1500" />
+        <meta property="og:image:height" content="850" />
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <meta property="og:url" content="https://ai-to.ai" />
+        <meta name="twitter:url" content="https://ai-to.ai" />
+
+        <meta property="og:type" content="website" />
+
+        <meta name="twitter:creator" content="@IroncladDev" />
+      </head>
       <body className={inter.className}>
         <QueryClientProvider>
           <SessionProvider session={session}>
