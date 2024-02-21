@@ -20,6 +20,7 @@ export default function LLMItem({
   const [ref, box] = useClientRect<HTMLDivElement>()
 
   const searchNodes = (string: string) => {
+    if (query.length === 0) return [{ text: string, highlighted: false }]
     const regex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "ig")
     const splitText = string.split(regex)
     const matches = string.match(regex)
@@ -89,7 +90,7 @@ export default function LLMItem({
         </ContentSection>
         <ContentSection style={{ maxHeight: box?.height || "unset" }}>
           <Text weight="medium">Source Description</Text>
-          <Text multiline color="dimmer" markdown>
+          <Text multiline="clamp-4" color="dimmer">
             {searchNodes(llm.sourceDescription).map(
               ({ text, highlighted }, i) =>
                 highlighted ? (
@@ -97,7 +98,7 @@ export default function LLMItem({
                     {text}
                   </span>
                 ) : (
-                  <Fragment key={i}>{text}</Fragment>
+                  text
                 )
             )}
           </Text>
