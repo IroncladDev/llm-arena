@@ -19,6 +19,7 @@ import { MetaFieldRow } from "./components/MetaField"
 export type MetaField = {
   property?: MetaProperty | null
   note?: string
+  id: number
   type: MetaPropertyType
   name: string
   value: number | string | boolean
@@ -36,6 +37,7 @@ export default function Content({
       property: m,
       type: m.type,
       name: m.name,
+      id: Math.random(),
       value:
         m.type === MetaPropertyType.String
           ? ""
@@ -52,6 +54,7 @@ export default function Content({
         name: "",
         type: MetaPropertyType.Number,
         value: "",
+        id: Math.random(),
         property: null
       }
     ])
@@ -134,7 +137,7 @@ export default function Content({
                   <MetaPropertyContainer>
                     {metadata.map((field, i) => (
                       <MetaFieldRow
-                        key={`meta-${field.name}`}
+                        key={`meta-${field.id}`}
                         field={field}
                         metadata={metadata}
                         onChange={(args: Partial<MetaField>) => {
@@ -146,7 +149,9 @@ export default function Content({
                         }}
                         onDelete={() => {
                           setMetadata(newMetadata => {
-                            return newMetadata.filter((_, j) => j !== i)
+                            return newMetadata.filter(
+                              ({ id }) => id !== field.id
+                            )
                           })
                         }}
                       />
