@@ -71,7 +71,8 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
           data: {
             value: String(field.value),
             metaPropertyId: property.id,
-            llmId: llm.id
+            llmId: llm.id,
+            note: field.note
           }
         })
 
