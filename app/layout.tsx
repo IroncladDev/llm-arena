@@ -51,11 +51,14 @@ export default async function RootLayout({
           content="Create beautiful side-by-side LLM Comparisons."
         />
 
-        <meta property="og:image" content="https://ai-to.ai/cover.png" />
-        <meta name="twitter:image" content="https://ai-to.ai/cover.png" />
+        <meta property="og:image" content="https://ai-to.ai/images/cover.png" />
+        <meta
+          name="twitter:image"
+          content="https://ai-to.ai/images/cover.png"
+        />
         <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="1500" />
-        <meta property="og:image:height" content="850" />
+        <meta property="og:image:width" content="3000" />
+        <meta property="og:image:height" content="1700" />
         <meta name="twitter:card" content="summary_large_image" />
 
         <meta property="og:url" content="https://ai-to.ai" />

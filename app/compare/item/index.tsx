@@ -1,5 +1,5 @@
 import Text from "@/components/ui/text"
-import { ComparableField } from "@/lib/comparison"
+import { ComparableFieldGroup } from "@/lib/comparison"
 import { snakeToTitleCase } from "@/lib/utils"
 import { MetaPropertyType } from "@prisma/client"
 import { styled } from "react-tailwind-variants"
@@ -8,7 +8,11 @@ import BooleanTable from "./boolean-table"
 import NumericChart from "./numeric-chart"
 import StringTable from "./string-table"
 
-export default function CompareItem({ field }: { field: ComparableField }) {
+export default function CompareItem({
+  field
+}: {
+  field: ComparableFieldGroup
+}) {
   const { view, filter, sort } = useCompareState()
 
   return (

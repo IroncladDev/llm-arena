@@ -1,5 +1,5 @@
 import Text from "@/components/ui/text"
-import { ComparableField } from "@/lib/comparison"
+import { ComparableFieldGroup } from "@/lib/comparison"
 import { FieldSort, FilterType } from "../state"
 import { TableCell, TableCellContent, TableContainer, TableRow } from "./tables"
 
@@ -8,7 +8,7 @@ export default function StringTable({
   filter,
   sort
 }: {
-  field: ComparableField
+  field: ComparableFieldGroup
   filter: Array<FilterType>
   sort: FieldSort
 }) {
@@ -49,7 +49,12 @@ export default function StringTable({
             className={`leading-none border-b border-outline-dimmest ${i === fields.length - 1 ? "border-b-0" : ""}`}
             style={{ borderBottomStyle: "dashed" }}
           >
-            <Text color="dimmest" size="xs" multiline>
+            <Text
+              color="dimmest"
+              size="xs"
+              multiline
+              className={value === null ? "opacity-50" : undefined}
+            >
               {value === null ? "N/A" : value}{" "}
             </Text>
           </TableCell>
