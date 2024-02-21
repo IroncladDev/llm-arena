@@ -51,7 +51,7 @@ export async function removeContributor(e: RemoveContributorInput) {
       replyTo: "conner@connerow.dev",
       to: user.email,
       subject: "Your contributor status has been removed",
-      text: "",
+      text: "Your contributor status has been revoked by an administrator. If you have any questions or if you believe this was done in error, you may respond directly to this email.",
       html: baseEmail({
         title: "Your contributor status has been removed",
         paragraphs: [
