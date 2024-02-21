@@ -32,22 +32,25 @@ type ValuesValue<
 export function toMutualMetadata(
   llms: LLMWithMetadata[]
 ): Array<ComparableField> {
-  const fieldsMap = new Map<string, Map<string, ValuesValue>>()
+  const fieldsMap = new Map<string, Array<[string, ValuesValue]>>()
 
   llms.forEach(llm => {
     llm.fields.forEach(({ value, metaProperty, note }) => {
-      let llmValuesMap: Map<string, ValuesValue>
+      let llmValuesMap: Array<[string, ValuesValue]>
 
       if (fieldsMap.has(metaProperty.name)) {
         llmValuesMap = fieldsMap.get(metaProperty.name)!
       } else {
-        llmValuesMap = new Map<string, ValuesValue>()
-        llms.forEach(innerLlm =>
-          llmValuesMap.set(innerLlm.name, {
-            value: null,
-            type: metaProperty.type
-          })
-        )
+        llmValuesMap = []
+        llms.forEach(innerLlm => {
+          llmValuesMap.push([
+            innerLlm.name,
+            {
+              value: null,
+              type: metaProperty.type
+            }
+          ])
+        })
 
         fieldsMap.set(metaProperty.name, llmValuesMap)
       }
@@ -59,18 +62,40 @@ export function toMutualMetadata(
             ? value.toLowerCase() === "true"
             : String(value)
 
-      llmValuesMap.set(llm.name, {
-        value: fieldValue,
-        note: note || undefined,
-        type: metaProperty.type
-      })
+      const nullSlot = llmValuesMap.findIndex(
+        ([name, { value }]) => name === llm.name && value === null
+      )
+
+      if (nullSlot !== -1) {
+        llmValuesMap[nullSlot] = [
+          llm.name,
+          {
+            value: fieldValue,
+            note: note || undefined,
+            type: metaProperty.type
+          }
+        ]
+      } else {
+        llmValuesMap.push([
+          llm.name,
+          {
+            value: fieldValue,
+            note: note || undefined,
+            type: metaProperty.type
+          }
+        ])
+      }
     })
   })
 
   const sortedFields: Array<ComparableField> = Array.from(fieldsMap)
     .map(([name, values]) => {
       const valuesArray = Array.from(values).sort(([, a], [, b]) =>
-        a !== null && b === null ? -1 : a === null && b !== null ? 1 : 0
+        a.value !== null && b.value === null
+          ? -1
+          : a.value === null && b.value !== null
+            ? 1
+            : 0
       )
       const nonNullCount = valuesArray.filter(
         ([, v]) => v.value !== null
