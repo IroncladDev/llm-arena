@@ -41,7 +41,9 @@ export default function NumericChart({
         <TableRow key={i}>
           <TableCell>
             <TableCellContent>
-              <Text color="dimmer">{key}</Text>
+              <Text color="dimmer">
+                {key} {field.nonNullCount}
+              </Text>
               {note && (
                 <Text size="xs" color="dimmest">
                   {note}

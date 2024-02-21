@@ -45,12 +45,12 @@ export default function StringTable({
               )}
             </TableCellContent>
           </TableCell>
-          <TableCell>
-            <Text
-              color={value === null ? "dimmest" : "dimmer"}
-              size={value === null ? "xs" : "sm"}
-            >
-              {value === null ? "N/A" : value}
+          <TableCell
+            className={`leading-none border-b border-outline-dimmest ${i === fields.length - 1 ? "border-b-0" : ""}`}
+            style={{ borderBottomStyle: "dashed" }}
+          >
+            <Text color="dimmest" size="xs" multiline>
+              {value === null ? "N/A" : value}{" "}
             </Text>
           </TableCell>
         </TableRow>
