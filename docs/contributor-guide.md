@@ -28,7 +28,7 @@ Go to the [Submission](https://ai-to.ai/submit) page. Start filling out the form
 
 **Tip**: You can use abbreviated values for numeric fields (e.g 1M, 2.8K, 25%, etc.). See [Numeric Values](#numericvalues).
 
-![Filling out the name and metadata](./images/add-name-metadata.png.png)
+![Filling out the name and metadata](./images/add-name-metadata.png)
 
 Some metadata fields such as benchmarks have an additional note attached to them (e.g. 0-shot). A note can be applied by clicking the icon when focusing the field name input. See [Metadata Best Practices](#metadatabestpractices).
 
