@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils"
 import { marked } from "marked"
 import { styled } from "react-tailwind-variants"
 import sanitizeHtml from "sanitize-html"
@@ -82,7 +81,9 @@ const Text = ({
     return (
       <TextBase
         {...props}
-        className={cn("markdown", props.className)}
+        className={
+          props.className ? ["markdown", props.className].join(" ") : "markdown"
+        }
         style={styleProp}
         dangerouslySetInnerHTML={{
           __html: clean(marked(children.replace(/\r?\n/g, "<br/>")) as string)
