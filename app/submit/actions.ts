@@ -40,11 +40,11 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
       throw new Error("Invalid number format found")
 
     const { hasDuplicates } = meta.reduce(
-      (acc, { name }) => {
-        if (acc.names[name]) {
+      (acc, { name, note }) => {
+        if (acc.names[`${name}${note || ""}`]) {
           acc.hasDuplicates = true
         }
-        acc.names[name] = true
+        acc.names[`${name}${note || ""}`] = true
 
         return acc
       },
