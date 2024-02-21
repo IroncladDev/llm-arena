@@ -3,7 +3,7 @@
 import { formatError } from "@/lib/errors"
 import { parseAbbrNumber } from "@/lib/numbers"
 import prisma from "@/lib/server/prisma"
-import { requireSession } from "@/lib/server/utils/session"
+import { getSession } from "@/lib/server/utils/session"
 import { LLM, MetaProperty, MetaPropertyType, UserRole } from "@prisma/client"
 import { z } from "zod"
 
@@ -16,8 +16,12 @@ export type SubmitReturn = {
 } | null
 
 export async function submit(_prevState: SubmitReturn, e: FormData) {
+  const res = await getSession()
+
   try {
-    const { user } = await requireSession()
+    if (!res?.user) throw new Error("Unauthorized")
+
+    const { user } = res
 
     if (user.role !== UserRole.admin && user.role !== UserRole.contributor)
       throw new Error("Unauthorized")

@@ -1,75 +1,99 @@
 "use server"
 
-import { emailTemplates } from "@/lib/constants"
-import { send } from "@/lib/server/email"
+import { formatError } from "@/lib/errors"
+import { baseEmail, send } from "@/lib/server/email"
 import prisma from "@/lib/server/prisma"
 import { requireAdmin } from "@/lib/server/utils/auth"
-import { requireSession } from "@/lib/server/utils/session"
-import { User, VoteStatus } from "@prisma/client"
+import { getSession } from "@/lib/server/utils/session"
+import { UserRole, VoteStatus } from "@prisma/client"
 import { z } from "zod"
 
-const updatePendingContributorInput = z
-  .object({
-    userId: z.string(),
-    status: z.nativeEnum(VoteStatus)
-  })
-  .superRefine((data, ctx) => {
-    if (isNaN(Number(data.userId))) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Invalid User ID",
-        path: ["userId"]
-      })
-    }
-  })
+const updatePendingContributorInput = z.object({
+  userId: z.number(),
+  status: z.nativeEnum(VoteStatus)
+})
 
 export async function updatePendingContributor(
-  users: Array<User>,
-  e: FormData
-): Promise<Array<User>> {
+  input: z.infer<typeof updatePendingContributorInput>
+): Promise<
+  | {
+      success: true
+    }
+  | {
+      success: false
+      message: string
+    }
+> {
+  const res = await getSession()
+
   try {
-    const { user } = await requireSession()
+    if (!res?.user) throw new Error("Unauthorized")
+
+    const { user } = res
     requireAdmin(user)
 
-    const { status, userId: userIdString } =
-      updatePendingContributorInput.parse(Object.fromEntries(e.entries()))
-
-    const userId = Number(userIdString)
+    const { status, userId } = updatePendingContributorInput.parse(input)
 
     const userToUpdate = await prisma.user.findFirst({
-      where: { id: userId, role: "pending" }
+      where: { id: userId }
     })
 
-    if (userToUpdate) {
-      await prisma.user.update({
-        where: { id: userId },
-        data: { role: status === VoteStatus.approve ? "contributor" : "user" }
-      })
+    if (!userToUpdate) throw new Error("User not found")
 
-      // TODO: Send email to user
-      if (status === VoteStatus.approve) {
-        send({
-          from: "noreply@ai-to.ai",
-          replyTo: "conner@connerow.dev",
-          to: userToUpdate.email,
-          templateId: emailTemplates.contributorAccepted
-        })
-      } else {
-        send({
-          from: "noreply@ai-to.ai",
-          replyTo: "conner@connerow.dev",
-          to: userToUpdate.email,
-          templateId: emailTemplates.contributorRejected
-        })
+    if (userToUpdate.role !== UserRole.pending)
+      throw new Error("User is not pending")
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        role:
+          status === VoteStatus.approve ? UserRole.contributor : UserRole.user
       }
+    })
 
-      return users.filter(u => u.id !== userId)
+    if (status === VoteStatus.approve) {
+      await send({
+        from: "AI to AI <noreply@ai-to.ai>",
+        replyTo: "conner@connerow.dev",
+        to: userToUpdate.email,
+        subject: "Contribution Request Approved",
+        text: "Congratulations! We've approved your request to become a contributor to AI to AI. To get started, check out the Contributor Guide: https://github.com/IroncladDev/ai-to-ai/blob/main/docs/contributor-guide.md",
+        html: baseEmail({
+          title: "Contribution Request Approved",
+          paragraphs: [
+            "Congratulations! We've approved your request to become a contributor to AI to AI.",
+            'To get started, check out the <a href="https://github.com/IroncladDev/ai-to-ai/blob/main/docs/contributor-guide.md">Contributor Guide</a>'
+          ],
+          buttonLinks: [
+            {
+              href: "https://github.com/IroncladDev/ai-to-ai/blob/main/docs/contributor-guide.md",
+              text: "Start Contributing"
+            }
+          ]
+        })
+      })
+    } else {
+      await send({
+        from: "AI to AI <noreply@ai-to.ai>",
+        replyTo: "conner@connerow.dev",
+        to: userToUpdate.email,
+        subject: "Contribution Request Denied",
+        text: "Thanks for your interest in contributing to AI to AI. At the moment we've decided not to move forward with your request.\n\nIf you have any questions, you may respond to this email directly.",
+        html: baseEmail({
+          title: "Contribution Request Denied",
+          paragraphs: [
+            "Thanks for your interest in contributing to AI to AI. At the moment we've decided not to move forward with your request.",
+            "If you have any questions, you may respond to this email directly."
+          ],
+          buttonLinks: []
+        })
+      })
     }
 
-    throw new Error("User not found")
+    return { success: true }
   } catch (e) {
     console.log(e)
 
-    return users
+    return { success: false, message: formatError(e) }
   }
 }

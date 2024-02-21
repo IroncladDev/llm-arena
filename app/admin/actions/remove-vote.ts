@@ -4,7 +4,7 @@ import determineConsensus from "@/lib/consensus"
 import { formatError } from "@/lib/errors"
 import prisma from "@/lib/server/prisma"
 import { requireAdmin } from "@/lib/server/utils/auth"
-import { requireSession } from "@/lib/server/utils/session"
+import { getSession } from "@/lib/server/utils/session"
 import { z } from "zod"
 
 const removeVoteInput = z.object({
@@ -14,8 +14,12 @@ const removeVoteInput = z.object({
 export type RemoveVoteInput = z.infer<typeof removeVoteInput>
 
 export async function removeVote(e: RemoveVoteInput) {
+  const res = await getSession()
+
   try {
-    const { user } = await requireSession()
+    if (!res?.user) throw new Error("Unauthorized")
+
+    const { user } = res
     requireAdmin(user)
 
     const { voteId } = removeVoteInput.parse(e)

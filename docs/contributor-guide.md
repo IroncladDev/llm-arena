@@ -88,3 +88,11 @@ Abbreviated values are supported for numeric fields. The following examples show
 If you input an invalid numeric value, you will see a warning notice.
 
 ![Invalid number](./images/invalid-number.png)
+
+## Guidelines & Rules
+
+- **Profanity / Abuse**: LLMs containing profanity or abusive content will be removed from the platform by an administrator. Depending on the severity, the contributor may be banned from the platform.
+- **Duplicate LLMs**: LLMs that are duplicates of others will be rejected by contributors.
+- **Spam**: Repeatedly uploading LLMs or abusing the voting system will result in your contributor status being revoked.
+
+Use Common Sense. Our admins aren't bots and will take necessary action if you try to bend the rules.

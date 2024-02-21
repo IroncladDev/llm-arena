@@ -1,9 +1,10 @@
 "use server"
 
 import { formatError } from "@/lib/errors"
+import { baseEmail, send } from "@/lib/server/email"
 import prisma from "@/lib/server/prisma"
 import { requireAdmin } from "@/lib/server/utils/auth"
-import { requireSession } from "@/lib/server/utils/session"
+import { getSession } from "@/lib/server/utils/session"
 import { z } from "zod"
 
 const removeLLMInput = z.object({
@@ -13,8 +14,12 @@ const removeLLMInput = z.object({
 export type RemoveLLMInput = z.infer<typeof removeLLMInput>
 
 export async function removeLLM(e: RemoveLLMInput) {
+  const res = await getSession()
+
   try {
-    const { user } = await requireSession()
+    if (!res?.user) throw new Error("Unauthorized")
+
+    const { user } = res
     requireAdmin(user)
 
     const { llmId } = removeLLMInput.parse(e)
@@ -41,6 +46,21 @@ export async function removeLLM(e: RemoveLLMInput) {
 
     await prisma.lLM.delete({
       where: { id: llmId }
+    })
+
+    await send({
+      from: "AI to AI <noreply@ai-to.ai>",
+      replyTo: "conner@connerow.dev",
+      to: user.email,
+      subject: `Your LLM "${llm.name}" has been removed`,
+      text: "",
+      html: baseEmail({
+        title: `Your LLM "${llm.name}" has been removed`,
+        paragraphs: [
+          `Your LLM with the name "${llm.name}" has been removed from AI to AI by an administrator. If you have any questions or if you believe this was done in error, you may respond directly to this email.`
+        ],
+        buttonLinks: []
+      })
     })
 
     return {
