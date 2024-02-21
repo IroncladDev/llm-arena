@@ -53,7 +53,7 @@ export async function removeLLM(e: RemoveLLMInput) {
       replyTo: "conner@connerow.dev",
       to: user.email,
       subject: `Your LLM "${llm.name}" has been removed`,
-      text: "",
+      text: `Your LLM with the name "${llm.name}" has been removed from AI to AI by an administrator. If you have any questions or if you believe this was done in error, you may respond directly to this email.`,
       html: baseEmail({
         title: `Your LLM "${llm.name}" has been removed`,
         paragraphs: [
