@@ -61,7 +61,7 @@ export default function Header({
           >
             AI to AI
           </Text>
-          <Text size="lg" color="dimmer">
+          <Text size="lg" color="dimmer" multiline center>
             Create beautiful side-by-side LLM Comparisons
           </Text>
         </HeaderContent>
@@ -75,7 +75,7 @@ const Container = styled(MotionDiv, {
 })
 
 const Content = styled("div", {
-  base: "flex flex-col grow max-w-screen-md w-full self-center"
+  base: "flex flex-col grow max-w-screen-md max-md:max-w-screen max-md:p-4 w-full self-center"
 })
 
 const HeaderContent = styled(MotionDiv, {

@@ -2,6 +2,7 @@
 
 import { MotionContainer } from "@/components/container"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import Text from "@/components/ui/text"
 import { Textarea } from "@/components/ui/textarea"
@@ -202,6 +203,21 @@ export default function Content({
                 required
               />
             </FormField>
+            <FormField>
+              <AgreementContainer>
+                <Checkbox required name="guideline-check" />
+                <Text color="dimmer" size="sm">
+                  I have read and ensured that this LLM abides by the{" "}
+                  <a
+                    href="https://github.com/IroncladDev/ai-to-ai/blob/main/docs/contributor-guide.md"
+                    target="_blank"
+                    className="text-accent-dimmer"
+                  >
+                    Contributor Guide
+                  </a>
+                </Text>
+              </AgreementContainer>
+            </FormField>
           </FormFields>
           <SubmitButton />
           {state && !state.success && state.message && (
@@ -266,4 +282,8 @@ const FormField = styled("div", {
 
 const Label = styled("label", {
   base: "text-lg font-medium text-foreground-dimmer pl-2"
+})
+
+const AgreementContainer = styled("label", {
+  base: "flex items-center gap-2 pl-3"
 })

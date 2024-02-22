@@ -81,9 +81,11 @@ export default function Votes({
             {status === "pending" && "remainingApprovals" in consensus && (
               <VoteStat className="border-t border-outline-dimmest pt-2">
                 <Text color="dimmer" size="sm">
-                  {approvals >= rejections
-                    ? `${consensus.remainingApprovals} more approvals required`
-                    : `${consensus.remainingRejections} more rejections required`}
+                  {llm.votes.length < 4
+                    ? "Four votes required until approved/rejected"
+                    : approvals >= rejections
+                      ? `${consensus.remainingApprovals} more approvals required`
+                      : `${consensus.remainingRejections} more rejections required`}
                 </Text>
                 <PendingBadge>Pending</PendingBadge>
               </VoteStat>
@@ -229,7 +231,7 @@ const IndicatorBar = styled(MotionDiv, {
 })
 
 const Container = styled("div", {
-  base: "flex flex-col gap-2"
+  base: "flex flex-col gap-2 min-h-[160px]"
 })
 
 const VoteContainer = styled("div", {
