@@ -18,9 +18,9 @@ const TextBase = styled("span", {
       base: "text-base",
       lg: "text-lg",
       xl: "text-xl",
-      h1: "text-6xl",
+      h1: "text-6xl max-md:text-4xl",
       h2: "text-3xl",
-      display: "text-[80px] max-md:text-[50px]"
+      display: "text-[80px] max-md:text-[40px]"
     },
     color: {
       default: "text-foreground",

@@ -41,7 +41,7 @@ export default function determineConsensus<T extends Vote>(
       rejections
     }
   } else {
-    // Calculate the number of remaining approvals/rejections needed to turn the vote around
+    // Calculate the number of remaining approvals/rejections needed to reach consensus
     const remainingApprovals = Math.max(2 * rejections + 1 - approvals, 1)
     const remainingRejections = Math.max(2 * approvals + 1 - rejections, 1)
 

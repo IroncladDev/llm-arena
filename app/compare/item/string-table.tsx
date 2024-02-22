@@ -16,7 +16,7 @@ export default function StringTable({
     filter.includes("nullFields")
       ? field.values
       : field.values.filter(([, v]) => v.value !== null)
-  ).toSorted((a, b) => {
+  ).sort((a, b) => {
     switch (sort) {
       case "value-asc":
         return String(a[1]).localeCompare(String(b[1]))

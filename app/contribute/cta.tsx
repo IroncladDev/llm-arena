@@ -27,7 +27,7 @@ export default function Cta() {
       }}
     >
       <Content>
-        <Text size="h1" weight="bold" color="dimmer">
+        <Text size="h1" weight="bold" color="dimmer" multiline center>
           Join as a Contributor
         </Text>
         <Text size="lg" color="dimmest" multiline paragraph center>
@@ -47,5 +47,5 @@ const Container = styled(MotionDiv, {
 })
 
 const Content = styled("div", {
-  base: "flex flex-col grow max-w-screen-md w-full self-center py-16 justify-center items-center gap-8"
+  base: "flex flex-col grow max-w-screen-md w-full max-md:max-w-screen max-md:px-4 self-center py-16 justify-center items-center gap-8"
 })

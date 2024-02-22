@@ -17,7 +17,7 @@ export default function BooleanTable({
     filter.includes("nullFields")
       ? field.values
       : field.values.filter(([, v]) => v.value !== null)
-  ).toSorted((a, b) => {
+  ).sort((a, b) => {
     switch (sort) {
       case "value-asc":
         return a[1] && !b[1] ? 1 : !a[1] && b[1] ? -1 : 0

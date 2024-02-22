@@ -1,13 +1,14 @@
 import OverflowScroll from "@/components/overflow"
 import { Button } from "@/components/ui/button"
 import Text from "@/components/ui/text"
+import { User, UserRole } from "@prisma/client"
 import { Hexagon, PlusIcon, XIcon } from "lucide-react"
 import Link from "next/link"
 import { styled } from "react-tailwind-variants"
 import LLMSearch from "./search"
 import { useCompareState } from "./state"
 
-export default function Sidebar() {
+export default function Sidebar({ currentUser }: { currentUser: User | null }) {
   const {
     llms,
     sidebar: open,
@@ -87,8 +88,44 @@ export default function Sidebar() {
         <FooterSection>
           <FooterLinks>
             <FooterLink href="/about">About</FooterLink>
-            <FooterLink href="/contribute">Contribute</FooterLink>
-            <FooterLink href="/login">Log In</FooterLink>
+            <FooterLink
+              href="/contribute"
+              hidden={
+                currentUser?.role === "contributor" ||
+                currentUser?.role === "admin"
+              }
+            >
+              Contribute
+            </FooterLink>
+            <FooterLink href="/login" hidden={!!currentUser}>
+              Log In
+            </FooterLink>
+            <FooterLink
+              href="/llms"
+              hidden={
+                !currentUser ||
+                (currentUser?.role !== UserRole.admin &&
+                  currentUser?.role !== UserRole.contributor)
+              }
+            >
+              LLMs
+            </FooterLink>
+            <FooterLink
+              href="/submit"
+              hidden={
+                !currentUser ||
+                (currentUser?.role !== UserRole.admin &&
+                  currentUser?.role !== UserRole.contributor)
+              }
+            >
+              Submit an LLM
+            </FooterLink>
+            <FooterLink
+              href="/admin"
+              hidden={!currentUser || currentUser?.role !== UserRole.admin}
+            >
+              Admin
+            </FooterLink>
             <FooterLink
               href="https://github.com/IroncladDev/ai-to-ai"
               target="_blank"

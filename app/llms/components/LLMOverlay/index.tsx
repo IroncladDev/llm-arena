@@ -202,5 +202,5 @@ const ContentSection = styled("div", {
 })
 
 export const ContentContainer = styled("div", {
-  base: "flex flex-col gap-4 h-full"
+  base: "flex flex-col gap-4 h-auto"
 })

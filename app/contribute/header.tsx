@@ -57,10 +57,16 @@ export default function Header({
     <Container style={{ background }}>
       <Content>
         <HeaderContent style={{ translateY }}>
-          <Text size="display" weight="bold" className="leading-tight">
+          <Text
+            size="display"
+            weight="bold"
+            className="leading-tight"
+            center
+            multiline
+          >
             Contributing
           </Text>
-          <Text color="dimmer" size="lg">
+          <Text color="dimmer" size="lg" center multiline>
             All comparable LLMs are added by contributors like you
           </Text>
           <DownButton variant="highlight" asChild className="mt-8">
@@ -79,7 +85,7 @@ const Container = styled(MotionDiv, {
 })
 
 const Content = styled("div", {
-  base: "flex flex-col grow max-w-screen-md w-full self-center"
+  base: "flex flex-col grow max-w-screen-md max-md:max-w-screen max-md:p-4 w-full self-center"
 })
 
 const HeaderContent = styled(MotionDiv, {

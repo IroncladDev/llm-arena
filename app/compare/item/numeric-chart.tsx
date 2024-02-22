@@ -18,7 +18,7 @@ export default function NumericChart({
     filter.includes("nullFields")
       ? field.values
       : field.values.filter(([, v]) => v.value !== null)
-  ).toSorted((a, b) => {
+  ).sort((a, b) => {
     switch (sort) {
       case "value-asc":
         return Number(a[1]) - Number(b[1])

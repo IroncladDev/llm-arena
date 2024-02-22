@@ -3,12 +3,13 @@
 import { MotionContainer } from "@/components/container"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
+import { User } from "@prisma/client"
 import { styled } from "react-tailwind-variants"
 import Comparison from "./comparison"
 import Sidebar from "./sidebar"
 import { useCompareState } from "./state"
 
-export default function Content() {
+export default function Content({ currentUser }: { currentUser: User | null }) {
   const sidebar = useCompareState(state => state.sidebar)
 
   return (
@@ -37,7 +38,7 @@ export default function Content() {
       }}
     >
       <SidebarContainer open={sidebar}>
-        <Sidebar />
+        <Sidebar currentUser={currentUser} />
       </SidebarContainer>
       <ContentContainer>
         <Comparison />
