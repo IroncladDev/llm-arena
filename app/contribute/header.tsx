@@ -70,7 +70,7 @@ export default function Header({
             All comparable LLMs are added by contributors like you
           </Text>
           <DownButton variant="highlight" asChild className="mt-8">
-            <a href="#intro">
+            <a href="#intro" aria-label="Go down">
               <ArrowDown className="text-foreground-dimmest w-8 h-8" />
             </a>
           </DownButton>

@@ -90,7 +90,7 @@ const ItemsContainer = styled("div", {
   base: "flex flex-col absolute top-0 left-0 right-0 max-h-[100%] overflow-y-auto overflow-x-hidden gap-4 p-8 max-sm:p-2 max-sm:gap-2",
   variants: {
     view: {
-      grid: "grid grid-cols-[repeat(auto-fit,_minmax(360px,_1fr))] justify-center justify-items-center",
+      grid: "grid grid-cols-[repeat(auto-fit,_minmax(360px,_1fr))] justify-center justify-items-center max-w-[1024px] mx-auto",
       list: "flex flex-col gap-4 p-4"
     }
   }

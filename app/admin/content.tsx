@@ -1,6 +1,6 @@
 "use client"
 
-import { MotionContainer } from "@/components/container"
+import { Container } from "@/components/container"
 import { Button } from "@/components/ui/button"
 import Text from "@/components/ui/text"
 import { User, VoteStatus } from "@prisma/client"
@@ -13,11 +13,7 @@ export default function AdminPage({ waitlist }: { waitlist: Array<User> }) {
   const [users, setUsers] = useState(waitlist)
 
   return (
-    <MotionContainer
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <Container>
       <Content>
         <Text size="h2" weight="bold" center>
           Contributor Waitlist
@@ -33,7 +29,7 @@ export default function AdminPage({ waitlist }: { waitlist: Array<User> }) {
           ))}
         </UserContainer>
       </Content>
-    </MotionContainer>
+    </Container>
   )
 }
 
