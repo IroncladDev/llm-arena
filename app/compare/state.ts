@@ -2,7 +2,7 @@ import { Field, LLM, MetaProperty, MetaPropertyType } from "@prisma/client"
 import { create } from "zustand"
 
 export const useCompareState = create<ControlOptions>(set => ({
-  view: "grid",
+  view: "list",
   sort: "default",
   filter: [
     MetaPropertyType.String,

@@ -68,7 +68,11 @@ export default function Controls() {
 
   return (
     <ControlsContainer>
-      <SidebarButton size="icon" onClick={() => setSidebar(!sidebar)}>
+      <SidebarButton
+        size="icon"
+        onClick={() => setSidebar(!sidebar)}
+        aria-label="Open Sidebar"
+      >
         <MenuIcon className="w-4 h-4 text-foreground-dimmer" />
       </SidebarButton>
       <ControlItem className="max-sm:hidden">
@@ -77,21 +81,21 @@ export default function Controls() {
         </Text>
         <OptionsContainer>
           <OptionButton
-            selected={view === "grid"}
-            onClick={() => setView("grid")}
-          >
-            <GridIcon size={16} />
-            <Text size="xs" color="inherit">
-              Grid
-            </Text>
-          </OptionButton>
-          <OptionButton
             selected={view === "list"}
             onClick={() => setView("list")}
           >
             <ListIcon size={16} />
             <Text size="xs" color="inherit">
               List
+            </Text>
+          </OptionButton>
+          <OptionButton
+            selected={view === "grid"}
+            onClick={() => setView("grid")}
+          >
+            <GridIcon size={16} />
+            <Text size="xs" color="inherit">
+              Grid
             </Text>
           </OptionButton>
         </OptionsContainer>
@@ -102,7 +106,7 @@ export default function Controls() {
         </Text>
         <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
           <PopoverTrigger asChild>
-            <Button size="sm">
+            <Button size="sm" aria-label="Filter">
               <FilterIcon className="w-4 h-4 text-foreground-dimmer" />
               <Text size="xs" color="dimmer">
                 ({filter.length})
@@ -137,7 +141,7 @@ export default function Controls() {
           value={sort}
           onValueChange={value => setSort(value as FieldSort)}
         >
-          <SelectTrigger small>
+          <SelectTrigger small aria-label="Sort">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

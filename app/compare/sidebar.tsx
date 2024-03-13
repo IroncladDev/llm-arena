@@ -1,14 +1,16 @@
 import OverflowScroll from "@/components/overflow"
+import { useCurrentUser } from "@/components/providers/CurrentUserProvider"
 import { Button } from "@/components/ui/button"
 import Text from "@/components/ui/text"
-import { User, UserRole } from "@prisma/client"
+import { UserRole } from "@prisma/client"
 import { Hexagon, PlusIcon, XIcon } from "lucide-react"
 import Link from "next/link"
 import { styled } from "react-tailwind-variants"
 import LLMSearch from "./search"
 import { useCompareState } from "./state"
 
-export default function Sidebar({ currentUser }: { currentUser: User | null }) {
+export default function Sidebar() {
+  const currentUser = useCurrentUser()
   const {
     llms,
     sidebar: open,
@@ -32,6 +34,7 @@ export default function Sidebar({ currentUser }: { currentUser: User | null }) {
               onClick={() => setOpen(false)}
               variant="ghost"
               className="bg-root md:hidden"
+              aria-label="Close Sidebar"
             >
               <XIcon className="text-foreground-dimmer w-4 h-4" />
             </Button>

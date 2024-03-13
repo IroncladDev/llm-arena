@@ -1,6 +1,6 @@
 "use client"
 
-import { MotionContainer } from "@/components/container"
+import { Container } from "@/components/container"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
@@ -68,10 +68,7 @@ export default function Content({
   }, [state, router])
 
   return (
-    <MotionContainer
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+    <Container
       className="items-center absolute h-screen overflow-y-auto"
       style={{
         background: gr.merge(
@@ -227,7 +224,7 @@ export default function Content({
           )}
         </FormContent>
       </FormContainer>
-    </MotionContainer>
+    </Container>
   )
 }
 

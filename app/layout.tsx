@@ -1,4 +1,3 @@
-import { AnimatePresence } from "@/components/motion"
 import { CurrentUserProvider } from "@/components/providers/CurrentUserProvider"
 import { QueryClientProvider } from "@/components/providers/QueryClientProvider"
 import SessionProvider from "@/components/providers/SessionProvider"
@@ -72,9 +71,7 @@ export default async function RootLayout({
         <QueryClientProvider>
           <SessionProvider session={session}>
             <CurrentUserProvider user={currentUserSession?.user || null}>
-              <TooltipProvider delayDuration={500}>
-                <AnimatePresence>{children}</AnimatePresence>
-              </TooltipProvider>
+              <TooltipProvider delayDuration={500}>{children}</TooltipProvider>
             </CurrentUserProvider>
           </SessionProvider>
         </QueryClientProvider>

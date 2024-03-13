@@ -1,6 +1,6 @@
 "use client"
 
-import { MotionContainer } from "@/components/container"
+import { Container } from "@/components/container"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Text from "@/components/ui/text"
@@ -64,11 +64,7 @@ export default function LLMsPage() {
   })
 
   return (
-    <MotionContainer
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <Container>
       <Content>
         <Header>
           <Text size="h2" weight="bold">
@@ -104,7 +100,7 @@ export default function LLMsPage() {
         ))}
       </Content>
       <LLMOverlay />
-    </MotionContainer>
+    </Container>
   )
 }
 
