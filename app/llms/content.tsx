@@ -1,12 +1,10 @@
 "use client"
 
 import { Container } from "@/components/container"
-import { Button } from "@/components/ui/button"
+import Navbar from "@/components/navbar"
 import { Input } from "@/components/ui/input"
 import Text from "@/components/ui/text"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
-import { PlusIcon } from "lucide-react"
-import Link from "next/link"
 import { useState } from "react"
 import { styled } from "react-tailwind-variants"
 import { LLMWithRelations, SearchInput } from "../api/search/types"
@@ -65,22 +63,12 @@ export default function LLMsPage() {
 
   return (
     <Container>
+      <Navbar />
       <Content>
         <Header>
           <Text size="h2" weight="bold">
             LLMs
           </Text>
-          <HeaderLinks>
-            <HeadLink href="/">Home</HeadLink>
-            <div className="px-2 h-full">
-              <Button size="sm" asChild>
-                <HeadLink href="/submit">
-                  <PlusIcon className="w-4 h-4" />
-                  <Text size="xs">Submit an LLM</Text>
-                </HeadLink>
-              </Button>
-            </div>
-          </HeaderLinks>
         </Header>
         <SearchContainer>
           <Input
@@ -104,7 +92,7 @@ export default function LLMsPage() {
   )
 }
 
-const { Content, SearchContainer, Header, HeaderLinks, HeadLink } = {
+const { Content, SearchContainer, Header } = {
   Content: styled("div", {
     base: "flex flex-col gap-4 max-w-3xl self-center min-h-screen h-full w-full p-4"
   }),
@@ -113,11 +101,5 @@ const { Content, SearchContainer, Header, HeaderLinks, HeadLink } = {
   }),
   Header: styled("div", {
     base: "flex items-center gap-4 justify-between pb-4 border-b-2 border-outline-dimmest"
-  }),
-  HeaderLinks: styled("div", {
-    base: "flex items-center gap-4"
-  }),
-  HeadLink: styled(Link, {
-    base: "text-accent-dimmer"
   })
 }

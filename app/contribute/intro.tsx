@@ -7,50 +7,41 @@ export default function Intro() {
     <Container id="intro">
       <Content>
         <FadeIn>
-          <Text size="lg" weight="medium" color="dimmest" multiline>
-            <strong className="text-foreground-dimmer">
+          <Text size="lg" weight="medium" color="dimmer" multiline>
+            <strong className="text-foreground">
               You can&apos;t out-accelerate AI
             </strong>
-            . There are{" "}
-            <strong className="text-foreground-dimmer">millions</strong> of
+            . There are <strong className="text-foreground">millions</strong> of
             Large Language Models across the internet, more springing up every
             second.
           </Text>
-          <Text size="lg" color="dimmest" multiline>
+          <Text size="lg" color="dimmer" multiline>
             Whether open source or closed source, they all flex their{" "}
-            <strong className="text-foreground-dimmer">context length</strong>,{" "}
-            <strong className="text-foreground-dimmer">
-              performance benchmarks
-            </strong>
-            , and{" "}
-            <strong className="text-foreground-dimmer">
-              other public statistics
-            </strong>
+            <strong className="text-foreground">context length</strong>,{" "}
+            <strong className="text-foreground">performance benchmarks</strong>,
+            and{" "}
+            <strong className="text-foreground">other public statistics</strong>
             .
           </Text>
-          <Text size="lg" weight="medium" color="dimmest" multiline>
+          <Text size="lg" weight="medium" color="dimmer" multiline>
             We are all familliar with the significant time and effort it takes
             one to collect the right information for just{" "}
-            <strong className="text-foreground-dimmer">one</strong> of these
-            LLMs.
+            <strong className="text-foreground">one</strong> of these LLMs.
           </Text>
-          <Text size="lg" weight="medium" color="dimmest" multiline>
+          <Text size="lg" weight="medium" color="dimmer" multiline>
             And then it is forgotten.
           </Text>
         </FadeIn>
         <hr />
         <FadeIn>
-          <Text size="lg" weight="medium" color="dimmest" multiline>
+          <Text size="lg" weight="medium" color="dimmer" multiline>
             I thought long and hard on how{" "}
-            <strong className="text-foreground-dimmer">AI to AI</strong> could
-            fix this problem and benefit others.
+            <strong className="text-foreground">AI to AI</strong> could fix this
+            problem and benefit others.
           </Text>
-          <Text size="lg" weight="medium" color="dimmest" multiline>
+          <Text size="lg" weight="medium" color="dimmer" multiline>
             The answer was an open{" "}
-            <strong className="text-foreground-dimmer">
-              Contribution System
-            </strong>
-            .
+            <strong className="text-foreground">Contribution System</strong>.
           </Text>
         </FadeIn>
       </Content>

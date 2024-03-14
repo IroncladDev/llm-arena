@@ -23,16 +23,16 @@ export default function Function({
   return (
     <Container>
       <Content>
-        <Text size="h1" weight="semibold" color="dimmer">
+        <Text size="h1" weight="semibold">
           How it works
         </Text>
         <StepContainer ref={ref}>
           <Steps style={{ translateX }}>
             <Step>
-              <Text size="h2" weight="semibold" color="dimmer">
+              <Text size="h2" weight="semibold">
                 1. Fill out Information
               </Text>
-              <Text size="lg" color="dimmest" multiline paragraph>
+              <Text size="lg" color="dimmer" multiline paragraph>
                 Provide the model name and metadata in the submission form.
               </Text>
               <Preview
@@ -46,10 +46,10 @@ export default function Function({
               />
             </Step>
             <Step>
-              <Text size="h2" weight="semibold" color="dimmer">
+              <Text size="h2" weight="semibold">
                 2. Provide a Source
               </Text>
-              <Text size="lg" color="dimmest" multiline paragraph>
+              <Text size="lg" color="dimmer" multiline paragraph>
                 Provide one or more sources so reviewers can verify that the
                 information you provided is accurate.
               </Text>
@@ -64,10 +64,10 @@ export default function Function({
               />
             </Step>
             <Step>
-              <Text size="h2" weight="semibold" color="dimmer">
+              <Text size="h2" weight="semibold">
                 3. Wait for Approval
               </Text>
-              <Text size="lg" color="dimmest" multiline paragraph>
+              <Text size="lg" color="dimmer" multiline paragraph>
                 Other contributors will approve or reject the pending LLM.
               </Text>
               <Preview
@@ -81,10 +81,10 @@ export default function Function({
               />
             </Step>
             <Step>
-              <Text size="h2" weight="semibold" color="dimmer">
+              <Text size="h2" weight="semibold">
                 4. Available for Use
               </Text>
-              <Text size="lg" color="dimmest" multiline paragraph>
+              <Text size="lg" color="dimmer" multiline paragraph>
                 Once approved, the model will be available for everyone to use
                 for comparison.
               </Text>
