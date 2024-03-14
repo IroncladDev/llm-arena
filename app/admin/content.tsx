@@ -8,12 +8,14 @@ import { ExternalLink, GithubIcon } from "lucide-react"
 import { useState } from "react"
 import { styled } from "react-tailwind-variants"
 import { updatePendingContributor } from "./actions/update-pending-contributor"
+import Navbar from "@/components/navbar"
 
 export default function AdminPage({ waitlist }: { waitlist: Array<User> }) {
   const [users, setUsers] = useState(waitlist)
 
   return (
     <Container>
+      <Navbar />
       <Content>
         <Text size="h2" weight="bold" center>
           Contributor Waitlist
@@ -80,7 +82,7 @@ const UserRow = ({
 
 const { Content, UserRowContainer, UserRowStart, UserContainer } = {
   Content: styled("div", {
-    base: "flex flex-col gap-2 max-w-2xl self-center h-full w-full py-2"
+    base: "flex flex-col gap-2 max-w-2xl self-center h-full w-full py-8"
   }),
   UserRowContainer: styled("div", {
     base: "flex gap-2 items-center py-2"

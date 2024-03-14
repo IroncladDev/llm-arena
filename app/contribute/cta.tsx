@@ -27,15 +27,15 @@ export default function Cta() {
       }}
     >
       <Content>
-        <Text size="h1" weight="bold" color="dimmer" multiline center>
+        <Text size="h1" weight="bold" multiline center>
           Join as a Contributor
         </Text>
-        <Text size="lg" color="dimmest" multiline paragraph center>
+        <Text size="lg" color="dimmer" multiline paragraph center>
           Help contribute to the ever-accelerating AI hype by reviewing and
           adding LLMs
         </Text>
         <Button variant="highlight" asChild>
-          <Link href="/contribute/join">Apply to Contribute</Link>
+          <Link href="/contribute/join">Apply as a Contributor</Link>
         </Button>
       </Content>
     </Container>

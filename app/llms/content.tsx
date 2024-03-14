@@ -13,6 +13,7 @@ import { LLMWithRelations, SearchInput } from "../api/search/types"
 import LLMItem from "./components/LLMItem"
 import LLMOverlay from "./components/LLMOverlay"
 import LLMSearchFilter from "./components/LLMSearchFilter"
+import Navbar from "@/components/navbar"
 
 export default function LLMsPage() {
   const [searchBy, setSearchBy] = useState<SearchInput["searchBy"]>({
@@ -65,22 +66,12 @@ export default function LLMsPage() {
 
   return (
     <Container>
+      <Navbar />
       <Content>
         <Header>
           <Text size="h2" weight="bold">
             LLMs
           </Text>
-          <HeaderLinks>
-            <HeadLink href="/">Home</HeadLink>
-            <div className="px-2 h-full">
-              <Button size="sm" asChild>
-                <HeadLink href="/submit">
-                  <PlusIcon className="w-4 h-4" />
-                  <Text size="xs">Submit an LLM</Text>
-                </HeadLink>
-              </Button>
-            </div>
-          </HeaderLinks>
         </Header>
         <SearchContainer>
           <Input
