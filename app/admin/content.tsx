@@ -1,6 +1,7 @@
 "use client"
 
 import { Container } from "@/components/container"
+import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import Text from "@/components/ui/text"
 import { User, VoteStatus } from "@prisma/client"
@@ -8,7 +9,6 @@ import { ExternalLink, GithubIcon } from "lucide-react"
 import { useState } from "react"
 import { styled } from "react-tailwind-variants"
 import { updatePendingContributor } from "./actions/update-pending-contributor"
-import Navbar from "@/components/navbar"
 
 export default function AdminPage({ waitlist }: { waitlist: Array<User> }) {
   const [users, setUsers] = useState(waitlist)

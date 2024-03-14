@@ -1,13 +1,12 @@
 "use client"
 
 import { Container } from "@/components/container"
+import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import Text from "@/components/ui/text"
 import { Textarea } from "@/components/ui/textarea"
-import gr from "@/lib/gradients"
-import { colors, tokens } from "@/tailwind.config"
 import { MetaProperty, MetaPropertyType } from "@prisma/client"
 import { PlusIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -16,7 +15,6 @@ import { useFormState, useFormStatus } from "react-dom"
 import { styled } from "react-tailwind-variants"
 import { submit } from "./actions"
 import { MetaFieldRow } from "./components/MetaField"
-import Navbar from "@/components/navbar"
 
 export type MetaField = {
   property?: MetaProperty | null
@@ -78,11 +76,7 @@ export default function Content({
         <FormFields>
           <FormField>
             <Label htmlFor="name">Name</Label>
-            <Input
-              name="name"
-              placeholder="Unhinged Chat 6b"
-              required
-            />
+            <Input name="name" placeholder="Unhinged Chat 6b" required />
           </FormField>
           <FormField>
             <Label>Metadata</Label>
@@ -222,11 +216,7 @@ const SubmitButton = () => {
   const { pending } = useFormStatus()
 
   return (
-    <Button
-      type="submit"
-      className="w-full"
-      disabled={pending}
-    >
+    <Button type="submit" className="w-full" disabled={pending}>
       Submit
     </Button>
   )

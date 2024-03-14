@@ -1,10 +1,6 @@
 "use client"
 
-import { styled } from "react-tailwind-variants"
-import { useCurrentUser } from "./providers/CurrentUserProvider"
 import { UserRole } from "@prisma/client"
-import Link from "next/link"
-import { Button } from "./ui/button"
 import {
   ExternalLink,
   HomeIcon,
@@ -12,7 +8,9 @@ import {
   PlusIcon,
   SettingsIcon
 } from "lucide-react"
-import Text from "./ui/text"
+import Link from "next/link"
+import { styled } from "react-tailwind-variants"
+import { useCurrentUser } from "./providers/CurrentUserProvider"
 
 export default function Navbar() {
   const user = useCurrentUser()
