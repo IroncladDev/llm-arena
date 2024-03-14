@@ -105,26 +105,23 @@ export default function Function({
   )
 }
 
-const Container = styled(MotionDiv, {
-  base: "flex flex-col grow"
-})
-
-const Content = styled("div", {
-  base: "flex flex-col grow max-w-screen-md w-full self-center py-16 px-4 gap-8"
-})
-
-const StepContainer = styled("div", {
-  base: "grow relative"
-})
-
-const Steps = styled(MotionDiv, {
-  base: "absolute top-0 left-0 w-auto h-full flex gap-4"
-})
-
-const Step = styled("div", {
-  base: "h-full border-2 border-outline-dimmest rounded-xl p-8 grow min-w-[360px] w-[60vw] max-w-[600px] flex flex-col gap-4"
-})
-
-const Preview = styled("div", {
-  base: "grow bg-center bg-cover bg-contain bg-no-repeat rounded-xl p-2 rounded-lg border border-outline-dimmest"
-})
+const { Container, Content, StepContainer, Steps, Step, Preview } = {
+  Container: styled(MotionDiv, {
+    base: "flex flex-col grow"
+  }),
+  Content: styled("div", {
+    base: "flex flex-col grow max-w-screen-md w-full self-center py-16 px-4 gap-8"
+  }),
+  StepContainer: styled("div", {
+    base: "grow relative"
+  }),
+  Steps: styled(MotionDiv, {
+    base: "absolute top-0 left-0 w-auto h-full flex gap-4"
+  }),
+  Step: styled("div", {
+    base: "h-full border-2 border-outline-dimmest rounded-xl p-8 grow min-w-[360px] w-[60vw] max-w-[600px] flex flex-col gap-4"
+  }),
+  Preview: styled("div", {
+    base: "grow bg-center bg-cover bg-contain bg-no-repeat rounded-xl p-2 rounded-lg border border-outline-dimmest"
+  })
+}

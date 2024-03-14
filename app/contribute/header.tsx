@@ -80,18 +80,17 @@ export default function Header({
   )
 }
 
-const Container = styled(MotionDiv, {
-  base: "flex flex-col grow"
-})
-
-const Content = styled("div", {
-  base: "flex flex-col grow max-w-screen-md max-md:max-w-screen max-md:p-4 w-full self-center"
-})
-
-const HeaderContent = styled(MotionDiv, {
-  base: "flex flex-col gap-4 grow items-center justify-center"
-})
-
-const DownButton = styled(Button, {
-  base: "h-16 w-16 rounded-full"
-})
+const { Container, Content, HeaderContent, DownButton } = {
+  Container: styled(MotionDiv, {
+    base: "flex flex-col grow"
+  }),
+  Content: styled("div", {
+    base: "flex flex-col grow max-w-screen-md max-md:max-w-screen max-md:p-4 w-full self-center"
+  }),
+  HeaderContent: styled(MotionDiv, {
+    base: "flex flex-col gap-4 grow items-center justify-center"
+  }),
+  DownButton: styled(Button, {
+    base: "h-16 w-16 rounded-full"
+  })
+}

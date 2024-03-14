@@ -197,10 +197,11 @@ export default function LLMOverlay() {
   )
 }
 
-const ContentSection = styled("div", {
-  base: "flex flex-col gap-2"
-})
-
-export const ContentContainer = styled("div", {
-  base: "flex flex-col gap-4 h-auto"
-})
+const { ContentSection, ContentContainer } = {
+  ContentSection: styled("div", {
+    base: "flex flex-col gap-2"
+  }),
+  ContentContainer: styled("div", {
+    base: "flex flex-col gap-4 h-auto"
+  })
+}

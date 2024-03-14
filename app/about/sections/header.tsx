@@ -70,14 +70,14 @@ export default function Header({
   )
 }
 
-const Container = styled(MotionDiv, {
-  base: "flex flex-col grow"
-})
-
-const Content = styled("div", {
-  base: "flex flex-col grow max-w-screen-md max-md:max-w-screen max-md:p-4 w-full self-center"
-})
-
-const HeaderContent = styled(MotionDiv, {
-  base: "flex flex-col gap-4 grow items-center justify-center"
-})
+const { Container, Content, HeaderContent } = {
+  Container: styled(MotionDiv, {
+    base: "flex flex-col grow"
+  }),
+  Content: styled("div", {
+    base: "flex flex-col grow max-w-screen-md max-md:max-w-screen max-md:p-4 w-full self-center"
+  }),
+  HeaderContent: styled(MotionDiv, {
+    base: "flex flex-col gap-4 grow items-center justify-center"
+  })
+}

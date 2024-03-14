@@ -76,22 +76,23 @@ export default function Comparison() {
   )
 }
 
-const EmptyStateContainer = styled("div", {
-  base: "flex flex-col gap-4 p-6 bg-root/50 rounded-lg border-2 border-outline-dimmest/50 min-w-[320px] w-full max-w-[360px] shadow-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-})
-const Container = styled("div", {
-  base: "grow h-full flex flex-col relative"
-})
-const ContainerOverflow = styled("div", {
-  base: "grow h-full relative"
-})
-
-const ItemsContainer = styled("div", {
-  base: "flex flex-col absolute top-0 left-0 right-0 max-h-[100%] overflow-y-auto overflow-x-hidden gap-4 p-8 max-sm:p-2 max-sm:gap-2",
-  variants: {
-    view: {
-      grid: "grid grid-cols-[repeat(auto-fit,_minmax(360px,_1fr))] justify-center justify-items-center max-w-[1024px] mx-auto",
-      list: "flex flex-col gap-4 p-4"
+const { EmptyStateContainer, Container, ContainerOverflow, ItemsContainer } = {
+  EmptyStateContainer: styled("div", {
+    base: "flex flex-col gap-4 p-6 bg-root/50 rounded-lg border-2 border-outline-dimmest/50 min-w-[320px] w-full max-w-[360px] shadow-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+  }),
+  Container: styled("div", {
+    base: "grow h-full flex flex-col relative"
+  }),
+  ContainerOverflow: styled("div", {
+    base: "grow h-full relative"
+  }),
+  ItemsContainer: styled("div", {
+    base: "flex flex-col absolute top-0 left-0 right-0 max-h-[100%] overflow-y-auto overflow-x-hidden gap-4 p-8 max-sm:p-2 max-sm:gap-2",
+    variants: {
+      view: {
+        grid: "grid grid-cols-[repeat(auto-fit,_minmax(360px,_1fr))] justify-center justify-items-center max-w-[1024px] mx-auto",
+        list: "flex flex-col gap-4 p-4"
+      }
     }
-  }
-})
+  })
+}

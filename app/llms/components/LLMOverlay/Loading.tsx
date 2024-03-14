@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton"
-import { ContentContainer } from "."
+import { styled } from "react-tailwind-variants"
 import Header from "./Header"
 
 export default function Loading() {
@@ -11,3 +11,7 @@ export default function Loading() {
     </ContentContainer>
   )
 }
+
+const ContentContainer = styled("div", {
+  base: "flex flex-col gap-4 h-auto"
+})

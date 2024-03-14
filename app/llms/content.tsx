@@ -104,22 +104,20 @@ export default function LLMsPage() {
   )
 }
 
-const Content = styled("div", {
-  base: "flex flex-col gap-4 max-w-3xl self-center min-h-screen h-full w-full p-4"
-})
-
-const SearchContainer = styled("div", {
-  base: "flex items-center w-full gap-4 justify-between"
-})
-
-const Header = styled("div", {
-  base: "flex items-center gap-4 justify-between pb-4 border-b-2 border-outline-dimmest"
-})
-
-const HeaderLinks = styled("div", {
-  base: "flex items-center gap-4"
-})
-
-const HeadLink = styled(Link, {
-  base: "text-accent-dimmer"
-})
+const { Content, SearchContainer, Header, HeaderLinks, HeadLink } = {
+  Content: styled("div", {
+    base: "flex flex-col gap-4 max-w-3xl self-center min-h-screen h-full w-full p-4"
+  }),
+  SearchContainer: styled("div", {
+    base: "flex items-center w-full gap-4 justify-between"
+  }),
+  Header: styled("div", {
+    base: "flex items-center gap-4 justify-between pb-4 border-b-2 border-outline-dimmest"
+  }),
+  HeaderLinks: styled("div", {
+    base: "flex items-center gap-4"
+  }),
+  HeadLink: styled(Link, {
+    base: "text-accent-dimmer"
+  })
+}

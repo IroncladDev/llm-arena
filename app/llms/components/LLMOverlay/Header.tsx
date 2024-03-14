@@ -22,10 +22,11 @@ export default function Header({
   )
 }
 
-const HeaderBase = styled("div", {
-  base: "flex items-center gap-4"
-})
-
-const CloseButton = styled(Button, {
-  base: "outline-none shrink-0"
-})
+const { HeaderBase, CloseButton } = {
+  HeaderBase: styled("div", {
+    base: "flex items-center gap-4"
+  }),
+  CloseButton: styled(Button, {
+    base: "outline-none shrink-0"
+  })
+}

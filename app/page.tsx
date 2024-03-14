@@ -8,12 +8,11 @@ import Comparison from "./compare/comparison"
 import Sidebar from "./compare/sidebar"
 import { useCompareState } from "./compare/state"
 
-export default function Content() {
+export default function Page() {
   const sidebar = useCompareState(state => state.sidebar)
 
   return (
-    <Container
-      className="flex flex-row h-screen"
+    <Content
       style={{
         background: gr.merge(
           gr.radial(
@@ -29,26 +28,30 @@ export default function Content() {
       <SidebarContainer open={sidebar}>
         <Sidebar />
       </SidebarContainer>
-      <ContentContainer>
+      <ComparisonContainer>
         <Comparison />
-      </ContentContainer>
-    </Container>
+      </ComparisonContainer>
+    </Content>
   )
 }
 
-const SidebarContainer = styled("div", {
-  base: "flex flex-col bg-root/50 border-r-2 border-outline-dimmest h-screen min-w-[320px]",
-  variants: {
-    open: {
-      true: "max-md:absolute max-md:top-0 max-md:left-0 max-md:z-10 bg-root max-sm:w-full",
-      false: "max-md:hidden"
+const { Content, SidebarContainer, ComparisonContainer } = {
+  Content: styled(Container, {
+    base: "flex flex-row h-screen"
+  }),
+  SidebarContainer: styled("div", {
+    base: "flex flex-col bg-root/50 border-r-2 border-outline-dimmest h-screen min-w-[320px]",
+    variants: {
+      open: {
+        true: "max-md:absolute max-md:top-0 max-md:left-0 max-md:z-10 bg-root max-sm:w-full",
+        false: "max-md:hidden"
+      }
+    },
+    defaultVariants: {
+      open: true
     }
-  },
-  defaultVariants: {
-    open: true
-  }
-})
-
-const ContentContainer = styled("div", {
-  base: "grow flex flex-col h-screen"
-})
+  }),
+  ComparisonContainer: styled("div", {
+    base: "grow flex flex-col h-screen"
+  })
+}

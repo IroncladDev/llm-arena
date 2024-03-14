@@ -42,10 +42,11 @@ export default function Cta() {
   )
 }
 
-const Container = styled(MotionDiv, {
-  base: "flex flex-col grow min-h-screen"
-})
-
-const Content = styled("div", {
-  base: "flex flex-col grow max-w-screen-md w-full max-md:max-w-screen max-md:px-4 self-center py-16 justify-center items-center gap-8"
-})
+const { Container, Content } = {
+  Container: styled(MotionDiv, {
+    base: "flex flex-col grow min-h-screen"
+  }),
+  Content: styled("div", {
+    base: "flex flex-col grow max-w-screen-md w-full max-md:max-w-screen max-md:px-4 self-center py-16 justify-center items-center gap-8"
+  })
+}

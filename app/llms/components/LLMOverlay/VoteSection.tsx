@@ -128,64 +128,68 @@ export default function VoteSection({
   )
 }
 
-const Container = styled("div", {
-  base: "flex flex-col gap-2 relative"
-})
-
-const DisabledOverlay = styled("div", {
-  base: "absolute inset-0 bg-overlay flex flex-col items-center justify-center"
-})
-
-const SubmitOptions = styled("div", {
-  base: "flex gap-2 justify-between items-center"
-})
-
-const StatusButtons = styled("div", {
-  base: "flex gap-1 border-2 p-1 rounded-xl",
-  variants: {
-    action: {
-      approve: "border-emerald-500/30",
-      reject: "border-rose-500/30"
+const {
+  Container,
+  DisabledOverlay,
+  SubmitOptions,
+  StatusButtons,
+  ApproveButton,
+  RejectButton,
+  ThumbsUp,
+  ThumbsDown,
+  ErrorContainer
+} = {
+  Container: styled("div", {
+    base: "flex flex-col gap-2 relative"
+  }),
+  DisabledOverlay: styled("div", {
+    base: "absolute inset-0 bg-overlay flex flex-col items-center justify-center"
+  }),
+  SubmitOptions: styled("div", {
+    base: "flex gap-2 justify-between items-center"
+  }),
+  StatusButtons: styled("div", {
+    base: "flex gap-1 border-2 p-1 rounded-xl",
+    variants: {
+      action: {
+        approve: "border-emerald-500/30",
+        reject: "border-rose-500/30"
+      }
     }
-  }
-})
-
-const ApproveButton = styled(Button, {
-  base: "bg-transparent border-transparent opacity-50 hover:opacity-100 hover:border-transparent transition-opacity rounded-lg",
-  variants: {
-    active: {
-      true: "opacity-100 bg-higher"
+  }),
+  ApproveButton: styled(Button, {
+    base: "bg-transparent border-transparent opacity-50 hover:opacity-100 hover:border-transparent transition-opacity rounded-lg",
+    variants: {
+      active: {
+        true: "opacity-100 bg-higher"
+      }
     }
-  }
-})
-
-const RejectButton = styled(Button, {
-  base: "bg-transparent border-transparent opacity-50 hover:opacity-100 hover:border-transparent transition-opacity rounded-lg",
-  variants: {
-    active: {
-      true: "opacity-100 bg-higher"
+  }),
+  RejectButton: styled(Button, {
+    base: "bg-transparent border-transparent opacity-50 hover:opacity-100 hover:border-transparent transition-opacity rounded-lg",
+    variants: {
+      active: {
+        true: "opacity-100 bg-higher"
+      }
     }
-  }
-})
-
-const ThumbsUp = styled(ThumbsUpIcon, {
-  base: "w-4 h-4 text-foreground-dimmest",
-  variants: {
-    active: {
-      true: "text-emerald-500"
+  }),
+  ThumbsUp: styled(ThumbsUpIcon, {
+    base: "w-4 h-4 text-foreground-dimmest",
+    variants: {
+      active: {
+        true: "text-emerald-500"
+      }
     }
-  }
-})
-
-const ThumbsDown = styled(ThumbsDownIcon, {
-  base: "w-4 h-4 text-foreground-dimmest",
-  variants: {
-    active: {
-      true: "text-rose-500"
+  }),
+  ThumbsDown: styled(ThumbsDownIcon, {
+    base: "w-4 h-4 text-foreground-dimmest",
+    variants: {
+      active: {
+        true: "text-rose-500"
+      }
     }
-  }
-})
-
-const ErrorContainer = styled("div", {
-  base: "flex gap-2 items-center px-2 py-1 bg-rose-500/10 border-2 border-rose-500/30 rounded-lg"
-})
+  }),
+  ErrorContainer: styled("div", {
+    base: "flex gap-2 items-center px-2 py-1 bg-rose-500/10 border-2 border-rose-500/30 rounded-lg"
+  })
+}
