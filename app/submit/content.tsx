@@ -251,36 +251,40 @@ const SubmitButton = () => {
   )
 }
 
-const MetaHeaders = styled("div", {
-  base: "flex items-center ml-3 w-[calc(100%-70px)]"
-})
-
-const MetaPropertyContainer = styled("div", {
-  base: "flex flex-col mx-3"
-})
-
-const EmptyMetaContainer = styled("div", {
-  base: "flex flex-col p-4 items-center justify-center border-2 border-dashed border-outline-dimmer min-h-[160px] rounded-lg gap-2"
-})
-
-const FormContainer = styled("div", {
-  base: "w-full flex justify-center py-16 max-sm:py-0"
-})
-
-const FormContent = styled("form", {
-  base: "w-full max-w-3xl flex flex-col gap-4 py-6 px-4 bg-default border-2 border-outline-dimmest rounded-lg shadow-lg max-sm:border-none"
-})
-
-const FormFields = styled("div", { base: "flex flex-col" })
-
-const FormField = styled("div", {
-  base: "flex flex-col gap-1 p-2 w-full border-x-2 last:border-b-2 last:rounded-b-lg last:pb-6 first:border-t-2 first:!rounded-t-lg first:pt-6 border-higher focus-within:border-accent-dimmest transition-colors max-sm:px-0 max-sm:border-0 last:max-sm:rounded-b-none first:max-sm:rounded-t-none last:max-sm:border-b-0 first:max-sm:border-t-0"
-})
-
-const Label = styled("label", {
-  base: "text-lg font-medium text-foreground-dimmer pl-2"
-})
-
-const AgreementContainer = styled("label", {
-  base: "flex items-center gap-2 pl-3"
-})
+const {
+  MetaHeaders,
+  MetaPropertyContainer,
+  EmptyMetaContainer,
+  FormContainer,
+  FormContent,
+  FormFields,
+  FormField,
+  Label,
+  AgreementContainer
+} = {
+  MetaHeaders: styled("div", {
+    base: "flex items-center ml-3 w-[calc(100%-70px)]"
+  }),
+  MetaPropertyContainer: styled("div", {
+    base: "flex flex-col mx-3"
+  }),
+  EmptyMetaContainer: styled("div", {
+    base: "flex flex-col p-4 items-center justify-center border-2 border-dashed border-outline-dimmer min-h-[160px] rounded-lg gap-2"
+  }),
+  FormContainer: styled("div", {
+    base: "w-full flex justify-center py-16 max-sm:py-0"
+  }),
+  FormContent: styled("form", {
+    base: "w-full max-w-3xl flex flex-col gap-4 py-6 px-4 bg-default border-2 border-outline-dimmest rounded-lg shadow-lg max-sm:border-none"
+  }),
+  FormFields: styled("div", { base: "flex flex-col" }),
+  FormField: styled("div", {
+    base: "flex flex-col gap-1 p-2 w-full border-x-2 last:border-b-2 last:rounded-b-lg last:pb-6 first:border-t-2 first:!rounded-t-lg first:pt-6 border-higher focus-within:border-accent-dimmest transition-colors max-sm:px-0 max-sm:border-0 last:max-sm:rounded-b-none first:max-sm:rounded-t-none last:max-sm:border-b-0 first:max-sm:border-t-0"
+  }),
+  Label: styled("label", {
+    base: "text-lg font-medium text-foreground-dimmer pl-2"
+  }),
+  AgreementContainer: styled("label", {
+    base: "flex items-center gap-2 pl-3"
+  })
+}

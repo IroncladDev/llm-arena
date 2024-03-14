@@ -78,18 +78,17 @@ const UserRow = ({
   )
 }
 
-const Content = styled("div", {
-  base: "flex flex-col gap-2 max-w-2xl self-center h-full w-full py-2"
-})
-
-const UserRowContainer = styled("div", {
-  base: "flex gap-2 items-center py-2"
-})
-
-const UserRowStart = styled("div", {
-  base: "flex grow"
-})
-
-const UserContainer = styled("div", {
-  base: "flex flex-col grow divide-y divide-outline-dimmest"
-})
+const { Content, UserRowContainer, UserRowStart, UserContainer } = {
+  Content: styled("div", {
+    base: "flex flex-col gap-2 max-w-2xl self-center h-full w-full py-2"
+  }),
+  UserRowContainer: styled("div", {
+    base: "flex gap-2 items-center py-2"
+  }),
+  UserRowStart: styled("div", {
+    base: "flex grow"
+  }),
+  UserContainer: styled("div", {
+    base: "flex flex-col grow divide-y divide-outline-dimmest"
+  })
+}

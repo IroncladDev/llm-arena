@@ -11,11 +11,11 @@ export default function FieldTable({
   capLength?: number
 }) {
   return (
-    <TableContainer>
+    <Table.Container>
       {fields.slice(0, capLength).map((field, i) => (
-        <TableRow key={i}>
-          <TableCell>
-            <TableCellContent>
+        <Table.Row key={i}>
+          <Table.Cell>
+            <Table.CellContent>
               <Text weight="medium" color="dimmer" size="sm">
                 {field.metaProperty.name}
               </Text>
@@ -24,49 +24,48 @@ export default function FieldTable({
                   {field.note}
                 </Text>
               )}
-            </TableCellContent>
-          </TableCell>
-          <TableCell>
-            <TableCellContent>
+            </Table.CellContent>
+          </Table.Cell>
+          <Table.Cell>
+            <Table.CellContent>
               <Text weight="medium" color="dimmer">
                 {field.metaProperty.type}
               </Text>
-            </TableCellContent>
-          </TableCell>
-          <TableCell>
-            <TableCellContent>
+            </Table.CellContent>
+          </Table.Cell>
+          <Table.Cell>
+            <Table.CellContent>
               <Text color="dimmer" multiline>
                 {field.metaProperty.type === MetaPropertyType.Number
                   ? abbrNumber(Number(field.value))
                   : field.value}
               </Text>
-            </TableCellContent>
-          </TableCell>
-        </TableRow>
+            </Table.CellContent>
+          </Table.Cell>
+        </Table.Row>
       ))}
       {typeof capLength === "number" && fields.length > capLength ? (
-        <TableRow>
-          <TableCell className="col-span-2 text-center">
+        <Table.Row>
+          <Table.Cell className="col-span-2 text-center">
             <Text>{fields.length - capLength} more</Text>
-          </TableCell>
-        </TableRow>
+          </Table.Cell>
+        </Table.Row>
       ) : null}
-    </TableContainer>
+    </Table.Container>
   )
 }
 
-const TableContainer = styled("div", {
-  base: "table border border-outline-dimmer w-full max-w-[640px]"
-})
-
-const TableRow = styled("div", {
-  base: "table-row"
-})
-
-const TableCell = styled("div", {
-  base: "table-cell min-h-10 first:max-w-[200px] last:w-full border border-outline-dimmer align-middle"
-})
-
-const TableCellContent = styled("div", {
-  base: "flex flex-col h-full min-h-10 px-2 justify-center"
-})
+const Table = {
+  Container: styled("div", {
+    base: "table border border-outline-dimmer w-full max-w-[640px]"
+  }),
+  Row: styled("div", {
+    base: "table-row"
+  }),
+  Cell: styled("div", {
+    base: "table-cell min-h-10 first:max-w-[200px] last:w-full border border-outline-dimmer align-middle"
+  }),
+  CellContent: styled("div", {
+    base: "flex flex-col h-full min-h-10 px-2 justify-center"
+  })
+}

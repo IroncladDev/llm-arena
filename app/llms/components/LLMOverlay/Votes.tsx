@@ -201,49 +201,53 @@ function VoteComment({
   )
 }
 
-const VoteStats = styled("div", {
-  base: "flex flex-col gap-2 p-2 rounded-lg border-2",
-  variants: {
-    status: {
-      approved: "border-emerald-500/30",
-      rejected: "border-rose-500/30",
-      pending: "border-outline-dimmest"
+const {
+  Container,
+  VoteStats,
+  VoteStat,
+  Indicator,
+  IndicatorBar,
+  VoteContainer,
+  PendingBadge
+} = {
+  Container: styled("div", {
+    base: "flex flex-col gap-2 min-h-[160px]"
+  }),
+  VoteStats: styled("div", {
+    base: "flex flex-col gap-2 p-2 rounded-lg border-2",
+    variants: {
+      status: {
+        approved: "border-emerald-500/30",
+        rejected: "border-rose-500/30",
+        pending: "border-outline-dimmest"
+      }
     }
-  }
-})
-
-const VoteStat = styled("div", {
-  base: "flex items-center gap-2 justify-between"
-})
-
-const Indicator = styled("div", {
-  base: "grow rounded-lg h-2 max-w-[240px] bg-higher"
-})
-
-const IndicatorBar = styled(MotionDiv, {
-  base: "h-2 rounded-lg",
-  variants: {
-    status: {
-      approve: "bg-emerald-500",
-      reject: "bg-rose-500"
+  }),
+  VoteStat: styled("div", {
+    base: "flex items-center gap-2 justify-between"
+  }),
+  Indicator: styled("div", {
+    base: "grow rounded-lg h-2 max-w-[240px] bg-higher"
+  }),
+  IndicatorBar: styled(MotionDiv, {
+    base: "h-2 rounded-lg",
+    variants: {
+      status: {
+        approve: "bg-emerald-500",
+        reject: "bg-rose-500"
+      }
     }
-  }
-})
-
-const Container = styled("div", {
-  base: "flex flex-col gap-2 min-h-[160px]"
-})
-
-const VoteContainer = styled("div", {
-  base: "flex gap-2 px-2 pt-1 pb-2 rounded-lg border-2 bg-higher",
-  variants: {
-    status: {
-      approve: "border-emerald-500/30",
-      reject: "border-rose-500/30"
+  }),
+  VoteContainer: styled("div", {
+    base: "flex gap-2 px-2 pt-1 pb-2 rounded-lg border-2 bg-higher",
+    variants: {
+      status: {
+        approve: "border-emerald-500/30",
+        reject: "border-rose-500/30"
+      }
     }
-  }
-})
-
-const PendingBadge = styled("div", {
-  base: "rounded-md px-1.5 py-0.5 text-xs bg-amber-500/25 text-amber-300/75"
-})
+  }),
+  PendingBadge: styled("div", {
+    base: "rounded-md px-1.5 py-0.5 text-xs bg-amber-500/25 text-amber-300/75"
+  })
+}

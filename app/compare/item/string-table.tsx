@@ -1,7 +1,7 @@
 import Text from "@/components/ui/text"
 import { ComparableFieldGroup } from "@/lib/comparison"
 import { FieldSort, FilterType } from "../state"
-import { TableCell, TableCellContent, TableContainer, TableRow } from "./tables"
+import Table from "./tables"
 
 export default function StringTable({
   field,
@@ -32,20 +32,20 @@ export default function StringTable({
   })
 
   return (
-    <TableContainer>
+    <Table.Container>
       {fields.map(([key, { value, note }], i) => (
-        <TableRow key={i}>
-          <TableCell>
-            <TableCellContent>
+        <Table.Row key={i}>
+          <Table.Cell>
+            <Table.CellContent>
               <Text color="dimmer">{key}</Text>
               {note && (
                 <Text size="xs" color="dimmest">
                   {note}
                 </Text>
               )}
-            </TableCellContent>
-          </TableCell>
-          <TableCell
+            </Table.CellContent>
+          </Table.Cell>
+          <Table.Cell
             className={`leading-none border-b border-outline-dimmest ${i === fields.length - 1 ? "border-b-0" : ""}`}
             style={{ borderBottomStyle: "dashed" }}
           >
@@ -57,9 +57,9 @@ export default function StringTable({
             >
               {value === null ? "N/A" : value}{" "}
             </Text>
-          </TableCell>
-        </TableRow>
+          </Table.Cell>
+        </Table.Row>
       ))}
-    </TableContainer>
+    </Table.Container>
   )
 }

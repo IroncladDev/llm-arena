@@ -91,46 +91,50 @@ export default function LLMSearch({
   )
 }
 
-const Search = styled("div", {
-  base: "flex relative basis-0 w-full min-w-0 grow"
-})
-
-const DownshiftPopover = styled("div", {
-  base: "w-full rounded-lg border-2 border-outline-dimmer/75 absolute top-12 left-0 bg-default z-10 shadow-lg"
-})
-
-const ItemsContainer = styled("ul", {
-  base: "flex-col hidden",
-  variants: {
-    visible: {
-      true: "flex"
+const {
+  Search,
+  DownshiftPopover,
+  ItemsContainer,
+  Item,
+  ItemInfo,
+  ItemIcon,
+  EmptyState
+} = {
+  Search: styled("div", {
+    base: "flex relative basis-0 w-full min-w-0 grow"
+  }),
+  DownshiftPopover: styled("div", {
+    base: "w-full rounded-lg border-2 border-outline-dimmer/75 absolute top-12 left-0 bg-default z-10 shadow-lg"
+  }),
+  ItemsContainer: styled("ul", {
+    base: "flex-col hidden",
+    variants: {
+      visible: {
+        true: "flex"
+      }
     }
-  }
-})
-
-const Item = styled("li", {
-  base: "flex gap-2 justify-between p-2 first:rounded-t-md last:rounded-b-md",
-  variants: {
-    highlighted: {
-      true: "bg-higher"
+  }),
+  Item: styled("li", {
+    base: "flex gap-2 justify-between p-2 first:rounded-t-md last:rounded-b-md",
+    variants: {
+      highlighted: {
+        true: "bg-higher"
+      }
     }
-  }
-})
-
-const ItemInfo = styled("div", {
-  base: "flex gap-2 items-center"
-})
-
-const ItemIcon = styled(Hexagon, {
-  base: "w-4 h-4",
-  variants: {
-    selected: {
-      true: "text-accent-dimmer fill-accent-dimmest/50",
-      false: "text-foreground-dimmest"
+  }),
+  ItemInfo: styled("div", {
+    base: "flex gap-2 items-center"
+  }),
+  ItemIcon: styled(Hexagon, {
+    base: "w-4 h-4",
+    variants: {
+      selected: {
+        true: "text-accent-dimmer fill-accent-dimmest/50",
+        false: "text-foreground-dimmest"
+      }
     }
-  }
-})
-
-const EmptyState = styled("div", {
-  base: "flex justify-center items-center p-4"
-})
+  }),
+  EmptyState: styled("div", {
+    base: "flex justify-center items-center p-4"
+  })
+}

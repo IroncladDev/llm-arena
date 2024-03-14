@@ -109,47 +109,51 @@ export default function LLMItem({
   )
 }
 
-const Container = styled("div", {
-  base: "flex flex-col gap-2 p-2 rounded-lg border-2 border-outline-dimmest bg-default hover:border-accent-dimmer cursor-pointer transition-colors"
-})
-
-const Header = styled("div", {
-  base: "flex gap-2 items-center"
-})
-
-const StatusBadge = styled("div", {
-  base: "rounded-md px-1.5 py-0.5 text-xs",
-  variants: {
-    status: {
-      pending: "bg-amber-500/25 text-amber-300/75",
-      approved: "bg-emerald-500/25 text-emerald-300/75",
-      rejected: "bg-rose-500/25 text-rose-300/75"
+const {
+  Container,
+  Header,
+  Content,
+  ContentOverlay,
+  ContentSection,
+  StatusBadge,
+  StatusBar,
+  StatusVote
+} = {
+  Container: styled("div", {
+    base: "flex flex-col gap-2 p-2 rounded-lg border-2 border-outline-dimmest bg-default hover:border-accent-dimmer cursor-pointer transition-colors"
+  }),
+  Header: styled("div", {
+    base: "flex gap-2 items-center"
+  }),
+  Content: styled("div", {
+    base: "flex gap-2 items-start w-full overflow-hidden relative max-h-[200px]"
+  }),
+  ContentOverlay: styled("div", {
+    base: `absolute inset-0 bg-gradient-to-t from-default via-transparent via-transparent to-transparent flex flex-col justify-end max-h-[200px]`
+  }),
+  ContentSection: styled("div", {
+    base: "flex flex-col gap-2 grow basis-0"
+  }),
+  StatusBadge: styled("div", {
+    base: "rounded-md px-1.5 py-0.5 text-xs",
+    variants: {
+      status: {
+        pending: "bg-amber-500/25 text-amber-300/75",
+        approved: "bg-emerald-500/25 text-emerald-300/75",
+        rejected: "bg-rose-500/25 text-rose-300/75"
+      }
     }
-  }
-})
-
-export const StatusBar = styled("div", {
-  base: "rounded-full h-1.5 w-[120px] bg-higher flex"
-})
-
-export const StatusVote = styled("div", {
-  base: "grow basis-0 h-full first:rounded-l-full last:rounded-r-full shadow-[2px_0_0_2px,-2px_0_0_2px]",
-  variants: {
-    status: {
-      approve: "bg-emerald-600 shadow-emerald-600/10",
-      reject: "bg-rose-600 shadow-rose-600/10"
+  }),
+  StatusBar: styled("div", {
+    base: "rounded-full h-1.5 w-[120px] bg-higher flex"
+  }),
+  StatusVote: styled("div", {
+    base: "grow basis-0 h-full first:rounded-l-full last:rounded-r-full shadow-[2px_0_0_2px,-2px_0_0_2px]",
+    variants: {
+      status: {
+        approve: "bg-emerald-600 shadow-emerald-600/10",
+        reject: "bg-rose-600 shadow-rose-600/10"
+      }
     }
-  }
-})
-
-const Content = styled("div", {
-  base: "flex gap-2 items-start w-full overflow-hidden relative max-h-[200px]"
-})
-
-const ContentOverlay = styled("div", {
-  base: `absolute inset-0 bg-gradient-to-t from-default via-transparent via-transparent to-transparent flex flex-col justify-end max-h-[200px]`
-})
-
-const ContentSection = styled("div", {
-  base: "flex flex-col gap-2 grow basis-0"
-})
+  })
+}

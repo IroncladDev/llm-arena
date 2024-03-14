@@ -2,7 +2,7 @@ import Text from "@/components/ui/text"
 import { ComparableFieldGroup } from "@/lib/comparison"
 import { CheckIcon, XIcon } from "lucide-react"
 import { FieldSort, FilterType } from "../state"
-import { TableCell, TableCellContent, TableContainer, TableRow } from "./tables"
+import Table from "./tables"
 
 export default function BooleanTable({
   field,
@@ -33,20 +33,20 @@ export default function BooleanTable({
   })
 
   return (
-    <TableContainer>
+    <Table.Container>
       {fields.map(([key, { value, note }], i) => (
-        <TableRow key={i}>
-          <TableCell>
-            <TableCellContent>
+        <Table.Row key={i}>
+          <Table.Cell>
+            <Table.CellContent>
               <Text color="dimmer">{key}</Text>
               {note && (
                 <Text size="xs" color="dimmest">
                   {note}
                 </Text>
               )}
-            </TableCellContent>
-          </TableCell>
-          <TableCell>
+            </Table.CellContent>
+          </Table.Cell>
+          <Table.Cell>
             {value === null ? (
               <Text color="dimmest" size="xs" className="opacity-50">
                 N/A
@@ -56,9 +56,9 @@ export default function BooleanTable({
             ) : (
               <XIcon className="w-4 h-4 text-foreground-dimmer" />
             )}
-          </TableCell>
-        </TableRow>
+          </Table.Cell>
+        </Table.Row>
       ))}
-    </TableContainer>
+    </Table.Container>
   )
 }

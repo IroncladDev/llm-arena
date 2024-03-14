@@ -161,10 +161,11 @@ export default function LLMSearchFilter({
   )
 }
 
-const FilterGroup = styled("div", {
-  base: "flex flex-col gap-1"
-})
-
-const FilterField = styled("div", {
-  base: "flex items-center gap-2 pl-2"
-})
+const { FilterGroup, FilterField } = {
+  FilterGroup: styled("div", {
+    base: "flex flex-col gap-1"
+  }),
+  FilterField: styled("div", {
+    base: "flex items-center gap-2 pl-2"
+  })
+}

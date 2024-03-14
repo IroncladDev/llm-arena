@@ -3,7 +3,7 @@ import { ComparableFieldGroup } from "@/lib/comparison"
 import { abbrNumber } from "@/lib/numbers"
 import { styled } from "react-tailwind-variants"
 import { FieldSort, FilterType } from "../state"
-import { TableCell, TableCellContent, TableContainer, TableRow } from "./tables"
+import Table from "./tables"
 
 export default function NumericChart({
   field,
@@ -36,20 +36,20 @@ export default function NumericChart({
   const greatestValue = Math.max(...rows.map(([, { value }]) => Number(value)))
 
   return (
-    <TableContainer>
+    <Table.Container>
       {rows.map(([key, { value, note }], i) => (
-        <TableRow key={i}>
-          <TableCell>
-            <TableCellContent>
+        <Table.Row key={i}>
+          <Table.Cell>
+            <Table.CellContent>
               <Text color="dimmer">{key}</Text>
               {note && (
                 <Text size="xs" color="dimmest">
                   {note}
                 </Text>
               )}
-            </TableCellContent>
-          </TableCell>
-          <TableCell>
+            </Table.CellContent>
+          </Table.Cell>
+          <Table.Cell>
             <BarContainer>
               <Bar
                 key={i}
@@ -67,24 +67,25 @@ export default function NumericChart({
                 {value === null ? "N/A" : abbrNumber(value as number)}
               </Text>
             </BarContainer>
-          </TableCell>
-        </TableRow>
+          </Table.Cell>
+        </Table.Row>
       ))}
-    </TableContainer>
+    </Table.Container>
   )
 }
 
-const Bar = styled("div", {
-  base: "h-6 rounded-r-lg my-0.5",
-  variants: {
-    isNullValue: {
-      true: "bg-gradient-to-r from-higher/0 to-higher border-2 border-l-0 border-outline-dimmer rounded-r-md",
-      false:
-        "bg-gradient-to-r from-accent-dimmest/0 to-accent-dimmest border-accent-dimmer border-2 border-l-0"
+const { Bar, BarContainer } = {
+  Bar: styled("div", {
+    base: "h-6 rounded-r-lg my-0.5",
+    variants: {
+      isNullValue: {
+        true: "bg-gradient-to-r from-higher/0 to-higher border-2 border-l-0 border-outline-dimmer rounded-r-md",
+        false:
+          "bg-gradient-to-r from-accent-dimmest/0 to-accent-dimmest border-accent-dimmer border-2 border-l-0"
+      }
     }
-  }
-})
-
-const BarContainer = styled("div", {
-  base: "flex gap-2 items-center w-full absolute top-1/2 transform -translate-y-1/2"
-})
+  }),
+  BarContainer: styled("div", {
+    base: "flex gap-2 items-center w-full absolute top-1/2 transform -translate-y-1/2"
+  })
+}

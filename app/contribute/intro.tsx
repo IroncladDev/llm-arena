@@ -73,10 +73,11 @@ const FadeIn = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-const Container = styled(MotionDiv, {
-  base: "flex flex-col grow"
-})
-
-const Content = styled("div", {
-  base: "grow max-w-screen-md w-full self-center flex flex-col gap-16 px-4 h-auto py-16"
-})
+const { Container, Content } = {
+  Container: styled(MotionDiv, {
+    base: "flex flex-col grow"
+  }),
+  Content: styled("div", {
+    base: "grow max-w-screen-md w-full self-center flex flex-col gap-16 px-4 h-auto py-16"
+  })
+}

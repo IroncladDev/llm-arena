@@ -157,28 +157,32 @@ export default function Controls() {
   )
 }
 
-const ControlsContainer = styled("div", {
-  base: "flex gap-8 max-sm:gap-4 p-4 max-sm:overflow-x-auto max-w-screen max-sm:w-screen bg-root/50 border-b-2 border-outline-dimmest justify-center relative"
-})
-
-const SidebarButton = styled(Button, {
-  base: "md:hidden shrink-0 self-center absolute left-4"
-})
-
-const ControlItem = styled("div", {
-  base: "flex flex-col gap-1 h-full justify-between"
-})
-
-const OptionsContainer = styled("div", {
-  base: "flex gap-2"
-})
-
-const OptionButton = styled("button", {
-  base: "py-1.5 px-2 rounded-md hover:bg-highest flex gap-1 items-center",
-  variants: {
-    selected: {
-      true: "bg-higher text-foreground",
-      false: "text-foreground-dimmer"
+const {
+  ControlsContainer,
+  SidebarButton,
+  ControlItem,
+  OptionsContainer,
+  OptionButton
+} = {
+  ControlsContainer: styled("div", {
+    base: "flex gap-8 max-sm:gap-4 p-4 max-sm:overflow-x-auto max-w-screen max-sm:w-screen bg-root/50 border-b-2 border-outline-dimmest justify-center relative"
+  }),
+  SidebarButton: styled(Button, {
+    base: "md:hidden shrink-0 self-center absolute left-4"
+  }),
+  ControlItem: styled("div", {
+    base: "flex flex-col gap-1 h-full justify-between"
+  }),
+  OptionsContainer: styled("div", {
+    base: "flex gap-2"
+  }),
+  OptionButton: styled("button", {
+    base: "py-1.5 px-2 rounded-md hover:bg-highest flex gap-1 items-center",
+    variants: {
+      selected: {
+        true: "bg-higher text-foreground",
+        false: "text-foreground-dimmer"
+      }
     }
-  }
-})
+  })
+}

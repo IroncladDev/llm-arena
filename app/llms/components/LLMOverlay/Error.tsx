@@ -20,10 +20,11 @@ export default function ErrorState({ error }: { error: string }) {
   )
 }
 
-const ErrorContainer = styled("div", {
-  base: "flex items-center justify-center grow w-full h-full flex-col gap-4"
-})
-
-const ContentContainer = styled("div", {
-  base: "flex flex-col grow h-full"
-})
+const { ErrorContainer, ContentContainer } = {
+  ErrorContainer: styled("div", {
+    base: "flex items-center justify-center grow w-full h-full flex-col gap-4"
+  }),
+  ContentContainer: styled("div", {
+    base: "flex flex-col grow h-full"
+  })
+}
