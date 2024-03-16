@@ -13,6 +13,8 @@ Install dependencies and start the development environment.
    - Create a separate [Github oauth app](https://github.com/settings/developers)
    - Set the redirect URI to `http://localhost:3000/api/auth/callback/github`
    - You will need a sendgrid API key if you want to send emails
+   - `DISCORD_WEBHOOK_URL_PUBLIC` is a discord webhook to log public events (LLM submitted/approved/rejected)
+   - `DISCORD_WEBHOOK_URL_ADMIN` is a discord webhook to log admin events (contributor/vote/llm removed) and ideally logs to a private discord channel. For development purposes, both webhooks can be the same
 3. Run `mprocs` to start the development environment. This will install dependencies, spin up a postgres docker instance, and prisma studio.
 4. Run `bun db:sync` to apply pending migrations and create the prisma client
 5. Run `bun db:seed` to seed the database with initial data

@@ -1,14 +1,21 @@
 "use server"
 
 import determineConsensus from "@/lib/consensus"
+import { siteUrl } from "@/lib/env"
 import { formatError } from "@/lib/errors"
 import prisma from "@/lib/server/prisma"
 import { requireAdmin } from "@/lib/server/utils/auth"
 import { getSession } from "@/lib/server/utils/session"
+import { EmbedBuilder, WebhookClient } from "discord.js"
 import { z } from "zod"
 
+const webhook = new WebhookClient({
+  url: process.env.DISCORD_WEBHOOK_URL_ADMIN
+})
+
 const removeVoteInput = z.object({
-  voteId: z.number()
+  voteId: z.number(),
+  reason: z.string().min(3).max(255)
 })
 
 export type RemoveVoteInput = z.infer<typeof removeVoteInput>
@@ -22,11 +29,14 @@ export async function removeVote(e: RemoveVoteInput) {
     const { user } = res
     requireAdmin(user)
 
-    const { voteId } = removeVoteInput.parse(e)
+    const { voteId, reason } = removeVoteInput.parse(e)
 
     const vote = await prisma.vote.findFirst({
       where: {
         id: voteId
+      },
+      include: {
+        user: true
       }
     })
 
@@ -57,6 +67,23 @@ export async function removeVote(e: RemoveVoteInput) {
       data: {
         status: consensus.status
       }
+    })
+
+    const embed = new EmbedBuilder()
+      .setTitle(`[Vote Removed]`)
+      .setURL(new URL("/llms?llm=" + llm.id, siteUrl).toString())
+      .setDescription(`"${vote.comment}"`)
+      .setFields({
+        name: "Reason",
+        value: reason
+      })
+      .setFooter({
+        text: `- ${vote.user.handle}`
+      })
+      .setColor(0xef4444)
+
+    await webhook.send({
+      embeds: [embed]
     })
 
     return {

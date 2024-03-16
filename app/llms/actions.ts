@@ -1,12 +1,18 @@
 "use server"
 
 import determineConsensus from "@/lib/consensus"
+import { siteUrl } from "@/lib/env"
 import { formatError } from "@/lib/errors"
 import prisma from "@/lib/server/prisma"
 import { requireContributorOrAdmin } from "@/lib/server/utils/auth"
 import { getSession } from "@/lib/server/utils/session"
 import { LLMStatus, VoteStatus } from "@prisma/client"
+import { EmbedBuilder, WebhookClient } from "discord.js"
 import { z } from "zod"
+
+const webhook = new WebhookClient({
+  url: process.env.DISCORD_WEBHOOK_URL_PUBLIC
+})
 
 const castVoteInput = z
   .object({
@@ -96,6 +102,22 @@ export async function castVoteAction(_prevState: CastVoteReturn, e: FormData) {
         status: consensus.status
       }
     })
+
+    if (consensus.status !== LLMStatus.pending) {
+      const allVotes = [...llm.votes, newVote]
+
+      const embed = new EmbedBuilder()
+        .setTitle(`[LLM ${consensus.status}] ${llm.name}`)
+        .setURL(new URL("/llms?llm=" + llm.id, siteUrl).toString())
+        .setDescription(
+          `${consensus.status} after ${allVotes.length} votes. ${allVotes.filter(v => v.status === VoteStatus.approve).length} approvals, ${allVotes.filter(v => v.status === VoteStatus.reject).length} rejections.`
+        )
+        .setColor(consensus.status === "approved" ? 0x34d399 : 0xef4444)
+
+      await webhook.send({
+        embeds: [embed]
+      })
+    }
 
     return {
       success: true

@@ -103,7 +103,13 @@ export default function LLMOverlay() {
                   <DropdownMenuContent>
                     <DropdownMenuItem
                       onSelect={async () => {
-                        const res = await removeLLM({ llmId: llm.id })
+                        const reason = prompt(
+                          "Please provide a reason why you are removing the LLM"
+                        )
+
+                        if (!reason) return
+
+                        const res = await removeLLM({ llmId: llm.id, reason })
 
                         if (res.success) {
                           setIsOpen(false)
@@ -115,9 +121,13 @@ export default function LLMOverlay() {
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onSelect={async () => {
-                        const res1 = await removeContributor({
-                          userId: llm.user.id
-                        })
+                        const reason = prompt(
+                          "Please provide a reason why you are removing the LLM and contributor"
+                        )
+
+                        if (!reason) return
+
+                        const res1 = await removeLLM({ llmId: llm.id, reason })
 
                         if (res1.message) {
                           alert(res1.message)
@@ -125,7 +135,10 @@ export default function LLMOverlay() {
                           return
                         }
 
-                        const res2 = await removeLLM({ llmId: llm.id })
+                        const res2 = await removeContributor({
+                          userId: llm.user.id,
+                          reason
+                        })
 
                         if (res2.message) {
                           alert(res2.message)

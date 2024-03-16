@@ -9,6 +9,12 @@ module.exports = {
       "node_modules/handlebars/dist/handlebars.js"
     )
 
+    // For Discord.js to work in Server Actions
+    config.module.rules.push({
+      test: /\.node/,
+      use: "node-loader"
+    })
+
     // Make sure to return the modified config
     return config
   }

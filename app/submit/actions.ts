@@ -1,11 +1,17 @@
 "use server"
 
+import { siteUrl } from "@/lib/env"
 import { formatError } from "@/lib/errors"
 import { parseAbbrNumber } from "@/lib/numbers"
 import prisma from "@/lib/server/prisma"
 import { getSession } from "@/lib/server/utils/session"
 import { LLM, MetaProperty, MetaPropertyType, UserRole } from "@prisma/client"
+import { EmbedBuilder, WebhookClient } from "discord.js"
 import { z } from "zod"
+
+const webhook = new WebhookClient({
+  url: process.env.DISCORD_WEBHOOK_URL_PUBLIC
+})
 
 export type SubmitReturn = {
   success: boolean
@@ -131,6 +137,29 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
         }
       }
     }
+
+    const embed = new EmbedBuilder()
+      .setTitle(`[New LLM Submitted] ${llm.name}`)
+      .setURL(new URL("/llms?llm=" + llm.id, siteUrl).toString())
+      .setDescription(llm.sourceDescription)
+      .setColor(0xb53e3e)
+
+    const fieldsToAdd = meta
+      .slice(0, 5)
+      .map(x => ({ name: `${x.name} (${x.type})`, value: String(x.value) }))
+
+    if (meta.length > 5) {
+      fieldsToAdd.push({
+        name: "...",
+        value: `${meta.length - 5} more`
+      })
+    }
+
+    embed.addFields(fieldsToAdd)
+
+    await webhook.send({
+      embeds: [embed]
+    })
 
     return {
       success: true,

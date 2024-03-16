@@ -19,6 +19,7 @@ model User {
   provider  AuthProvider @default(github)
   role      UserRole     @default(user)
   createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt @default(now())
 
   // Relations
   votes     Vote[]

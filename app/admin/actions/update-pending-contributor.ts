@@ -6,7 +6,12 @@ import prisma from "@/lib/server/prisma"
 import { requireAdmin } from "@/lib/server/utils/auth"
 import { getSession } from "@/lib/server/utils/session"
 import { UserRole, VoteStatus } from "@prisma/client"
+import { EmbedBuilder, WebhookClient } from "discord.js"
 import { z } from "zod"
+
+const webhook = new WebhookClient({
+  url: process.env.DISCORD_WEBHOOK_URL_ADMIN
+})
 
 const updatePendingContributorInput = z.object({
   userId: z.number(),
@@ -89,6 +94,17 @@ export async function updatePendingContributor(
         })
       })
     }
+
+    const embed = new EmbedBuilder()
+      .setTitle(
+        `[Contributor ${status === VoteStatus.approve ? "Accepted" : "Rejected"}] ${userToUpdate.handle}`
+      )
+      .setURL(`https://github.com/${userToUpdate.handle}`)
+      .setColor(status === VoteStatus.approve ? 0x34d399 : 0xef4444)
+
+    await webhook.send({
+      embeds: [embed]
+    })
 
     return { success: true }
   } catch (e) {

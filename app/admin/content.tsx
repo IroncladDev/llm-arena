@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import Text from "@/components/ui/text"
 import { User, VoteStatus } from "@prisma/client"
+import { formatDistanceToNow } from "date-fns"
 import { ExternalLink, GithubIcon } from "lucide-react"
 import { useState } from "react"
 import { styled } from "react-tailwind-variants"
@@ -58,21 +59,29 @@ const UserRow = ({
   return (
     <UserRowContainer>
       <UserRowStart>
-        <Button asChild variant="highlight">
+        <Button asChild variant="highlight" size="sm">
           <a href={"https://github.com/" + user.handle} target="_blank">
             <GithubIcon size={16} />
             <Text>{user.handle}</Text>
             <ExternalLink size={16} />
           </a>
         </Button>
+        <Text color="dimmest">
+          Updated {formatDistanceToNow(user.updatedAt)} ago
+        </Text>
       </UserRowStart>
-      <Button onClick={() => submit(VoteStatus.approve)} variant="highlight">
+      <Button
+        onClick={() => submit(VoteStatus.approve)}
+        variant="highlight"
+        size="sm"
+      >
         Approve
       </Button>
       <Button
         type="button"
         onClick={() => submit(VoteStatus.reject)}
         variant="outline"
+        size="sm"
       >
         Reject
       </Button>
@@ -88,7 +97,7 @@ const { Content, UserRowContainer, UserRowStart, UserContainer } = {
     base: "flex gap-2 items-center py-2"
   }),
   UserRowStart: styled("div", {
-    base: "flex grow"
+    base: "flex grow items-center gap-2"
   }),
   UserContainer: styled("div", {
     base: "flex flex-col grow divide-y divide-outline-dimmest"

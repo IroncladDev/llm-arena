@@ -162,7 +162,13 @@ function VoteComment({
           <DropdownMenuContent>
             <DropdownMenuItem
               onSelect={async () => {
-                const res = await removeVote({ voteId: vote.id })
+                const reason = prompt(
+                  "Please provide a reason why you are removing the vote"
+                )
+
+                if (!reason) return
+
+                const res = await removeVote({ voteId: vote.id, reason })
 
                 if (res.success) {
                   refetch()
@@ -175,14 +181,21 @@ function VoteComment({
             </DropdownMenuItem>
             <DropdownMenuItem
               onSelect={async () => {
-                const res = await removeVote({ voteId: vote.id })
+                const reason = prompt(
+                  "Please provide a reason why you are removing the vote and contributor"
+                )
+
+                if (!reason) return
+
+                const res = await removeVote({ voteId: vote.id, reason })
 
                 if (!res.success) {
                   return alert(res.message)
                 }
 
                 const revokeRes = await removeContributor({
-                  userId: vote.userId
+                  userId: vote.userId,
+                  reason
                 })
 
                 if (!revokeRes.success) {
