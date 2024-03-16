@@ -11,9 +11,11 @@ import {
 import Link from "next/link"
 import { styled } from "react-tailwind-variants"
 import { useCurrentUser } from "./providers/CurrentUserProvider"
+import { usePathname } from "next/navigation"
 
 export default function Navbar() {
   const user = useCurrentUser()
+  const pathname = usePathname()
 
   return (
     user?.role === "contributor" ||
@@ -22,32 +24,33 @@ export default function Navbar() {
         <Content>
           <NavLink asChild>
             <Link href="/">
-              <HomeIcon className="text-foreground-dimmer w-4 h-4" />
-              Compare
+              <HomeIcon className="w-4 h-4" />
+              Home
             </Link>
           </NavLink>
+
+          <NavLink asChild highlighted={pathname === "/llms"}>
+            <Link href="/llms">
+              <ListIcon className="w-4 h-4" />
+              LLMs
+            </Link>
+          </NavLink>
+
           {user.role === UserRole.admin && (
-            <NavLink asChild>
+            <NavLink asChild highlighted={pathname === "/admin"}>
               <Link href="/admin">
-                <SettingsIcon className="text-foreground-dimmer w-4 h-4" />
+                <SettingsIcon className="w-4 h-4" />
                 Admin
               </Link>
             </NavLink>
           )}
-
-          <NavLink asChild>
-            <Link href="/llms">
-              <ListIcon className="text-foreground-dimmer w-4 h-4" />
-              LLMs
-            </Link>
-          </NavLink>
 
           <NavLink
             href="https://github.com/IroncladDev/ai-to-ai/blob/main/docs/contributor-guide.md"
             target="_blank"
           >
             Contributor Guide
-            <ExternalLink className="text-foreground-dimmer w-4 h-4" />
+            <ExternalLink className="w-4 h-4" />
           </NavLink>
           {user.role === UserRole.admin && (
             <NavLink
@@ -55,13 +58,13 @@ export default function Navbar() {
               target="_blank"
             >
               Admin Guide
-              <ExternalLink className="text-foreground-dimmer w-4 h-4" />
+              <ExternalLink className="w-4 h-4" />
             </NavLink>
           )}
 
-          <NavLink asChild>
+          <NavLink asChild highlighted={pathname === "/submit"}>
             <Link href="/submit">
-              <PlusIcon className="text-foreground-dimmer w-4 h-4" />
+              <PlusIcon className="w-4 h-4" />
               Submit an LLM
             </Link>
           </NavLink>
@@ -79,6 +82,11 @@ const { Container, Content, NavLink } = {
     base: "max-w-[1024px] flex flex-wrap justify-center items-center divide-x-2 divide-higher gap-y-2"
   }),
   NavLink: styled("a", {
-    base: "text-foreground-dimmer text-xs hover:text-accent-dimmer transition-colors px-4 inline-flex items-center gap-1"
+    base: "text-foreground-dimmer text-xs hover:text-accent-dimmer transition-colors px-4 inline-flex items-center gap-1",
+    variants: {
+      highlighted: {
+        true: "text-accent"
+      }
+    }
   })
 }
