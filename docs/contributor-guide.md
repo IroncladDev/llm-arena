@@ -60,12 +60,7 @@ Finally, provide one or more sources to back the LLM's metadata. This can be a r
 
 <img alt="Adding a source" src="./images/add-source.png" width="400"/>
 
-Please watch the following video on how to submit an LLM:
-
-<video controls>
-  <source src="./video-guide.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+**Perquisite**: Please download and watch the [Video Guide](https://github.com/IroncladDev/ai-to-ai/blob/main/docs/video-guide.mp4) on adding an LLM before you start. The file is too large to display in this file.
 
 ## Best Practices
 
