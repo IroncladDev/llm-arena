@@ -1,10 +1,10 @@
+import LLMIcon from "@/components/llm-icon"
 import Text from "@/components/ui/text"
+import { XIcon } from "lucide-react"
+import { useState } from "react"
 import { styled } from "react-tailwind-variants"
 import LLMSearch from "../compare/search"
-import { useState } from "react"
 import { LLMWithMetadata } from "../compare/state"
-import { XIcon } from "lucide-react"
-import LLMIcon from "@/components/llm-icon"
 
 export default function Selector() {
   const [llms, setLLMs] = useState<Array<LLMWithMetadata>>([])
@@ -20,13 +20,16 @@ export default function Selector() {
       <LLMSearch llms={llms} setLLMs={setLLMs} placeholder="Find an LLM" />
       <LLMContainer>
         {llms.map(llm => (
-          <LLMItem key={llm.id}>
+          <LLMItem key={llm.id} role="button" tabIndex={0}>
             <IconContainer>
               <LLMIcon llm={llm} />
               <CloseButton>
                 <XIcon
                   className="w-4 h-4 text-foreground-dimmest"
-                  onClick={() => setLLMs(llms.filter(x => x.id !== llm.id))}
+                  onClick={e => {
+                    e.stopPropagation()
+                    setLLMs(llms.filter(x => x.id !== llm.id))
+                  }}
                 />
               </CloseButton>
             </IconContainer>
@@ -59,10 +62,10 @@ const {
     base: "flex flex-col items-center gap-2"
   }),
   LLMContainer: styled("div", {
-    base: "flex flex-wrap items-center justify-center gap-2 w-full"
+    base: "flex flex-wrap items-center justify-center gap-2 w-full max-h-[480px] overflow-y-auto"
   }),
   LLMItem: styled("div", {
-    base: "flex flex-col rounded-lg border-2 border-outline-dimmer bg-default grow basis-0"
+    base: "flex flex-col rounded-lg border-2 border-outline-dimmer bg-default grow basis-0 max-w-[320px] shadow-md cursor-pointer hover:border-accent-dimmest transition-colors"
   }),
   IconContainer: styled("div", {
     base: "flex items-center justify-center py-4 bg-root rounded-t-lg relative"
