@@ -220,13 +220,7 @@ function VoteComment({
   )
 }
 
-const {
-  VoteStats,
-  Indicator,
-  IndicatorBar,
-  VoteContainer,
-  PendingBadge
-} = {
+const { VoteStats, Indicator, IndicatorBar, VoteContainer, PendingBadge } = {
   VoteStats: styled("div", {
     base: "flex flex-col gap-2 p-2 rounded-lg border-2",
     variants: {

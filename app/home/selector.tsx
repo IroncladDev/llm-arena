@@ -1,4 +1,7 @@
 import LLMIcon from "@/components/llm-icon"
+import { Button } from "@/components/ui/button"
+import Flex from "@/components/ui/flex"
+import { Sheet, SheetContent } from "@/components/ui/sheet"
 import Text from "@/components/ui/text"
 import {
   ArrowRightIcon,
@@ -7,15 +10,12 @@ import {
   PlusIcon,
   XIcon
 } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { styled } from "react-tailwind-variants"
 import LLMSearch from "../compare/search"
 import { LLMWithMetadata } from "../compare/types"
-import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
-import { Sheet, SheetContent } from "@/components/ui/sheet"
 import FieldTable from "../llms/components/FieldTable"
-import Flex from "@/components/ui/flex"
 
 export default function Selector() {
   const [llms, setLLMs] = useState<Array<LLMWithMetadata>>([])

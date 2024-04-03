@@ -1,7 +1,7 @@
 import { formatError } from "@/lib/errors"
-import { optionsSchema, OptionsType } from "./state"
 import prisma from "@/lib/server/prisma"
 import Content from "./content"
+import { optionsSchema, OptionsType } from "./state"
 
 export default async function ComparePage({
   searchParams

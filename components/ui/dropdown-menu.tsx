@@ -74,13 +74,13 @@ DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName
 
 export {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSub,
-  DropdownMenuTrigger,
-  DropdownMenuCheckboxItem,
-  DropdownMenuRadioItem
+  DropdownMenuTrigger
 }

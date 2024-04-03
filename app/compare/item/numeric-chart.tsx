@@ -1,12 +1,12 @@
 import Text from "@/components/ui/text"
 import { ComparableFieldGroup } from "@/lib/comparison"
+import gr from "@/lib/gradients"
 import { abbrNumber } from "@/lib/numbers"
+import { tokens } from "@/tailwind.config"
 import { styled } from "react-tailwind-variants"
+import { useURLState } from "../state"
 import { FilterEnum, themeData } from "../types"
 import Table from "./tables"
-import { useURLState } from "../state"
-import gr from "@/lib/gradients"
-import { tokens } from "@/tailwind.config"
 
 export default function NumericChart({
   field

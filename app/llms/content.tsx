@@ -2,6 +2,7 @@
 
 import { Container } from "@/components/container"
 import Navbar from "@/components/navbar"
+import Flex from "@/components/ui/flex"
 import { Input } from "@/components/ui/input"
 import Text from "@/components/ui/text"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
@@ -11,7 +12,6 @@ import { LLMWithRelations, SearchInput } from "../api/search/types"
 import LLMItem from "./components/LLMItem"
 import LLMOverlay from "./components/LLMOverlay"
 import LLMSearchFilter from "./components/LLMSearchFilter"
-import Flex from "@/components/ui/flex"
 
 export default function LLMsPage() {
   const [searchBy, setSearchBy] = useState<SearchInput["searchBy"]>({

@@ -1,6 +1,6 @@
+import Flex from "@/components/ui/flex"
 import { Skeleton } from "@/components/ui/skeleton"
 import Header from "./Header"
-import Flex from "@/components/ui/flex"
 
 export default function Loading() {
   return (
