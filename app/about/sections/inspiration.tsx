@@ -1,8 +1,8 @@
+import { Container } from "@/components/container"
 import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
-import { Container } from "@/components/container"
 
 export default function Inspiration() {
   return (

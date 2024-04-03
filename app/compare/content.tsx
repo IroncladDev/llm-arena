@@ -1,18 +1,18 @@
 "use client"
 
-import { styled } from "react-tailwind-variants"
-import { useURLState } from "./state"
 import { Container } from "@/components/container"
-import Sidebar from "./sidebar"
-import { useEffect, useState } from "react"
-import { LLMWithMetadata, ModeEnum } from "./types"
-import LLMContainer from "./llms"
-import Flex from "@/components/ui/flex"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRightIcon, MenuIcon, PencilIcon } from "lucide-react"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import useClientRect from "@/hooks/useElementSize"
+import { ArrowRightIcon, MenuIcon, PencilIcon } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import { styled } from "react-tailwind-variants"
+import LLMContainer from "./llms"
+import Sidebar from "./sidebar"
+import { useURLState } from "./state"
+import { LLMWithMetadata, ModeEnum } from "./types"
 
 export default function Content({ llms }: { llms: Array<LLMWithMetadata> }) {
   const { mode, set } = useURLState()

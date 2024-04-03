@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
+import Flex from "@/components/ui/flex"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Text from "@/components/ui/text"
@@ -25,7 +26,6 @@ import Header from "./Header"
 import Loading from "./Loading"
 import VoteSection from "./VoteSection"
 import Votes from "./Votes"
-import Flex from "@/components/ui/flex"
 
 export default function LLMOverlay() {
   const params = useSearchParams()

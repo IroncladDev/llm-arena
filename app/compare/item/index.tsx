@@ -1,17 +1,17 @@
+import { MotionDiv } from "@/components/motion"
 import Text from "@/components/ui/text"
+import useClientRect from "@/hooks/useElementSize"
 import { ComparableFieldGroup } from "@/lib/comparison"
 import { snakeToTitleCase } from "@/lib/utils"
 import { MetaPropertyType } from "@prisma/client"
+import { MoveHorizontalIcon, XIcon } from "lucide-react"
+import { useState } from "react"
 import { styled } from "react-tailwind-variants"
 import { useURLState } from "../state"
+import { ModeEnum, themeData } from "../types"
 import BooleanTable from "./boolean-table"
 import NumericChart from "./numeric-chart"
 import StringTable from "./string-table"
-import { ModeEnum, themeData } from "../types"
-import { MoveHorizontalIcon, XIcon } from "lucide-react"
-import { useState } from "react"
-import { MotionDiv } from "@/components/motion"
-import useClientRect from "@/hooks/useElementSize"
 
 export default function CompareItem({
   field,
@@ -98,7 +98,7 @@ const { Container, OptionButton, DragHandle, DragHandleBar } = {
     base: "absolute top-2 right-2 opacity-0 group-hover/item:opacity-100 transition-opacity"
   }),
   DragHandle: styled(MotionDiv, {
-    base: "flex items-center justify-center w-2 h-full absolute top-0 bottom-0 opacity-0 group-hover/item:opacity-100 transition-opacity right-0",
+    base: "flex items-center justify-center w-2 h-full absolute top-0 bottom-0 opacity-0 group-hover/item:opacity-100 transition-opacity right-0"
   }),
   DragHandleBar: styled("div", {
     base: "bg-foreground-dimmest/50 rounded-full w-[2px] h-12 cursor-ew-resize active:bg-foreground-dimmest/25"

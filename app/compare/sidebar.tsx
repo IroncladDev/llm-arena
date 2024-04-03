@@ -1,6 +1,28 @@
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
 import Flex from "@/components/ui/flex"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select"
+import {
+  Slider,
+  SliderRange,
+  SliderThumb,
+  SliderTrack
+} from "@/components/ui/slider"
 import Text from "@/components/ui/text"
+import gr from "@/lib/gradients"
+import { toPng } from "html-to-image"
 import {
   ArrowDownToLineIcon,
   CheckIcon,
@@ -10,20 +32,12 @@ import {
   Link2Icon,
   PencilIcon,
   ShareIcon,
-  XIcon
+  XIcon,
+  icons
 } from "lucide-react"
+import { createElement, useEffect, useState } from "react"
 import { styled } from "react-tailwind-variants"
 import { useURLState } from "./state"
-import {
-  Select,
-  SelectItem,
-  SelectContent,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select"
-import { createElement, useEffect, useState } from "react"
-import { icons } from "lucide-react"
-import gr from "@/lib/gradients"
 import {
   FilterEnum,
   ModeEnum,
@@ -33,20 +47,6 @@ import {
   themeData,
   viewData
 } from "./types"
-import {
-  Slider,
-  SliderRange,
-  SliderTrack,
-  SliderThumb
-} from "@/components/ui/slider"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuItem
-} from "@/components/ui/dropdown-menu"
-import { toPng } from "html-to-image"
 
 export default function Sidebar({
   onOpenChange,

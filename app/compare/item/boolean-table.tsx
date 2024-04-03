@@ -1,9 +1,9 @@
 import Text from "@/components/ui/text"
 import { ComparableFieldGroup } from "@/lib/comparison"
 import { CheckIcon, XIcon } from "lucide-react"
+import { useURLState } from "../state"
 import { FilterEnum, themeData } from "../types"
 import Table from "./tables"
-import { useURLState } from "../state"
 
 export default function BooleanTable({
   field

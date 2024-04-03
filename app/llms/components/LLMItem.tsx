@@ -1,4 +1,5 @@
 import { LLMWithRelations } from "@/app/api/search/types"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import useClientRect from "@/hooks/useElementSize"
 import { VoteStatus } from "@prisma/client"
@@ -6,7 +7,6 @@ import { usePathname, useRouter } from "next/navigation"
 import { Fragment } from "react"
 import { styled } from "react-tailwind-variants"
 import FieldTable from "./FieldTable"
-import Flex from "@/components/ui/flex"
 
 export default function LLMItem({
   query,

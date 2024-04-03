@@ -1,7 +1,7 @@
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import { InfoIcon } from "lucide-react"
 import Header from "./Header"
-import Flex from "@/components/ui/flex"
 
 export default function ErrorState({ error }: { error: string }) {
   return (

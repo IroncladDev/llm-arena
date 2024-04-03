@@ -3,13 +3,13 @@
 import { Container } from "@/components/container"
 import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import { User, VoteStatus } from "@prisma/client"
 import { formatDistanceToNow } from "date-fns"
 import { ExternalLink, GithubIcon } from "lucide-react"
 import { useState } from "react"
 import { updatePendingContributor } from "./actions/update-pending-contributor"
-import Flex from "@/components/ui/flex"
 
 export default function AdminPage({ waitlist }: { waitlist: Array<User> }) {
   const [users, setUsers] = useState(waitlist)

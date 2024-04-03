@@ -1,6 +1,7 @@
 import { LLMWithRelations } from "@/app/api/search/types"
 import { useCurrentUser } from "@/components/providers/CurrentUserProvider"
 import { Button } from "@/components/ui/button"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import { Textarea } from "@/components/ui/textarea"
 import { User, Vote, VoteStatus } from "@prisma/client"
@@ -9,7 +10,6 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useFormState } from "react-dom"
 import { styled } from "react-tailwind-variants"
 import { castVoteAction } from "../../actions"
-import Flex from "@/components/ui/flex"
 
 export default function VoteSection({
   llm,
