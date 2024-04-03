@@ -1,211 +1,384 @@
-import OverflowScroll from "@/components/overflow"
-import { useCurrentUser } from "@/components/providers/CurrentUserProvider"
 import { Button } from "@/components/ui/button"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
-import { UserRole } from "@prisma/client"
-import { Hexagon, PlusIcon, XIcon } from "lucide-react"
-import Link from "next/link"
+import {
+  ArrowDownToLineIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CopyIcon,
+  EyeIcon,
+  Link2Icon,
+  PencilIcon,
+  ShareIcon,
+  XIcon
+} from "lucide-react"
 import { styled } from "react-tailwind-variants"
-import LLMSearch from "./search"
-import { useCompareState } from "./state"
+import { useURLState } from "./state"
+import {
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select"
+import { createElement, useEffect, useState } from "react"
+import { icons } from "lucide-react"
+import gr from "@/lib/gradients"
+import {
+  FilterEnum,
+  ModeEnum,
+  ThemeEnum,
+  ViewEnum,
+  filterData,
+  themeData,
+  viewData
+} from "./types"
+import {
+  Slider,
+  SliderRange,
+  SliderTrack,
+  SliderThumb
+} from "@/components/ui/slider"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuItem
+} from "@/components/ui/dropdown-menu"
+import { toPng } from "html-to-image"
 
-export default function Sidebar() {
-  const currentUser = useCurrentUser()
+export default function Sidebar({
+  onOpenChange,
+  containerRef,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof SidebarContainer> & {
+  onOpenChange: React.Dispatch<React.SetStateAction<boolean>>
+  containerRef: React.RefObject<HTMLDivElement>
+}) {
   const {
-    llms,
-    sidebar: open,
-    setLLMs,
-    setSidebar: setOpen
-  } = useCompareState()
+    view,
+    filters,
+    set,
+    setFilterValue,
+    theme,
+    padding,
+    spacing,
+    ommitted,
+    setOmmittedField
+  } = useURLState()
+
+  const [hasActed, setHasActed] = useState(false)
+
+  useEffect(() => {
+    if (hasActed) {
+      setTimeout(() => setHasActed(false), 3000)
+    }
+  }, [hasActed])
+
+  const handleCopy = async () => {
+    if (!containerRef.current) return
+
+    try {
+      const dataUrl = await toPng(containerRef.current)
+
+      const response = await fetch(dataUrl)
+      const blob = await response.blob()
+
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "image/png": blob
+        })
+      ])
+
+      setHasActed(true)
+    } catch (error) {
+      console.log(error)
+      alert("Failed to copy image to clipboard")
+    }
+  }
+
+  const handleDownload = async () => {
+    if (!containerRef.current) return
+
+    try {
+      const dataUrl = await toPng(containerRef.current)
+      const a = document.createElement("a")
+      a.href = dataUrl
+      a.download = "image.png"
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      setHasActed(true)
+    } catch (error) {
+      console.log(error)
+      alert("Failed to save image")
+    }
+  }
 
   return (
-    <Container>
-      <Content>
-        <Header>
-          <LLMSearch
-            llms={llms}
-            setLLMs={setLLMs}
-            placeholder="Find an LLM..."
-            id="llm-sidebar-search"
-          />
-          {open && (
+    <SidebarContainer {...props}>
+      <Flex gap={4} align="center" justify="between">
+        <Text weight="medium" size="lg">
+          Edit
+        </Text>
+        <Button
+          size="icon"
+          onClick={() => onOpenChange(false)}
+          className="md:hidden"
+        >
+          <XIcon />
+        </Button>
+      </Flex>
+      <Flex col gap={1}>
+        <Text asChild weight="medium" color="dimmer">
+          <label>View</label>
+        </Text>
+        <Select value={view} onValueChange={v => set({ view: v as ViewEnum })}>
+          <SelectTrigger id="view-select-trigger" elevated>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent elevated>
+            {Object.entries(viewData).map(([key, option]) => (
+              <SelectItem key={key} value={key}>
+                <Flex gap={2} align="center">
+                  {createElement(icons[option.icon], {
+                    className: "w-4 h-4"
+                  })}
+                  <Text>{option.label}</Text>
+                </Flex>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </Flex>
+      <Flex col gap={1}>
+        <Text asChild weight="medium" color="dimmer">
+          <label>Filter</label>
+        </Text>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
             <Button
-              size="icon"
-              onClick={() => setOpen(false)}
-              variant="ghost"
-              className="bg-root md:hidden"
-              aria-label="Close Sidebar"
+              aria-label="Filter"
+              className="justify-between w-full"
+              variant="elevated"
             >
-              <XIcon className="text-foreground-dimmer w-4 h-4" />
+              <Text>
+                {filters.length === 0
+                  ? "No filters"
+                  : filters.length === 1
+                    ? filterData[filters[0]].label
+                    : `${filters.length} filters`}
+              </Text>
+              <ChevronDownIcon className="w-4 h-4 text-foreground-dimmer" />
             </Button>
-          )}
-        </Header>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent elevated side="bottom" align="start">
+            {Object.entries(filterData).map(([key, option], i) => (
+              <DropdownMenuCheckboxItem
+                checked={filters.includes(key as FilterEnum)}
+                onSelect={() =>
+                  setFilterValue(
+                    key as FilterEnum,
+                    !filters.includes(key as FilterEnum)
+                  )
+                }
+                key={i}
+                inset
+              >
+                <Text>{option.label}</Text>
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </Flex>
+      <Flex col gap={1}>
+        <Text asChild weight="medium" color="dimmer">
+          <label htmlFor="theme-select-trigger">Theme</label>
+        </Text>
+        <Select
+          value={theme}
+          onValueChange={v => set({ theme: v as ThemeEnum })}
+        >
+          <SelectTrigger id="theme-select-trigger" elevated>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent elevated>
+            {Object.entries(themeData).map(([key, option]) => (
+              <SelectItem key={key} value={key}>
+                <Flex gap={2} align="center">
+                  <ThemeColor
+                    style={{ background: gr.linear(0, ...option.foreground) }}
+                  />
+                  <Text>{option.label}</Text>
+                </Flex>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </Flex>
+      <Flex col gap={1}>
+        <Flex gap={2} align="center">
+          <Text weight="medium" color="dimmer">
+            Padding
+          </Text>
+          <Text color="dimmest" size="xs" className="shrink-0">
+            {padding}
+          </Text>
+        </Flex>
+        <Flex gap={2} align="center">
+          <Text color="dimmest" size="xs" className="shrink-0">
+            8
+          </Text>
+          <Slider
+            defaultValue={[Number(padding)]}
+            max={128}
+            min={8}
+            step={1}
+            onValueChange={value => set({ padding: String(value[0]) }, true)}
+          >
+            <SliderTrack>
+              <SliderRange />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+          <Text color="dimmest" size="xs" className="shrink-0">
+            128
+          </Text>
+        </Flex>
+      </Flex>
+      <Flex col gap={1}>
+        <Flex gap={2} align="center">
+          <Text weight="medium" color="dimmer">
+            Spacing
+          </Text>
+          <Text color="dimmest" size="xs" className="shrink-0">
+            {spacing}
+          </Text>
+        </Flex>
+        <Flex gap={2} align="center">
+          <Text color="dimmest" size="xs" className="shrink-0">
+            8
+          </Text>
+          <Slider
+            defaultValue={[Number(spacing)]}
+            max={64}
+            min={8}
+            step={1}
+            onValueChange={value => set({ spacing: String(value[0]) }, true)}
+          >
+            <SliderTrack>
+              <SliderRange />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+          <Text color="dimmest" size="xs" className="shrink-0">
+            64
+          </Text>
+        </Flex>
+      </Flex>
+      {ommitted.length > 0 && (
+        <Flex col gap={1}>
+          <Text weight="medium" color="dimmer">
+            Ommitted Fields
+          </Text>
+          <Flex gap={2} wrap>
+            {ommitted.map(name => (
+              <OmmittedField
+                key={name}
+                onClick={() => setOmmittedField(name, false)}
+              >
+                <Text size="xs" color="dimmer">
+                  {name}
+                </Text>
+                <XIcon className="w-4 h-4 text-inherit" />
+              </OmmittedField>
+            ))}
+          </Flex>
+        </Flex>
+      )}
+      <Flex col grow gap={4} justify="end">
+        <Flex col gap={2}>
+          <Button
+            onClick={() => set({ mode: ModeEnum.view })}
+            variant="elevated"
+          >
+            Enter View Mode
+            <EyeIcon className="w-4 h-4" />
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="elevated">
+                <Text>Share</Text>
+                {hasActed ? (
+                  <CheckIcon className="w-4 h-4 text-emerald-500" />
+                ) : (
+                  <ShareIcon className="w-4 h-4" />
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent elevated side="top" collisionPadding={8}>
+              <ShareOption onClick={handleDownload}>
+                <ArrowDownToLineIcon className="w-4 h-4" />
+                <Text color="inherit">Download Image</Text>
+              </ShareOption>
+              <ShareOption onSelect={handleCopy}>
+                <CopyIcon className="w-4 h-4" />
+                <Text color="inherit">Copy Image</Text>
+              </ShareOption>
+              <ShareOption
+                onSelect={() => {
+                  const url = new URL(window.location.href)
 
-        <OverflowScroll>
-          {llms.length > 0 ? (
-            <SelectedLLMs>
-              {llms.map(llm => (
-                <SelectedLLM key={llm.id}>
-                  <SelectedLLMName>
-                    <Hexagon className="w-4 h-4 text-accent-dimmer fill-accent-dimmest/50" />
-                    <Text color="dimmer">{llm.name}</Text>
-                  </SelectedLLMName>
-                  <RemoveSelectedLLMButton
-                    onClick={() => {
-                      setLLMs(llms.filter(l => l.id !== llm.id))
-                    }}
-                  >
-                    <XIcon className="w-4 h-4" />
-                  </RemoveSelectedLLMButton>
-                </SelectedLLM>
-              ))}
-              <Button asChild className="mt-2">
-                <label htmlFor="llm-sidebar-search">
-                  <PlusIcon />
-                  <Text>Add another LLM</Text>
-                </label>
-              </Button>
-            </SelectedLLMs>
-          ) : (
-            <EmptyContainer>
-              <Text color="dimmest">No LLMs selected</Text>
-              <Button asChild>
-                <label htmlFor="llm-sidebar-search">
-                  <PlusIcon className="w-4 h-4" />
-                  <Text color="dimmer">Find an LLM</Text>
-                </label>
-              </Button>
-            </EmptyContainer>
-          )}
-        </OverflowScroll>
-      </Content>
-      <Footer>
-        <FooterSection>
-          <Text weight="bold" size="lg">
-            AI to AI
-          </Text>
-          <Text multiline color="dimmer">
-            Create beautiful side-by-side LLM Comparisons
-          </Text>
-        </FooterSection>
-        <FooterSection>
-          <FooterLinks>
-            <FooterLink href="/about">About</FooterLink>
-            <FooterLink
-              href="/contribute"
-              hidden={
-                currentUser?.role === "contributor" ||
-                currentUser?.role === "admin"
-              }
-            >
-              Contribute
-            </FooterLink>
-            <FooterLink href="/login" hidden={!!currentUser}>
-              Log In
-            </FooterLink>
-            <FooterLink
-              href="/llms"
-              hidden={
-                !currentUser ||
-                (currentUser?.role !== UserRole.admin &&
-                  currentUser?.role !== UserRole.contributor)
-              }
-            >
-              LLMs
-            </FooterLink>
-            <FooterLink
-              href="/submit"
-              hidden={
-                !currentUser ||
-                (currentUser?.role !== UserRole.admin &&
-                  currentUser?.role !== UserRole.contributor)
-              }
-            >
-              Submit an LLM
-            </FooterLink>
-            <FooterLink
-              href="/admin"
-              hidden={!currentUser || currentUser?.role !== UserRole.admin}
-            >
-              Admin
-            </FooterLink>
-            <FooterLink
-              href="https://github.com/IroncladDev/ai-to-ai"
-              target="_blank"
-            >
-              Github
-            </FooterLink>
-          </FooterLinks>
-        </FooterSection>
-        <FooterSection>
-          <Text color="dimmest">
-            &copy;{" "}
-            <a
-              href="https://connerow.dev"
-              target="_blank"
-              className="text-accent-dimmer"
-            >
-              IroncladDev
-            </a>{" "}
-            2024
-            {new Date().getFullYear() > 2024
-              ? "-" + new Date().getFullYear()
-              : ""}
-          </Text>
-        </FooterSection>
-      </Footer>
-    </Container>
+                  url.searchParams.set("mode", ModeEnum.view)
+
+                  navigator.clipboard.writeText(url.toString()).then(() => {
+                    setHasActed(true)
+                  })
+                }}
+              >
+                <Link2Icon className="w-4 h-4" />
+                <Text color="inherit">Copy Link</Text>
+              </ShareOption>
+              <ShareOption
+                onSelect={() => {
+                  const url = new URL(window.location.href)
+
+                  url.searchParams.set("mode", ModeEnum.edit)
+
+                  navigator.clipboard.writeText(url.toString()).then(() => {
+                    setHasActed(true)
+                  })
+                }}
+              >
+                <PencilIcon className="w-4 h-4" />
+                <Text color="inherit">Copy Link to Edit</Text>
+              </ShareOption>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </Flex>
+      </Flex>
+    </SidebarContainer>
   )
 }
 
-const {
-  Header,
-  Content,
-  Footer,
-  FooterSection,
-  FooterLinks,
-  FooterLink,
-  Container,
-  SelectedLLMs,
-  SelectedLLM,
-  SelectedLLMName,
-  RemoveSelectedLLMButton,
-  EmptyContainer
-} = {
-  Header: styled("div", {
-    base: "flex items-center gap-2"
+const { SidebarContainer, ThemeColor, ShareOption, OmmittedField } = {
+  SidebarContainer: styled("div", {
+    base: "flex flex-col gap-4 p-4 bg-default border-r-2 border-outline-dimmer max-md:border-r-0 md:max-w-[320px] max-w-screen max-md:absolute max-md:inset-0 h-screen grow z-10",
+    variants: {
+      open: {
+        true: "",
+        false: "max-md:hidden"
+      }
+    }
   }),
-  Content: styled("div", {
-    base: "flex flex-col gap-4 p-4 grow"
+  ThemeColor: styled("div", {
+    base: "w-4 h-4 rounded-full shrink-0"
   }),
-  Footer: styled("footer", {
-    base: "flex flex-col divide-y divide-outline-dimmer px-4 bg-default/50 border-t-2 border-outline-dimmest"
+  ShareOption: styled(DropdownMenuItem, {
+    base: "flex gap-2 items-center pl-2"
   }),
-  FooterSection: styled("div", {
-    base: "flex flex-col gap-2 py-4"
-  }),
-  FooterLinks: styled("div", {
-    base: "flex gap-4 items-center justify-center w-full"
-  }),
-  FooterLink: styled(Link, {
-    base: "text-accent-dimmer text-sm"
-  }),
-  Container: styled("div", {
-    base: "flex flex-col grow"
-  }),
-  SelectedLLMs: styled("div", {
-    base: "flex flex-col gap-2"
-  }),
-  SelectedLLM: styled("div", {
-    base: "flex gap-2 items-center border-2 bg-default/50 border-outline-dimmest/50 rounded-md text-foreground-dimmer"
-  }),
-  SelectedLLMName: styled("div", {
-    base: "flex gap-2 items-center p-2 grow h-full"
-  }),
-  RemoveSelectedLLMButton: styled("button", {
-    base: "p-2 h-full"
-  }),
-  EmptyContainer: styled("div", {
-    base: "flex flex-col gap-4 p-4 items-center justify-center grow w-full border-2 border-dashed border-outline-dimmest rounded-lg"
+  OmmittedField: styled("button", {
+    base: "flex gap-1 items-center border border-outline-dimmer rounded-md px-2 py-1 hover:border-accent-dimmer transition-colors text-foreground-dimmer hover:text-accent"
   })
 }

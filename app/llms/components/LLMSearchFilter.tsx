@@ -1,6 +1,7 @@
 import { SearchInput } from "@/app/api/search/types"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import Flex from "@/components/ui/flex"
 import {
   Popover,
   PopoverContent,
@@ -36,7 +37,7 @@ export default function LLMSearchFilter({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="flex flex-col gap-2 min-w-48">
-        <FilterGroup>
+        <Flex col gap={1}>
           <Text weight="medium">Search By</Text>
           <FilterField>
             <Checkbox
@@ -77,8 +78,8 @@ export default function LLMSearchFilter({
               <label htmlFor="fields">Fields</label>
             </Text>
           </FilterField>
-        </FilterGroup>
-        <FilterGroup>
+        </Flex>
+        <Flex col gap={1}>
           <FilterField className="pl-0">
             <Text weight="medium">Advanced Search</Text>
             <Tooltip>
@@ -118,8 +119,8 @@ export default function LLMSearchFilter({
               <label htmlFor="advanced">enabled</label>
             </Text>
           </FilterField>
-        </FilterGroup>
-        <FilterGroup>
+        </Flex>
+        <Flex col gap={1}>
           <Text weight="medium">LLM Status</Text>
           <RadioGroup
             value={search.status}
@@ -155,17 +156,12 @@ export default function LLMSearchFilter({
               </Text>
             </FilterField>
           </RadioGroup>
-        </FilterGroup>
+        </Flex>
       </PopoverContent>
     </Popover>
   )
 }
 
-const { FilterGroup, FilterField } = {
-  FilterGroup: styled("div", {
-    base: "flex flex-col gap-1"
-  }),
-  FilterField: styled("div", {
-    base: "flex items-center gap-2 pl-2"
-  })
-}
+const FilterField = styled("div", {
+  base: "flex items-center gap-2 pl-2"
+})

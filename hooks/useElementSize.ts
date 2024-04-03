@@ -15,12 +15,13 @@ const useClientRect = <T extends HTMLElement = HTMLElement>(): [
 
   useEffect(() => {
     const element = elementRef.current
+
     if (!element) return
 
-    updateSize()
-    window.addEventListener("resize", updateSize)
+    const resizeObserver = new ResizeObserver(updateSize)
+    resizeObserver.observe(element)
 
-    return () => window.removeEventListener("resize", updateSize)
+    return () => resizeObserver.disconnect()
   }, [updateSize])
 
   return [elementRef, box]

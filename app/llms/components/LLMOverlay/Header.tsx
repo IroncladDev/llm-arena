@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
+import Flex from "@/components/ui/flex"
 import { SheetClose } from "@/components/ui/sheet"
 import { XIcon } from "lucide-react"
-import { styled } from "react-tailwind-variants"
 
 export default function Header({
   children = null,
@@ -11,22 +11,13 @@ export default function Header({
   className?: string
 }) {
   return (
-    <HeaderBase className={className}>
+    <Flex align="center" gap={4} className={className}>
       {children}
       <SheetClose asChild>
-        <CloseButton size="icon">
+        <Button size="icon" className="outline-none shrink-0">
           <XIcon className="w-4 h-4" />
-        </CloseButton>
+        </Button>
       </SheetClose>
-    </HeaderBase>
+    </Flex>
   )
-}
-
-const { HeaderBase, CloseButton } = {
-  HeaderBase: styled("div", {
-    base: "flex items-center gap-4"
-  }),
-  CloseButton: styled(Button, {
-    base: "outline-none shrink-0"
-  })
 }

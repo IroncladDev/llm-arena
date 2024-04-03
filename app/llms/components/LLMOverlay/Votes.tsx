@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import determineConsensus from "@/lib/consensus"
 import { User, Vote, VoteStatus } from "@prisma/client"
@@ -33,11 +34,11 @@ export default function Votes({
   const rejectPercent = Math.round((rejections / llm.votes.length) * 100)
 
   return (
-    <Container>
+    <Flex col gap={2} className="min-h-[160px]">
       <VoteStats status={status}>
         {llm.votes.length > 0 ? (
           <>
-            <VoteStat>
+            <Flex gap={2} align="center" justify="between">
               <Text
                 color={status === "approved" ? "default" : "dimmer"}
                 weight={status === "approved" ? "bold" : "default"}
@@ -56,8 +57,8 @@ export default function Votes({
                 />
               </Indicator>
               <Text color="dimmer">{approvePercent}%</Text>
-            </VoteStat>
-            <VoteStat>
+            </Flex>
+            <Flex gap={2} align="center" justify="between">
               <Text
                 color={status === "rejected" ? "default" : "dimmer"}
                 weight={status === "rejected" ? "bold" : "default"}
@@ -77,9 +78,14 @@ export default function Votes({
                 />
               </Indicator>
               <Text color="dimmer">{rejectPercent}%</Text>
-            </VoteStat>
+            </Flex>
             {status === "pending" && "remainingApprovals" in consensus && (
-              <VoteStat className="border-t border-outline-dimmest pt-2">
+              <Flex
+                gap={2}
+                align="center"
+                justify="between"
+                className="border-t border-outline-dimmest pt-2"
+              >
                 <Text color="dimmer" size="sm">
                   {llm.votes.length < 4
                     ? "Four votes required until approved/rejected"
@@ -88,7 +94,7 @@ export default function Votes({
                       : `${consensus.remainingRejections} more rejections required`}
                 </Text>
                 <PendingBadge>Pending</PendingBadge>
-              </VoteStat>
+              </Flex>
             )}
           </>
         ) : (
@@ -104,7 +110,7 @@ export default function Votes({
             Comments
           </Text>
 
-          <Container>
+          <Flex col gap={2} className="min-h=[160px]">
             {comments.map((vote, i) => (
               <VoteComment
                 key={i}
@@ -113,10 +119,10 @@ export default function Votes({
                 refetch={refetch}
               />
             ))}
-          </Container>
+          </Flex>
         </>
       )}
-    </Container>
+    </Flex>
   )
 }
 
@@ -215,17 +221,12 @@ function VoteComment({
 }
 
 const {
-  Container,
   VoteStats,
-  VoteStat,
   Indicator,
   IndicatorBar,
   VoteContainer,
   PendingBadge
 } = {
-  Container: styled("div", {
-    base: "flex flex-col gap-2 min-h-[160px]"
-  }),
   VoteStats: styled("div", {
     base: "flex flex-col gap-2 p-2 rounded-lg border-2",
     variants: {
@@ -235,9 +236,6 @@ const {
         pending: "border-outline-dimmest"
       }
     }
-  }),
-  VoteStat: styled("div", {
-    base: "flex items-center gap-2 justify-between"
   }),
   Indicator: styled("div", {
     base: "grow rounded-lg h-2 max-w-[240px] bg-higher"

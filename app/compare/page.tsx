@@ -1,57 +1,91 @@
-"use client"
+import { formatError } from "@/lib/errors"
+import { optionsSchema, OptionsType } from "./state"
+import prisma from "@/lib/server/prisma"
+import Content from "./content"
 
-import { Container } from "@/components/container"
-import gr from "@/lib/gradients"
-import { tokens } from "@/tailwind.config"
-import { styled } from "react-tailwind-variants"
-import Comparison from "./comparison"
-import Sidebar from "./sidebar"
-import { useCompareState } from "./state"
+export default async function ComparePage({
+  searchParams
+}: {
+  searchParams: OptionsType
+}) {
+  try {
+    const { llms: llmIds } = optionsSchema.parse(searchParams)
 
-export default function Page() {
-  const sidebar = useCompareState(state => state.sidebar)
+    const ids = llmIds.split(",").map(Number)
 
-  return (
-    <Content
-      style={{
-        background: gr.merge(
-          gr.radial(
-            "circle at 75% 110%",
-            tokens.colors.default,
-            tokens.colors.default + " 25%",
-            tokens.colors.transparent + " 70%",
-            tokens.colors.transparent
-          )
-        )
-      }}
-    >
-      <SidebarContainer open={sidebar}>
-        <Sidebar />
-      </SidebarContainer>
-      <ComparisonContainer>
-        <Comparison />
-      </ComparisonContainer>
-    </Content>
-  )
-}
-
-const { Content, SidebarContainer, ComparisonContainer } = {
-  Content: styled(Container, {
-    base: "flex flex-row h-screen"
-  }),
-  SidebarContainer: styled("div", {
-    base: "flex flex-col bg-root/50 border-r-2 border-outline-dimmest h-screen min-w-[320px]",
-    variants: {
-      open: {
-        true: "max-md:absolute max-md:top-0 max-md:left-0 max-md:z-10 bg-root max-sm:w-full",
-        false: "max-md:hidden"
-      }
-    },
-    defaultVariants: {
-      open: true
+    if (ids.length < 2) {
+      throw new Error("You need to select at least two LLMS to compare.")
     }
-  }),
-  ComparisonContainer: styled("div", {
-    base: "grow flex flex-col h-screen"
-  })
+
+    const llms = await prisma.lLM.findMany({
+      where: {
+        id: {
+          in: ids
+        }
+      },
+      include: {
+        fields: {
+          include: {
+            metaProperty: true
+          }
+        },
+        user: true
+      }
+    })
+
+    return <Content llms={llms} />
+  } catch (e) {
+    throw new Error(formatError(e))
+  }
 }
+
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams: OptionsType
+}) {
+  try {
+    const params = optionsSchema.parse(searchParams)
+
+    const llms = await prisma.lLM.findMany({
+      where: {
+        id: {
+          in: params.llms.split(",").map(Number)
+        }
+      }
+    })
+
+    let title: string
+    let description: string
+
+    if (llms.length < 2) {
+      throw new Error("Not enough LLMs to compare")
+    } else if (llms.length >= 2 && llms.length <= 3) {
+      title = llms.map(llm => llm.name).join(" vs ")
+    } else {
+      title = `${llms[0].name} vs ${llms[1].name} and ${llms.length - 2} others`
+    }
+
+    if (llms.length < 2) {
+      throw new Error("Not enough LLMs to compare")
+    } else if (llms.length === 2) {
+      description = `See the comparison between ${llms[0].name} and ${llms[1].name}`
+    } else if (llms.length === 3) {
+      description = `See the comparison between ${llms[0].name}, ${llms[1].name}, and ${llms[2].name}`
+    } else {
+      description = `See the comparison between ${llms[0].name}, ${llms[1].name} and ${llms.length - 2} others`
+    }
+
+    return {
+      title,
+      description
+    }
+  } catch {
+    return {
+      title: "Error",
+      description: "An error occurred"
+    }
+  }
+}
+
+export const dynamic = "force-dynamic"

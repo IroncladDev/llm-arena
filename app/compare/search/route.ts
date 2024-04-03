@@ -50,7 +50,8 @@ export async function GET(req: Request) {
           include: {
             metaProperty: true
           }
-        }
+        },
+        user: true
       }
     })
 

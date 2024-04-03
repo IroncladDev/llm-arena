@@ -1,5 +1,6 @@
-import { MotionDiv } from "@/components/motion"
+import { Container } from "@/components/container"
 import { Button } from "@/components/ui/button"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
@@ -26,7 +27,7 @@ export default function Cta() {
         )
       }}
     >
-      <Content>
+      <Content col grow width="full" center gap={8}>
         <Text size="h1" weight="bold" multiline center>
           Join as a Contributor
         </Text>
@@ -42,11 +43,6 @@ export default function Cta() {
   )
 }
 
-const { Container, Content } = {
-  Container: styled(MotionDiv, {
-    base: "flex flex-col grow min-h-screen"
-  }),
-  Content: styled("div", {
-    base: "flex flex-col grow max-w-screen-md w-full max-md:max-w-screen max-md:px-4 self-center py-16 justify-center items-center gap-8"
-  })
-}
+const Content = styled(Flex, {
+  base: "max-w-screen-md max-md:max-w-screen max-md:px-4 py-16 self-center"
+})

@@ -1,4 +1,4 @@
-import { LLMWithMetadata } from "@/app/compare/state"
+import { LLMWithMetadata } from "@/app/compare/types"
 import { MetaPropertyType } from "@prisma/client"
 
 /**

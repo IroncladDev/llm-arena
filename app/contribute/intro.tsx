@@ -1,11 +1,16 @@
-import { MotionDiv } from "@/components/motion"
+import Flex, { MotionFlex } from "@/components/ui/flex"
 import Text from "@/components/ui/text"
-import { styled } from "react-tailwind-variants"
 
 export default function Intro() {
   return (
-    <Container id="intro">
-      <Content>
+    <MotionFlex col grow id="intro">
+      <Flex
+        col
+        grow
+        gap={16}
+        height="auto"
+        className="max-w-screen-md self-center px-4 py-16"
+      >
         <FadeIn>
           <Text size="lg" weight="medium" color="dimmer" multiline>
             <strong className="text-foreground">
@@ -44,31 +49,23 @@ export default function Intro() {
             <strong className="text-foreground">Contribution System</strong>.
           </Text>
         </FadeIn>
-      </Content>
-    </Container>
+      </Flex>
+    </MotionFlex>
   )
 }
 
 const FadeIn = ({ children }: { children: React.ReactNode }) => {
   return (
-    <MotionDiv
+    <MotionFlex
+      col
+      gap={4}
       initial={{ opacity: 0 }}
       whileInView={{
         opacity: 1
       }}
       viewport={{ margin: "0px 0px 200px 0px", amount: 0.5 }}
-      className="flex flex-col gap-4"
     >
       {children}
-    </MotionDiv>
+    </MotionFlex>
   )
-}
-
-const { Container, Content } = {
-  Container: styled(MotionDiv, {
-    base: "flex flex-col grow"
-  }),
-  Content: styled("div", {
-    base: "grow max-w-screen-md w-full self-center flex flex-col gap-16 px-4 h-auto py-16"
-  })
 }

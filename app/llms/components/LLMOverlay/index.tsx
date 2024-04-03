@@ -19,13 +19,13 @@ import { useQuery } from "@tanstack/react-query"
 import { ExternalLinkIcon, MoreVerticalIcon } from "lucide-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import { styled } from "react-tailwind-variants"
 import FieldTable from "../FieldTable"
 import ErrorState from "./Error"
 import Header from "./Header"
 import Loading from "./Loading"
 import VoteSection from "./VoteSection"
 import Votes from "./Votes"
+import Flex from "@/components/ui/flex"
 
 export default function LLMOverlay() {
   const params = useSearchParams()
@@ -81,11 +81,11 @@ export default function LLMOverlay() {
         {error && <ErrorState error={error.message} />}
         {isLoading && <Loading />}
         {llm && (
-          <ContentContainer>
+          <Flex col gap={4} height="auto">
             <Header>
               <Text
                 size="lg"
-                weight="medium"
+                weight="semibold"
                 multiline
                 maxLines={2}
                 className="grow"
@@ -156,19 +156,19 @@ export default function LLMOverlay() {
               )}
             </Header>
 
-            <ContentSection>
+            <Flex col gap={2}>
               <Text weight="medium">Metadata Fields</Text>
               <FieldTable fields={llm.fields} />
-            </ContentSection>
+            </Flex>
 
-            <ContentSection>
+            <Flex col gap={2}>
               <Text weight="medium">Source Description</Text>
               <Text multiline markdown color="dimmer">
                 {llm.sourceDescription}
               </Text>
-            </ContentSection>
+            </Flex>
 
-            <ContentSection>
+            <Flex col gap={2}>
               <Text color="dimmest" size="xs">
                 Uploaded by{" "}
                 <a
@@ -180,11 +180,11 @@ export default function LLMOverlay() {
                   <ExternalLinkIcon className="w-3 h-3 inline-block ml-1 mb-1 align-middle" />
                 </a>
               </Text>
-            </ContentSection>
+            </Flex>
 
             <hr />
 
-            <ContentSection>
+            <Flex col gap={2}>
               <Tabs
                 value={tab}
                 onValueChange={t => setTab(t as "votes" | "vote")}
@@ -202,19 +202,10 @@ export default function LLMOverlay() {
                   <VoteSection llm={llm} setTab={setTab} refetch={refetch} />
                 </TabsContent>
               </Tabs>
-            </ContentSection>
-          </ContentContainer>
+            </Flex>
+          </Flex>
         )}
       </SheetContent>
     </Sheet>
   )
-}
-
-const { ContentSection, ContentContainer } = {
-  ContentSection: styled("div", {
-    base: "flex flex-col gap-2"
-  }),
-  ContentContainer: styled("div", {
-    base: "flex flex-col gap-4 h-auto"
-  })
 }

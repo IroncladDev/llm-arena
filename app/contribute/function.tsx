@@ -1,4 +1,5 @@
 import { MotionDiv } from "@/components/motion"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import useClientRect from "@/hooks/useElementSize"
 import gr from "@/lib/gradients"
@@ -21,8 +22,8 @@ export default function Function({
   )
 
   return (
-    <Container>
-      <Content>
+    <Flex col grow>
+      <Content col grow width="full" gap={8}>
         <Text size="h1" weight="semibold">
           How it works
         </Text>
@@ -101,16 +102,13 @@ export default function Function({
           </Steps>
         </StepContainer>
       </Content>
-    </Container>
+    </Flex>
   )
 }
 
-const { Container, Content, StepContainer, Steps, Step, Preview } = {
-  Container: styled(MotionDiv, {
-    base: "flex flex-col grow"
-  }),
-  Content: styled("div", {
-    base: "flex flex-col grow max-w-screen-md w-full self-center py-16 px-4 gap-8"
+const { Content, StepContainer, Steps, Step, Preview } = {
+  Content: styled(Flex, {
+    base: "max-w-screen-md self-center py-16 px-4"
   }),
   StepContainer: styled("div", {
     base: "grow relative"

@@ -14,6 +14,7 @@ const TextBase = styled("span", {
   variants: {
     size: {
       xs: "text-xs",
+      xxs: "text-[10px] leading-[14px]",
       sm: "text-sm",
       base: "text-base",
       lg: "text-lg",

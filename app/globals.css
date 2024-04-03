@@ -27,6 +27,10 @@ html {
   .markdown code {
     @apply text-sm font-mono bg-higher rounded px-1 py-0.5 text-foreground-dimmest;
   }
+
+  .noTransform {
+    transform: none !important;
+  }
 }
 
 input::-webkit-outer-spin-button,

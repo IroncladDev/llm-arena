@@ -8,7 +8,8 @@ export const Input = styled("input", {
       elevated: "bg-higher text-foreground border-2 border-outline-dimmer"
     },
     size: {
-      default: "h-10 px-4 py-2"
+      default: "h-10 px-4 py-2",
+      lg: "h-12 rounded-xl px-4 text-base"
     }
   },
   defaultVariants: {

@@ -1,4 +1,4 @@
-import { LLMWithMetadata } from "@/app/compare/state"
+import { LLMWithMetadata } from "@/app/compare/types"
 import { Brain, Hexagon, Play, Volume2 } from "lucide-react"
 import { styled } from "react-tailwind-variants"
 
