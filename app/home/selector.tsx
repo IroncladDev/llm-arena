@@ -23,6 +23,7 @@ export default function Selector() {
 
   const router = useRouter()
   const scrollEndRef = useRef<HTMLLabelElement>(null)
+  const llmSearchRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     scrollEndRef.current?.scrollIntoView()
@@ -51,6 +52,7 @@ export default function Selector() {
         placeholder={llms.length === 0 ? "Add an LLM" : "Add another LLM"}
         size="lg"
         id="llm-search-input"
+        ref={llmSearchRef}
       />
       <Flex
         wrap

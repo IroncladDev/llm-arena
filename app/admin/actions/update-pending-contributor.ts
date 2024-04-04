@@ -1,5 +1,6 @@
 "use server"
 
+import { siteUrl } from "@/lib/env"
 import { formatError } from "@/lib/errors"
 import { baseEmail, send } from "@/lib/server/email"
 import prisma from "@/lib/server/prisma"
@@ -58,7 +59,7 @@ export async function updatePendingContributor(
 
     if (status === VoteStatus.approve) {
       await send({
-        from: "AI to AI <noreply@ai-to.ai>",
+        from: `AI to AI <noreply@${siteUrl.hostname}>`,
         replyTo: "conner@connerow.dev",
         to: userToUpdate.email,
         subject: "Contribution Request Approved",
@@ -79,7 +80,7 @@ export async function updatePendingContributor(
       })
     } else {
       await send({
-        from: "AI to AI <noreply@ai-to.ai>",
+        from: `AI to AI <noreply@${siteUrl.hostname}>`,
         replyTo: "conner@connerow.dev",
         to: userToUpdate.email,
         subject: "Contribution Request Denied",

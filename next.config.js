@@ -17,5 +17,8 @@ module.exports = {
 
     // Make sure to return the modified config
     return config
+  },
+  env: {
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL
   }
 }

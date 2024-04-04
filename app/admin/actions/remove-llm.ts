@@ -1,5 +1,6 @@
 "use server"
 
+import { siteUrl } from "@/lib/env"
 import { formatError } from "@/lib/errors"
 import { baseEmail, send } from "@/lib/server/email"
 import prisma from "@/lib/server/prisma"
@@ -60,7 +61,7 @@ export async function removeLLM(e: RemoveLLMInput) {
     })
 
     await send({
-      from: "AI to AI <noreply@ai-to.ai>",
+      from: `AI to AI <noreply@${siteUrl.hostname}>`,
       replyTo: user.email,
       to: llm.user.email,
       subject: `Your LLM "${llm.name}" has been removed`,
