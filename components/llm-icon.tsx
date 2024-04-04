@@ -1,5 +1,5 @@
 import { LLMWithMetadata } from "@/app/compare/types"
-import { Brain, Hexagon, Play, Volume2 } from "lucide-react"
+import { Hexagon, Play, Volume2 } from "lucide-react"
 import { styled } from "react-tailwind-variants"
 
 export default function LLMIcon({
@@ -19,8 +19,6 @@ export default function LLMIcon({
 
   if (useCase === null) {
     /* no-op */
-  } else if (/multimodal/i.test(useCase)) {
-    icon = <Brain />
   } else if (/video/i.test(useCase)) {
     icon = <Play />
   } else if (/audio/i.test(useCase)) {

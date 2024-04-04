@@ -1,3 +1,4 @@
+import LLMIcon from "@/components/llm-icon"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -37,9 +38,11 @@ import {
 } from "lucide-react"
 import { createElement, useEffect, useState } from "react"
 import { styled } from "react-tailwind-variants"
+import LLMSearch from "./search"
 import { useURLState } from "./state"
 import {
   FilterEnum,
+  LLMWithMetadata,
   ModeEnum,
   ThemeEnum,
   ViewEnum,
@@ -51,10 +54,14 @@ import {
 export default function Sidebar({
   onOpenChange,
   containerRef,
+  llms,
+  setLLMs,
   ...props
 }: React.ComponentPropsWithoutRef<typeof SidebarContainer> & {
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>
   containerRef: React.RefObject<HTMLDivElement>
+  llms: Array<LLMWithMetadata>
+  setLLMs: (items: Array<LLMWithMetadata>) => void
 }) {
   const {
     view,
@@ -316,6 +323,29 @@ export default function Sidebar({
           </Flex>
         </Flex>
       )}
+      <Flex col gap={1}>
+        <Text weight="medium" color="dimmer" asChild>
+          <label htmlFor="llm-sidebar-search">LLMs</label>
+        </Text>
+        <LLMSearch
+          llms={llms}
+          setLLMs={setLLMs}
+          variant="elevated"
+          placeholder="Add another LLM"
+          id="llm-sidebar-search"
+        />
+        {llms.map(item => (
+          <LLMListItem key={item.id}>
+            <LLMIcon llm={item} className="w-6 h-6" />
+            <Text className="grow" color="dimmer">
+              {item.name}
+            </Text>
+            <button onClick={() => setLLMs(llms.filter(x => x.id !== item.id))}>
+              <XIcon className="w-4 h-4 text-foreground-dimmer" />
+            </button>
+          </LLMListItem>
+        ))}
+      </Flex>
       <Flex col grow gap={4} justify="end">
         <Flex col gap={2}>
           <DropdownMenu>
@@ -374,9 +404,15 @@ export default function Sidebar({
   )
 }
 
-const { SidebarContainer, ThemeColor, ShareOption, OmmittedField } = {
+const {
+  SidebarContainer,
+  ThemeColor,
+  ShareOption,
+  OmmittedField,
+  LLMListItem
+} = {
   SidebarContainer: styled("div", {
-    base: "flex flex-col gap-4 p-4 bg-default border-r-2 border-outline-dimmer max-md:border-r-0 md:max-w-[320px] max-w-screen max-md:absolute max-md:inset-0 h-screen grow z-10",
+    base: "flex flex-col gap-4 p-4 bg-default border-r-2 border-outline-dimmer max-md:border-r-0 md:max-w-[320px] max-w-screen max-md:absolute max-md:inset-0 h-screen overflow-y-auto grow z-10",
     variants: {
       open: {
         true: "",
@@ -392,5 +428,8 @@ const { SidebarContainer, ThemeColor, ShareOption, OmmittedField } = {
   }),
   OmmittedField: styled("button", {
     base: "flex gap-1 items-center border border-outline-dimmer rounded-md px-2 py-1 hover:border-accent-dimmer transition-colors text-foreground-dimmer hover:text-accent"
+  }),
+  LLMListItem: styled("div", {
+    base: "flex items-center gap-2 border-2 border-outline-dimmest rounded-lg px-2 py-1"
   })
 }

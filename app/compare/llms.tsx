@@ -177,7 +177,7 @@ const {
     base: "relative grow basis-0"
   }),
   Overflow: styled("div", {
-    base: "absolute left-0 top-1/2 -translate-y-1/2 overflow-y-auto max-h-full w-full flex justify-center p-4"
+    base: "absolute left-0 top-1/2 -translate-y-1/2 overflow-y-auto max-h-full w-full flex justify-center px-4 py-8 pb-[96px]"
   }),
   DisplayContainer: styled(MotionDiv, {
     base: "flex flex-col border-2 rounded-xl max-w-[1600px] min-w-[360px] h-full bg-root relative group/outer"

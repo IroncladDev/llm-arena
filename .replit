@@ -5,6 +5,9 @@ hidden = [".config", "bun.lockb"]
 [nix]
 channel = "stable-23_11"
 
+# Can't use the latest version of bun on Replit and there are some issues in the deployment
+# NPM works, not touching it
+
 [deployment]
 build = ["sh", "-c", "npx prisma migrate deploy && npx prisma generate && npx next build"]
 run = ["sh", "-c", "npx next start"]
@@ -15,6 +18,5 @@ localPort = 3000
 externalPort = 80
 
 [env]
-# LD_LIBRARY_PATH="/nix/store/fq47cv26nb87hwz2678r6i8ym5b57lwf-openssl-3.0.7-bin/lib:${LD_LIBRARY_PATH}"
 NIXPKGS_ALLOW_INSECURE="1"
 PRISMA_CLI_QUERY_ENGINE_TYPE = "binary"

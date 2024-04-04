@@ -46,7 +46,7 @@ export default function Navbar() {
           )}
 
           <NavLink
-            href="https://github.com/IroncladDev/ai-to-ai/blob/main/docs/contributor-guide.md"
+            href="https://github.com/IroncladDev/llm-arena/blob/main/docs/contributor-guide.md"
             target="_blank"
           >
             Contributor Guide
@@ -54,7 +54,7 @@ export default function Navbar() {
           </NavLink>
           {user.role === UserRole.admin && (
             <NavLink
-              href="https://github.com/IroncladDev/ai-to-ai/blob/main/docs/admin-guide.md"
+              href="https://github.com/IroncladDev/llm-arena/blob/main/docs/admin-guide.md"
               target="_blank"
             >
               Admin Guide

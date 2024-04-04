@@ -48,7 +48,7 @@ export default function Page() {
             <Link href="/login">Login</Link>
           </FooterLink>
           <FooterLink color="dimmest" size="base" asChild>
-            <a href="https://github.com/IroncladDev/ai-to-ai" target="_blank">
+            <a href="https://github.com/IroncladDev/llm-arena" target="_blank">
               Github
             </a>
           </FooterLink>

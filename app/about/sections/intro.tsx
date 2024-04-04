@@ -39,7 +39,7 @@ export default function Intro({
             About
           </Text>
           <Text multiline paragraph color="dimmer" size="lg">
-            <strong className="text-foreground">AI to AI</strong> is a simple
+            <strong className="text-foreground">LLM Arena</strong> is a simple
             project that allows you to compare LLMs, side-by-side.
           </Text>
           <Text multiline paragraph color="dimmer" size="lg">
@@ -114,7 +114,7 @@ export default function Intro({
                   [
                     "gpt-4",
                     {
-                      value: "text generation, image generation/recognition",
+                      value: "multimodal",
                       type: MetaPropertyType.String
                     }
                   ],

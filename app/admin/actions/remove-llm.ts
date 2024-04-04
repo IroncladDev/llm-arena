@@ -1,6 +1,5 @@
 "use server"
 
-import { siteUrl } from "@/lib/env"
 import { formatError } from "@/lib/errors"
 import { baseEmail, send } from "@/lib/server/email"
 import prisma from "@/lib/server/prisma"
@@ -61,15 +60,15 @@ export async function removeLLM(e: RemoveLLMInput) {
     })
 
     await send({
-      from: `AI to AI <noreply@${siteUrl.hostname}>`,
+      from: `LLM Arena <noreply@llmarena.ai>`,
       replyTo: user.email,
       to: llm.user.email,
       subject: `Your LLM "${llm.name}" has been removed`,
-      text: `Your LLM with the name "${llm.name}" has been removed from AI to AI by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`,
+      text: `Your LLM with the name "${llm.name}" has been removed from LLM Arena by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`,
       html: baseEmail({
         title: `Your LLM "${llm.name}" has been removed`,
         paragraphs: [
-          `Your LLM with the name "${llm.name}" has been removed from AI to AI by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`
+          `Your LLM with the name "${llm.name}" has been removed from LLM Arena by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`
         ],
         buttonLinks: []
       })
