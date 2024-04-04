@@ -1,4 +1,4 @@
-modules = ["bun-1.0:v1-20230911-f253fb1"]
+modules = ["bun-1.0:v1-20230911-f253fb1", "python-3.10:v25-20230920-d4ad2e4"]
 
 hidden = [".config", "bun.lockb"]
 
@@ -6,8 +6,8 @@ hidden = [".config", "bun.lockb"]
 channel = "stable-23_11"
 
 [deployment]
-build = ["sh", "-c", "bun run build"]
-run = ["sh", "-c", "bun run start"]
+build = ["sh", "-c", "npx prisma migrate deploy && npx prisma generate && npx next build"]
+run = ["sh", "-c", "npx next start"]
 deploymentTarget = "cloudrun"
 
 [[ports]]
