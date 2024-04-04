@@ -29,13 +29,11 @@ export default function CompareItem({
     foreground: [, fg2]
   } = themeData[theme]
 
-  console.log(rect)
-
   return (
     <Container
       variant={view}
       style={{
-        maxWidth: rect ? rect.width - padding * 2 : undefined,
+        maxWidth: rect ? rect.width - padding * 2 - 4 : undefined,
         borderColor: fg2 + "65",
         ...(typeof customWidth === "number"
           ? {
@@ -59,27 +57,35 @@ export default function CompareItem({
         <BooleanTable field={field} />
       )}
       {mode === ModeEnum.edit && (
-        <OptionButton onClick={() => setOmmittedField(field.name, true)}>
-          <XIcon className="w-4 h-4 text-foreground-dimmest" />
-        </OptionButton>
-      )}
-      {mode === ModeEnum.edit && typeof customWidth === "number" && (
-        <OptionButton onClick={() => setCustomWidth(null)} className="right-8">
-          <MoveHorizontalIcon className="w-4 h-4 text-foreground-dimmest" />
-        </OptionButton>
-      )}
-      <DragHandle
-        drag="x"
-        className="noTransform"
-        dragMomentum={false}
-        onDrag={(_, info) => {
-          if (!box) return
+        <>
+          <OptionButton
+            onClick={() => setOmmittedField(field.name, true)}
+            aria-label="Remove Widget"
+          >
+            <XIcon className="w-4 h-4 text-foreground-dimmest" />
+          </OptionButton>
+          {typeof customWidth === "number" && (
+            <OptionButton
+              onClick={() => setCustomWidth(null)}
+              className="right-8"
+            >
+              <MoveHorizontalIcon className="w-4 h-4 text-foreground-dimmest" />
+            </OptionButton>
+          )}
+          <DragHandle
+            drag="x"
+            className="noTransform"
+            dragMomentum={false}
+            onDrag={(_, info) => {
+              if (!box) return
 
-          setCustomWidth(Math.round(info.point.x - box.left))
-        }}
-      >
-        <DragHandleBar />
-      </DragHandle>
+              setCustomWidth(Math.round(info.point.x - box.left))
+            }}
+          >
+            <DragHandleBar />
+          </DragHandle>
+        </>
+      )}
     </Container>
   )
 }
@@ -98,7 +104,7 @@ const { Container, OptionButton, DragHandle, DragHandleBar } = {
     base: "absolute top-2 right-2 opacity-0 group-hover/item:opacity-100 transition-opacity"
   }),
   DragHandle: styled(MotionDiv, {
-    base: "flex items-center justify-center w-2 h-full absolute top-0 bottom-0 opacity-0 group-hover/item:opacity-100 transition-opacity right-0"
+    base: "flex items-center justify-center w-2 h-full absolute top-0 bottom-0 opacity-0 group-hover/item:opacity-50 transition-opacity right-0"
   }),
   DragHandleBar: styled("div", {
     base: "bg-foreground-dimmest/50 rounded-full w-[2px] h-12 cursor-ew-resize active:bg-foreground-dimmest/25"

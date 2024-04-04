@@ -8,7 +8,6 @@ import { toMutualMetadata } from "@/lib/comparison"
 import gr from "@/lib/gradients"
 import { MetaPropertyType } from "@prisma/client"
 import { useMotionValue, useSpring } from "framer-motion"
-import { GripVerticalIcon } from "lucide-react"
 import { Fragment, forwardRef, useEffect } from "react"
 import { styled } from "react-tailwind-variants"
 import CompareItem from "./item"
@@ -68,23 +67,6 @@ const LLMContainer = forwardRef<
   return (
     <Container ref={container}>
       <Overflow>
-        <DragHandle
-          drag="x"
-          dragMomentum={false}
-          onDrag={(_, info) => {
-            if (!box) return
-
-            let newWidth = Math.round(
-              (box.left + box.width / 2 - info.point.x) * 2
-            )
-
-            containerWidth.set(newWidth)
-            set({ width: String(newWidth) })
-          }}
-          className="noTransform"
-        >
-          <GripVerticalIcon className="w-2 h-2" />
-        </DragHandle>
         <DisplayContainer
           style={{
             background: gr.radial(...background),
@@ -93,6 +75,25 @@ const LLMContainer = forwardRef<
           }}
           ref={ref}
         >
+          <DragHandle
+            drag="x"
+            position="left"
+            dragMomentum={false}
+            style={{ width: springPadding }}
+            onDrag={(_, info) => {
+              if (!box) return
+
+              let newWidth = Math.round(
+                (box.left + box.width / 2 - info.point.x) * 2 + padding
+              )
+
+              containerWidth.set(newWidth)
+              set({ width: String(newWidth) })
+            }}
+            className="noTransform"
+          >
+            <DragHandleBar />
+          </DragHandle>
           <MotionFlex
             style={{
               paddingTop: springPadding,
@@ -137,24 +138,26 @@ const LLMContainer = forwardRef<
               <CompareItem key={i} field={x} rect={rect} />
             ))}
           </ItemsContainer>
+          <DragHandle
+            drag="x"
+            position="right"
+            dragMomentum={false}
+            style={{ width: springPadding }}
+            onDrag={(_, info) => {
+              if (!box) return
+
+              const newWidth = Math.round(
+                (info.point.x - (box.left + box.width / 2)) * 2 + padding
+              )
+
+              containerWidth.set(newWidth)
+              set({ width: String(newWidth) })
+            }}
+            className="noTransform"
+          >
+            <DragHandleBar />
+          </DragHandle>
         </DisplayContainer>
-        <DragHandle
-          drag="x"
-          dragMomentum={false}
-          onDrag={(_, info) => {
-            if (!box) return
-
-            const newWidth = Math.round(
-              (info.point.x - (box.left + box.width / 2)) * 2
-            )
-
-            containerWidth.set(newWidth)
-            set({ width: String(newWidth) })
-          }}
-          className="noTransform"
-        >
-          <GripVerticalIcon className="w-2 h-2" />
-        </DragHandle>
       </Overflow>
     </Container>
   )
@@ -167,16 +170,17 @@ const {
   Overflow,
   DisplayContainer,
   HeaderWidget,
-  DragHandle
+  DragHandle,
+  DragHandleBar
 } = {
   Container: styled(MotionDiv, {
     base: "relative grow basis-0"
   }),
   Overflow: styled("div", {
-    base: "absolute left-0 top-1/2 -translate-y-1/2 overflow-y-auto max-h-full w-full flex justify-center p-4 group/outer"
+    base: "absolute left-0 top-1/2 -translate-y-1/2 overflow-y-auto max-h-full w-full flex justify-center p-4"
   }),
   DisplayContainer: styled(MotionDiv, {
-    base: "flex flex-col border-2 rounded-xl max-w-[1600px] min-w-[360px] h-full bg-root"
+    base: "flex flex-col border-2 rounded-xl max-w-[1600px] min-w-[360px] h-full bg-root relative group/outer"
   }),
   HeaderWidget: styled("div", {
     base: "flex flex-col gap-2 border-2 rounded-lg bg-root/50 w-full p-4"
@@ -191,7 +195,16 @@ const {
     }
   }),
   DragHandle: styled(MotionDiv, {
-    base: "flex items-center w-2 bg-higher md:opacity-0 transition-all group-hover/outer:opacity-100 text-foreground-dimmest cursor-ew-resize hover:bg-highest z-10 self-stretch shrink-0"
+    base: "flex items-center justify-center md:opacity-0 group-hover/outer:opacity-100 cursor-ew-resize z-10 absolute top-0 bottom-0 h-full transition-opacity",
+    variants: {
+      position: {
+        left: "left-0",
+        right: "right-0"
+      }
+    }
+  }),
+  DragHandleBar: styled("div", {
+    base: "bg-white/10 rounded-full w-[4px] h-24 cursor-ew-resize active:bg-white/5 transition-colors"
   })
 }
 

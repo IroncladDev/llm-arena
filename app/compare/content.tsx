@@ -72,7 +72,11 @@ export default function Content({ llms }: { llms: Array<LLMWithMetadata> }) {
           </Flex>
         )}
         {mode === ModeEnum.edit && !sidebarOpen && (
-          <SidebarButton size="icon" onClick={() => setSidebarOpen(true)}>
+          <SidebarButton
+            size="icon"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open Sidebar"
+          >
             <MenuIcon className="w-4 h-4" />
           </SidebarButton>
         )}

@@ -122,20 +122,35 @@ export default function Sidebar({
         <Text weight="medium" size="lg">
           Edit
         </Text>
-        <Button
-          size="icon"
-          onClick={() => onOpenChange(false)}
-          className="md:hidden"
-        >
-          <XIcon />
-        </Button>
+        <Flex gap={2} align="center">
+          <Button
+            onClick={() => set({ mode: ModeEnum.view })}
+            variant="elevated"
+            size="sm"
+          >
+            Enter View Mode
+            <EyeIcon className="w-4 h-4" />
+          </Button>
+          <Button
+            size="icon"
+            onClick={() => onOpenChange(false)}
+            className="md:hidden"
+            variant="elevated"
+          >
+            <XIcon className="w-4 h-4" />
+          </Button>
+        </Flex>
       </Flex>
       <Flex col gap={1}>
         <Text asChild weight="medium" color="dimmer">
           <label>View</label>
         </Text>
         <Select value={view} onValueChange={v => set({ view: v as ViewEnum })}>
-          <SelectTrigger id="view-select-trigger" elevated>
+          <SelectTrigger
+            id="view-select-trigger"
+            elevated
+            aria-label="Select View type"
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent elevated>
@@ -200,7 +215,11 @@ export default function Sidebar({
           value={theme}
           onValueChange={v => set({ theme: v as ThemeEnum })}
         >
-          <SelectTrigger id="theme-select-trigger" elevated>
+          <SelectTrigger
+            id="theme-select-trigger"
+            elevated
+            aria-label="Select theme"
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent elevated>
@@ -240,7 +259,7 @@ export default function Sidebar({
             <SliderTrack>
               <SliderRange />
             </SliderTrack>
-            <SliderThumb />
+            <SliderThumb aria-label="Adjust padding" />
           </Slider>
           <Text color="dimmest" size="xs" className="shrink-0">
             128
@@ -270,7 +289,7 @@ export default function Sidebar({
             <SliderTrack>
               <SliderRange />
             </SliderTrack>
-            <SliderThumb />
+            <SliderThumb aria-label="Adjust spacing" />
           </Slider>
           <Text color="dimmest" size="xs" className="shrink-0">
             64
@@ -299,13 +318,6 @@ export default function Sidebar({
       )}
       <Flex col grow gap={4} justify="end">
         <Flex col gap={2}>
-          <Button
-            onClick={() => set({ mode: ModeEnum.view })}
-            variant="elevated"
-          >
-            Enter View Mode
-            <EyeIcon className="w-4 h-4" />
-          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="elevated">
