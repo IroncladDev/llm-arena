@@ -7,17 +7,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: oven-sh/setup-bun@v1
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
 
     - name: Install Dependencies
-      run: bun i
+      run: npm i
 
     - name: Check code style
-      run: bun format:check
+      run: npm run format:check
 
     - name: Generate prisma client
-      run: bun prisma generate
+      run: npx prisma generate
 
     - name: Lint
-      run: bun lint
+      run: npm run lint
