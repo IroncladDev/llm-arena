@@ -2,7 +2,7 @@ procs:
   user:
     shell: zsh
     stop: SIGKILL
-  ai-to-ai:
+  llm-arena:
     shell: bun i && bun dev
     stop: SIGTERM
   prisma-studio:

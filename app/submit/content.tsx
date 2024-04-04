@@ -183,7 +183,7 @@ export default function Content({
               <Text color="dimmer" size="sm">
                 I have read and ensured that this LLM abides by the{" "}
                 <a
-                  href="https://github.com/IroncladDev/ai-to-ai/blob/main/docs/contributor-guide.md"
+                  href="https://github.com/IroncladDev/llm-arena/blob/main/docs/contributor-guide.md"
                   target="_blank"
                   className="text-accent-dimmer"
                 >

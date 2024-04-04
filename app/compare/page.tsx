@@ -33,7 +33,7 @@ export default async function ComparePage({
       }
     })
 
-    return <Content llms={llms} />
+    return <Content initialLLMs={llms} />
   } catch (e) {
     throw new Error(formatError(e))
   }

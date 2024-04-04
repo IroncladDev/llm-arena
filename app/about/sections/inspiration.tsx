@@ -50,15 +50,15 @@ export default function Inspiration() {
           >
             Amjad Masad
           </a>{" "}
-          wanted a way to compare different LLMs, somewhat like AKC&apos;s{" "}
+          wanted a way to compare different LLMs, somewhat like this{" "}
           <a
             href="https://www.akc.org/compare-breeds/"
             target="_blank"
             className="text-accent"
           >
-            dog breed comparison
-          </a>{" "}
-          tool.
+            dog breed comparison tool
+          </a>
+          .
         </Text>
         <Text multiline paragraph color="dimmer" size="lg">
           After some brainstorming, I decided to build a system similar to{" "}

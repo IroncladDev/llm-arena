@@ -16,6 +16,7 @@ import { styled } from "react-tailwind-variants"
 import LLMSearch from "../compare/search"
 import { LLMWithMetadata } from "../compare/types"
 import FieldTable from "../llms/components/FieldTable"
+import { name } from "../metadata"
 
 export default function Selector() {
   const [llms, setLLMs] = useState<Array<LLMWithMetadata>>([])
@@ -40,7 +41,7 @@ export default function Selector() {
     >
       <Flex col align="center" gap={2}>
         <Text size="xl" weight="medium">
-          Compare LLMs
+          {name}
         </Text>
         <Text color="dimmer">
           Select two or more LLMs to see a side-by-side comparison
@@ -165,7 +166,7 @@ export default function Selector() {
 const { LLMItem, IconContainer, SpecsContainer, CloseButton, PlaceholderLLM } =
   {
     LLMItem: styled("div", {
-      base: "flex flex-col rounded-xl border-2 border-outline-dimmer bg-default grow basis-0 max-w-[320px] shadow-md cursor-pointer hover:border-accent-dimmest transition-colors"
+      base: "flex flex-col rounded-xl border-2 border-outline-dimmer bg-default grow basis-0 max-w-[320px] min-w-[160px] shadow-md cursor-pointer hover:border-accent-dimmest transition-colors"
     }),
     IconContainer: styled("div", {
       base: "flex items-center justify-center py-4 bg-root rounded-t-xl relative"

@@ -43,7 +43,7 @@ export default function Conclusion() {
             target="_blank"
             className="text-accent"
           >
-            X/Twitter
+            X
           </a>
           .
         </Text>

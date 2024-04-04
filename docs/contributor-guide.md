@@ -3,13 +3,13 @@
 This guide covers [Voting on pending LLMs](#voting) and [Submitting new LLMs](#submittingllms) to the platform.
 If you're looking to contribute to the github repository, see [README.md](../README.md).
 
-To begin voting and uploading LLMs, you will need to [apply as a contributor](https://ai-to.ai/contribute).
+To begin voting and uploading LLMs, you will need to [apply as a contributor](https://llmarena.ai/contribute).
 Once your request has been approved, you will be ready to start contributing to the platform.
 
 ## Voting
 
 To prevent spam and abuse and ensure that all uploaded LLMs have accurate information, each LLM is subject to a voting process by contributors.
-All pending, approved, and rejected LLMs can be accessed from the [LLMs page](https://ai-to.ai/llms).
+All pending, approved, and rejected LLMs can be accessed from the [LLMs page](https://llmarena.ai/llms).
 
 <img alt="LLMs page" src="./images/llms.png" width="600"/>
 
@@ -46,7 +46,7 @@ The minimum amount of votes required before an LLM can be approved or rejected i
 
 As mentioned before, this is how LLMs get added to the platform. To submit an LLM, you will need to provide the LLM's name, metadata, and one or more sources to back and ensure the metadata is accurate.
 
-To get started, navigate to the [Submission](https://ai-to.ai/submit) page. Start filling out the form by adding the LLM's name and metadata. If possible, use existing metadata fields to ensure consistency across LLMs.
+To get started, navigate to the [Submission](https://llmarena.ai/submit) page. Start filling out the form by adding the LLM's name and metadata. If possible, use existing metadata fields to ensure consistency across LLMs.
 
 **Tip**: You can use abbreviated values for numeric fields (e.g 1M, 2.8K, 25%, etc.). See [Numeric Values](#numericvalues).
 
@@ -60,7 +60,7 @@ Finally, provide one or more sources to back the LLM's metadata. This can be a r
 
 <img alt="Adding a source" src="./images/add-source.png" width="400"/>
 
-**Perquisite**: Please download and watch the [Video Guide](https://github.com/IroncladDev/ai-to-ai/blob/main/docs/video-guide.mp4) on adding an LLM before you start. The file is too large to display in this file.
+**Perquisite**: Please download and watch the [Video Guide](https://github.com/IroncladDev/llm-arena/blob/main/docs/video-guide.mp4) on adding an LLM before you start. The file is too large to display in this file.
 
 ## Best Practices
 

@@ -1,3 +1,4 @@
+import { description, name } from "@/app/metadata"
 import Flex, { MotionFlex } from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
@@ -63,10 +64,10 @@ export default function Header({
             weight="bold"
             className="bg-gradient-to-r from-neutral-500 via-neutral-700 to-neutral-500 bg-clip-text text-transparent"
           >
-            AI to AI
+            {name}
           </Text>
           <Text size="lg" color="dimmer" multiline center>
-            Create beautiful side-by-side LLM Comparisons
+            {description}
           </Text>
         </MotionFlex>
       </Flex>

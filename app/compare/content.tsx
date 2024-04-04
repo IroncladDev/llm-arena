@@ -9,16 +9,21 @@ import { ArrowRightIcon, MenuIcon, PencilIcon } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { styled } from "react-tailwind-variants"
+import { name, title } from "../metadata"
 import LLMContainer from "./llms"
 import Sidebar from "./sidebar"
 import { useURLState } from "./state"
 import { LLMWithMetadata, ModeEnum } from "./types"
 
-export default function Content({ llms }: { llms: Array<LLMWithMetadata> }) {
+export default function Content({
+  initialLLMs
+}: {
+  initialLLMs: Array<LLMWithMetadata>
+}) {
   const { mode, set } = useURLState()
 
+  const [llms, setLLMs] = useState(initialLLMs)
   const [sidebarOpen, setSidebarOpen] = useState(true)
-
   const [containerRef, containerRect] = useClientRect<HTMLDivElement>()
 
   useEffect(() => {
@@ -39,37 +44,44 @@ export default function Content({ llms }: { llms: Array<LLMWithMetadata> }) {
             setSidebarOpen(open)
           }}
           containerRef={containerRef}
+          llms={llms}
+          setLLMs={items => {
+            set({
+              llms: items.map(x => x.id).join(",")
+            })
+            setLLMs(items)
+          }}
         />
       )}
       <ContentContainer>
         <LLMContainer llms={llms} ref={containerRef} rect={containerRect} />
         {mode === ModeEnum.view && (
-          <Flex align="center" justify="between" asChild p={4} gap={2}>
-            <footer>
-              <Button
-                size="sm"
-                onClick={() => {
-                  set({ mode: ModeEnum.edit })
-                  setSidebarOpen(true)
-                }}
-              >
-                Edit <PencilIcon className="w-4 h-4" />
-              </Button>
-              <Flex col center>
+          <Footer>
+            <Button
+              size="sm"
+              onClick={() => {
+                set({ mode: ModeEnum.edit })
+                setSidebarOpen(true)
+              }}
+            >
+              Edit <PencilIcon className="w-4 h-4" />
+            </Button>
+            <Flex col center asChild>
+              <Link href="/">
                 <Text size="base" weight="bold">
-                  AI to AI
+                  {name}
                 </Text>
                 <Text color="dimmer" size="xs" multiline center>
-                  Create side-by-side LLM comparisons
+                  {title}
                 </Text>
-              </Flex>
-              <Button size="sm" asChild>
-                <Link href="/">
-                  Try it out <ArrowRightIcon className="w-4 h-4" />
-                </Link>
-              </Button>
-            </footer>
-          </Flex>
+              </Link>
+            </Flex>
+            <Button size="sm" asChild>
+              <Link href="/">
+                Make your own <ArrowRightIcon className="w-4 h-4" />
+              </Link>
+            </Button>
+          </Footer>
         )}
         {mode === ModeEnum.edit && !sidebarOpen && (
           <SidebarButton
@@ -85,11 +97,14 @@ export default function Content({ llms }: { llms: Array<LLMWithMetadata> }) {
   )
 }
 
-const { ContentContainer, SidebarButton } = {
+const { ContentContainer, SidebarButton, Footer } = {
   ContentContainer: styled("div", {
     base: "flex flex-col gap-4 grow relative"
   }),
   SidebarButton: styled(Button, {
     base: "absolute top-2 left-2 md:hidden"
+  }),
+  Footer: styled("footer", {
+    base: "flex items-center justify-between p-4 gap-2 bg-gradient-to-b from-root/0 via-root to-root absolute bottom-0 left-0 right-0"
   })
 }

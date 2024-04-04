@@ -9,6 +9,7 @@ const envSchema = z.object({
   POSTGRES_PRISMA_URL: z.string(),
   DISCORD_WEBHOOK_URL_PUBLIC: z.string(),
   DISCORD_WEBHOOK_URL_ADMIN: z.string(),
+  DISCORD_INVITE: z.string().url(),
   NEXT_PUBLIC_SITE_URL: z.string().url()
 })
 

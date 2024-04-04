@@ -41,8 +41,8 @@ export default function Intro() {
         <FadeIn>
           <Text size="lg" weight="medium" color="dimmer" multiline>
             I thought long and hard on how{" "}
-            <strong className="text-foreground">AI to AI</strong> could fix this
-            problem and benefit others.
+            <strong className="text-foreground">LLM Arena</strong> could fix
+            this problem and benefit others.
           </Text>
           <Text size="lg" weight="medium" color="dimmer" multiline>
             The answer was an open{" "}

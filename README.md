@@ -1,8 +1,8 @@
-# AI to AI
+# LLM Arena
 
-An open-source platform for comparing LLMs
+An open-source website for creating and sharing LLM Comparisons
 
-[🔗 ai-to.ai](https://ai-to.ai)
+[🔗 llmarena.ai](https://llmarena.ai)
 
 ## Development
 
@@ -31,19 +31,19 @@ See the [Prisma Documentation](https://www.prisma.io/docs/orm/tools/prisma-cli) 
 
 ### Adding LLMs
 
-1. Apply as a contributor at https://ai-to.ai/contribute
-2. Read the [Contributor Guide](https://github.com/IroncladDev/ai-to-ai/blob/main/docs/contributor-guide.md)
-3. Once approved, you can [Submit a new LLM](https://ai-to.ai/submit) and [Vote on pending LLMs](https://ai-to.ai/llms)
+1. Apply as a contributor at https://llmarena.ai/contribute
+2. Read the [Contributor Guide](https://github.com/IroncladDev/llm-arena/blob/main/docs/contributor-guide.md)
+3. Once approved, you can [Submit a new LLM](https://llmarena.ai/submit) and [Vote on pending LLMs](https://llmarena.ai/llms)
 
 ### Bugs
 
-1. [Open an issue](https://github.com/IroncladDev/ai-to-ai/issues/new) on the repository
+1. [Open an issue](https://github.com/IroncladDev/llm-arena/issues/new) on the repository
 2. Describe the bug and include detailed steps on how to reproduce it
 3. Include screenshots or videos if possible
 
 ### Feature Requests
 
-1. [Open an issue](https://github.com/IroncladDev/ai-to-ai/issues/new) on the repository
+1. [Open an issue](https://github.com/IroncladDev/llm-arena/issues/new) on the repository
 2. Describe the feature and how it would be useful
 3. Include a quick sketch or mockup if possible (optional, [excalidraw](https://excalidraw.com/) and [figma](https://figma.com) are great tools for this)
 
