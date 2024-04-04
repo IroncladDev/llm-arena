@@ -14,7 +14,7 @@ const name = "AI to AI"
 const title = "Compare LLMs side-by-side"
 const description = "Create and share beautiful side-by-side LLM Comparisons"
 const url = process.env.NEXT_PUBLIC_SITE_URL
-const coverImage = new URL("/images/cover.png", url).toString()
+const coverImage = url + "/images/cover.png"
 
 export const metadata: Metadata = {
   title,
