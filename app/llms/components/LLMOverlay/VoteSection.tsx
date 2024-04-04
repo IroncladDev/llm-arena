@@ -1,6 +1,7 @@
 import { LLMWithRelations } from "@/app/api/search/types"
 import { useCurrentUser } from "@/components/providers/CurrentUserProvider"
 import { Button } from "@/components/ui/button"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import { Textarea } from "@/components/ui/textarea"
 import { User, Vote, VoteStatus } from "@prisma/client"
@@ -39,7 +40,7 @@ export default function VoteSection({
   }, [state, setTab, refetch])
 
   return (
-    <Container>
+    <Flex col gap={2} className="relative">
       <Text weight="medium" color={hasVoted ? "dimmest" : "default"}>
         <label htmlFor="comment">
           Comment{action === VoteStatus.approve ? " (Optional)" : ""}
@@ -71,7 +72,7 @@ export default function VoteSection({
           disabled={isDisabled}
         />
 
-        <SubmitOptions>
+        <Flex gap={2} justify="between" align="center">
           <StatusButtons action={action}>
             <ApproveButton
               onClick={() => setAction(VoteStatus.approve)}
@@ -97,7 +98,7 @@ export default function VoteSection({
           <Button type="submit" variant="elevated" disabled={isDisabled}>
             Submit
           </Button>
-        </SubmitOptions>
+        </Flex>
       </form>
 
       {state?.message && (
@@ -124,14 +125,12 @@ export default function VoteSection({
           </Text>
         </DisabledOverlay>
       ) : null}
-    </Container>
+    </Flex>
   )
 }
 
 const {
-  Container,
   DisabledOverlay,
-  SubmitOptions,
   StatusButtons,
   ApproveButton,
   RejectButton,
@@ -139,14 +138,8 @@ const {
   ThumbsDown,
   ErrorContainer
 } = {
-  Container: styled("div", {
-    base: "flex flex-col gap-2 relative"
-  }),
   DisabledOverlay: styled("div", {
     base: "absolute inset-0 bg-overlay flex flex-col items-center justify-center"
-  }),
-  SubmitOptions: styled("div", {
-    base: "flex gap-2 justify-between items-center"
   }),
   StatusButtons: styled("div", {
     base: "flex gap-1 border-2 p-1 rounded-xl",

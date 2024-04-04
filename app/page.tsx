@@ -1,16 +1,14 @@
 "use client"
 
 import { Container } from "@/components/container"
+import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
+import Link from "next/link"
 import { styled } from "react-tailwind-variants"
-import Comparison from "./compare/comparison"
-import Sidebar from "./compare/sidebar"
-import { useCompareState } from "./compare/state"
+import Selector from "./home/selector"
 
 export default function Page() {
-  const sidebar = useCompareState(state => state.sidebar)
-
   return (
     <Content
       style={{
@@ -25,33 +23,75 @@ export default function Page() {
         )
       }}
     >
-      <SidebarContainer open={sidebar}>
-        <Sidebar />
-      </SidebarContainer>
-      <ComparisonContainer>
-        <Comparison />
-      </ComparisonContainer>
+      <SelectorContainer>
+        <Selector />
+      </SelectorContainer>
+      <Footer
+        style={{
+          backgroundImage: gr.radial(
+            "ellipse at 50% 110%",
+            tokens.colors.red[500] + "45",
+            tokens.colors.red[500] + "15 30%",
+            tokens.colors.transparent + " 70%",
+            tokens.colors.transparent
+          )
+        }}
+      >
+        <FooterLinks>
+          <FooterLink size="base" asChild>
+            <Link href="/about">About</Link>
+          </FooterLink>
+          <FooterLink color="dimmest" size="base" asChild>
+            <Link href="/contribute">Contribute</Link>
+          </FooterLink>
+          <FooterLink color="dimmest" size="base" asChild>
+            <Link href="/login">Login</Link>
+          </FooterLink>
+          <FooterLink color="dimmest" size="base" asChild>
+            <a href="https://github.com/IroncladDev/ai-to-ai" target="_blank">
+              Github
+            </a>
+          </FooterLink>
+        </FooterLinks>
+        <Text color="dimmest">
+          Made by{" "}
+          <AuthorLink href="https://connerow.dev" target="_blank">
+            IroncladDev
+          </AuthorLink>{" "}
+          &copy;{" "}
+          {new Date().getFullYear() === 2024
+            ? 2024
+            : `2024 - ${new Date().getFullYear()}`}
+        </Text>
+      </Footer>
     </Content>
   )
 }
 
-const { Content, SidebarContainer, ComparisonContainer } = {
+const {
+  Content,
+  SelectorContainer,
+  Footer,
+  FooterLink,
+  FooterLinks,
+  AuthorLink
+} = {
   Content: styled(Container, {
-    base: "flex flex-row h-screen"
+    base: "flex flex-col h-screen"
   }),
-  SidebarContainer: styled("div", {
-    base: "flex flex-col bg-root/50 border-r-2 border-outline-dimmest h-screen min-w-[320px]",
-    variants: {
-      open: {
-        true: "max-md:absolute max-md:top-0 max-md:left-0 max-md:z-10 bg-root max-sm:w-full",
-        false: "max-md:hidden"
-      }
-    },
-    defaultVariants: {
-      open: true
-    }
+  SelectorContainer: styled("div", {
+    base: "flex flex-col items-center justify-center grow p-4"
   }),
-  ComparisonContainer: styled("div", {
-    base: "grow flex flex-col h-screen"
+  Footer: styled("footer", {
+    base: "flex flex-col gap-6 items-center w-full p-8"
+  }),
+  FooterLinks: styled("div", {
+    base: "flex gap-8 items-center justify-center w-full"
+  }),
+  FooterLink: styled(Text, {
+    base: "text-accent-dimmer hover:text-accent transition-colors"
+  }),
+  AuthorLink: styled("a", {
+    base: "text-accent-dimmer hover:text-accent transition-colors"
   })
 }

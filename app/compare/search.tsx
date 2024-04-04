@@ -3,26 +3,30 @@ import Text from "@/components/ui/text"
 import { useQuery } from "@tanstack/react-query"
 import { useCombobox } from "downshift"
 import { Hexagon } from "lucide-react"
-import { useState } from "react"
+import { forwardRef, useState } from "react"
 import { styled } from "react-tailwind-variants"
-import { LLMWithMetadata } from "./state"
+import { LLMWithMetadata } from "./types"
 
-export default function LLMSearch({
-  llms,
-  setLLMs,
-  ...props
-}: {
-  llms: Array<LLMWithMetadata>
-  setLLMs: (llms: Array<LLMWithMetadata>) => void
-} & Omit<React.ComponentProps<typeof Input>, "size">) {
+const LLMSearch = forwardRef<
+  HTMLInputElement,
+  {
+    llms: Array<LLMWithMetadata>
+    setLLMs: (llms: Array<LLMWithMetadata>) => void
+  } & React.ComponentPropsWithoutRef<typeof Input>
+>(({ llms, setLLMs, size, ...props }, ref) => {
   const [search, setSearch] = useState("")
 
-  const { data: results } = useQuery<Array<LLMWithMetadata>>({
+  const { data: results, isLoading } = useQuery<Array<LLMWithMetadata>>({
     queryKey: ["llmCompareSearch", search],
     queryFn: async () => {
-      const res = await fetch(
-        "/compare/search?query=" + encodeURIComponent(search)
-      )
+      const searchUrl = new URL("/compare/search", window.location.href)
+
+      if (search) searchUrl.searchParams.set("query", search)
+
+      if (llms.length > 0)
+        searchUrl.searchParams.set("exclude", llms.map(x => x.id).join(","))
+
+      const res = await fetch(searchUrl)
 
       return await res.json()
     }
@@ -63,8 +67,8 @@ export default function LLMSearch({
 
   return (
     <Search>
-      <Input {...getInputProps(props)} />
-      <DownshiftPopover hidden={!isOpen}>
+      <Input size={size} {...getInputProps({ ref, ...props })} />
+      <DownshiftPopover hidden={!isOpen} inputSize={size} loading={isLoading}>
         <ItemsContainer visible={items.length > 0} {...getMenuProps()}>
           {items.map((item, index) => (
             <Item
@@ -81,7 +85,7 @@ export default function LLMSearch({
           ))}
         </ItemsContainer>
 
-        {items.length === 0 && (
+        {items.length === 0 && !isLoading && (
           <EmptyState>
             <Text color="dimmer">No results</Text>
           </EmptyState>
@@ -89,7 +93,8 @@ export default function LLMSearch({
       </DownshiftPopover>
     </Search>
   )
-}
+})
+LLMSearch.displayName = "LLMSearch"
 
 const {
   Search,
@@ -104,7 +109,19 @@ const {
     base: "flex relative basis-0 w-full min-w-0 grow"
   }),
   DownshiftPopover: styled("div", {
-    base: "w-full rounded-lg border-2 border-outline-dimmer/75 absolute top-12 left-0 bg-default z-10 shadow-lg"
+    base: "w-full rounded-lg border-2 border-outline-dimmer/75 absolute top-12 left-0 bg-default z-10 shadow-lg",
+    variants: {
+      inputSize: {
+        default: "top-12",
+        lg: "top-14"
+      },
+      loading: {
+        true: "animate-pulse"
+      }
+    },
+    defaultVariants: {
+      inputSize: "default"
+    }
   }),
   ItemsContainer: styled("ul", {
     base: "flex-col hidden",
@@ -138,3 +155,5 @@ const {
     base: "flex justify-center items-center p-4"
   })
 }
+
+export default LLMSearch

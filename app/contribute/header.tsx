@@ -1,5 +1,5 @@
-import { MotionDiv } from "@/components/motion"
 import { Button } from "@/components/ui/button"
+import Flex, { MotionFlex } from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
@@ -54,9 +54,9 @@ export default function Header({
   const translateY = useTransform(smoothPercentage, [0, 1], ["0%", "-100%"])
 
   return (
-    <Container style={{ background }}>
-      <Content>
-        <HeaderContent style={{ translateY }}>
+    <MotionFlex col grow style={{ background }}>
+      <Content col grow width="full">
+        <MotionFlex col grow gap={4} center style={{ translateY }}>
           <Text
             size="display"
             weight="bold"
@@ -74,21 +74,15 @@ export default function Header({
               <ArrowDown className="text-foreground-dimmest w-8 h-8" />
             </a>
           </DownButton>
-        </HeaderContent>
+        </MotionFlex>
       </Content>
-    </Container>
+    </MotionFlex>
   )
 }
 
-const { Container, Content, HeaderContent, DownButton } = {
-  Container: styled(MotionDiv, {
-    base: "flex flex-col grow"
-  }),
-  Content: styled("div", {
-    base: "flex flex-col grow max-w-screen-md max-md:max-w-screen max-md:p-4 w-full self-center"
-  }),
-  HeaderContent: styled(MotionDiv, {
-    base: "flex flex-col gap-4 grow items-center justify-center"
+const { Content, DownButton } = {
+  Content: styled(Flex, {
+    base: "max-w-screen-md max-md:max-w-screen max-md:p-4 self-center"
   }),
   DownButton: styled(Button, {
     base: "h-16 w-16 rounded-full"

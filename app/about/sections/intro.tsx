@@ -1,5 +1,6 @@
 import CompareItem from "@/app/compare/item"
-import { MotionDiv } from "@/components/motion"
+import { Container } from "@/components/container"
+import Flex, { MotionFlex } from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
@@ -29,9 +30,11 @@ export default function Intro({
           tokens.colors.root
         )
       }}
+      center
+      className="border-t-2 border-default"
     >
-      <Content>
-        <AboutContainer>
+      <Flex col gap={4} p={8} align="center">
+        <Flex col grow gap={2}>
           <Text size="h1" weight="bold" center>
             About
           </Text>
@@ -44,9 +47,11 @@ export default function Intro({
             between two or more selected models get displayed together in{" "}
             <strong className="text-foreground">widgets</strong>.
           </Text>
-        </AboutContainer>
+        </Flex>
         <WidgetGutter>
           <WidgetContainer
+            gap={4}
+            center
             style={{
               translateX: slideWidgetsX
             }}
@@ -137,25 +142,16 @@ export default function Intro({
             />
           </WidgetContainer>
         </WidgetGutter>
-      </Content>
+      </Flex>
     </Container>
   )
 }
 
-const { Container, Content, AboutContainer, WidgetGutter, WidgetContainer } = {
-  Container: styled("div", {
-    base: "flex flex-col grow justify-center items-center border-t-2 border-default"
-  }),
-  Content: styled("div", {
-    base: "flex flex-col gap-8 p-4 items-center"
-  }),
-  AboutContainer: styled("div", {
-    base: "flex flex-col gap-2 grow"
-  }),
+const { WidgetGutter, WidgetContainer } = {
   WidgetGutter: styled("div", {
     base: "w-full px-4 h-[256px] relative"
   }),
-  WidgetContainer: styled(MotionDiv, {
-    base: "absolute top-0 left-0 flex gap-4 items-center justify-between *:shrink-0"
+  WidgetContainer: styled(MotionFlex, {
+    base: "absolute top-0 left-0 *:shrink-0"
   })
 }

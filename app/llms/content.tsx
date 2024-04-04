@@ -2,6 +2,7 @@
 
 import { Container } from "@/components/container"
 import Navbar from "@/components/navbar"
+import Flex from "@/components/ui/flex"
 import { Input } from "@/components/ui/input"
 import Text from "@/components/ui/text"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
@@ -70,7 +71,7 @@ export default function LLMsPage() {
             LLMs
           </Text>
         </Header>
-        <SearchContainer>
+        <Flex gap={4} align="center" width="full" justify="between">
           <Input
             placeholder="Search"
             value={search.query}
@@ -82,7 +83,7 @@ export default function LLMsPage() {
             setSearch={setSearch}
             setSearchBy={setSearchBy}
           />
-        </SearchContainer>
+        </Flex>
         {(llms || []).map((llm, i) => (
           <LLMItem query={search.query} key={i} llm={llm} />
         ))}
@@ -92,12 +93,9 @@ export default function LLMsPage() {
   )
 }
 
-const { Content, SearchContainer, Header } = {
+const { Content, Header } = {
   Content: styled("div", {
     base: "flex flex-col gap-4 max-w-3xl self-center min-h-screen h-full w-full p-4"
-  }),
-  SearchContainer: styled("div", {
-    base: "flex items-center w-full gap-4 justify-between"
   }),
   Header: styled("div", {
     base: "flex items-center gap-4 justify-between pb-4 border-b-2 border-outline-dimmest"

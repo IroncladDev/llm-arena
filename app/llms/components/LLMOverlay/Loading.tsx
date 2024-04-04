@@ -1,17 +1,13 @@
+import Flex from "@/components/ui/flex"
 import { Skeleton } from "@/components/ui/skeleton"
-import { styled } from "react-tailwind-variants"
 import Header from "./Header"
 
 export default function Loading() {
   return (
-    <ContentContainer>
+    <Flex col gap={4} height="auto">
       <Header>
         <Skeleton className="grow h-4" />
       </Header>
-    </ContentContainer>
+    </Flex>
   )
 }
-
-const ContentContainer = styled("div", {
-  base: "flex flex-col gap-4 h-auto"
-})

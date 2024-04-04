@@ -1,13 +1,13 @@
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import { InfoIcon } from "lucide-react"
-import { styled } from "react-tailwind-variants"
 import Header from "./Header"
 
 export default function ErrorState({ error }: { error: string }) {
   return (
-    <ContentContainer>
+    <Flex col grow height="full">
       <Header className="justify-end" />
-      <ErrorContainer>
+      <Flex col center grow width="full" height="full" gap={4}>
         <InfoIcon className="w-8 h-8 text-foreground-dimmest" />
         <Text size="lg" weight="medium">
           An Error Occurred
@@ -15,16 +15,7 @@ export default function ErrorState({ error }: { error: string }) {
         <Text size="sm" color="dimmer">
           {error}
         </Text>
-      </ErrorContainer>
-    </ContentContainer>
+      </Flex>
+    </Flex>
   )
-}
-
-const { ErrorContainer, ContentContainer } = {
-  ErrorContainer: styled("div", {
-    base: "flex items-center justify-center grow w-full h-full flex-col gap-4"
-  }),
-  ContentContainer: styled("div", {
-    base: "flex flex-col grow h-full"
-  })
 }

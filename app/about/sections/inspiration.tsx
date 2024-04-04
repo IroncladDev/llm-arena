@@ -1,11 +1,13 @@
+import { Container } from "@/components/container"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
-import { styled } from "react-tailwind-variants"
 
 export default function Inspiration() {
   return (
     <Container
+      center
       style={{
         backgroundImage: gr.merge(
           gr.radial(
@@ -34,8 +36,9 @@ export default function Inspiration() {
           )
         )
       }}
+      className="border-t-2 border-default"
     >
-      <Content>
+      <Flex col grow justify="center" gap={4} p={4}>
         <Text size="h1" weight="bold" center className="leading-tight">
           Inspiration
         </Text>
@@ -76,16 +79,7 @@ export default function Inspiration() {
           </a>
           .
         </Text>
-      </Content>
+      </Flex>
     </Container>
   )
-}
-
-const { Container, Content } = {
-  Container: styled("div", {
-    base: "flex flex-col grow border-t-2 border-default justify-center items-center min-h-screen"
-  }),
-  Content: styled("div", {
-    base: "flex flex-col gap-4 p-4"
-  })
 }

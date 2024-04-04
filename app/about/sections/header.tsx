@@ -1,10 +1,9 @@
-import { MotionDiv } from "@/components/motion"
+import Flex, { MotionFlex } from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
 import { MotionValue, useSpring, useTransform } from "framer-motion"
 import { useCallback } from "react"
-import { styled } from "react-tailwind-variants"
 
 const toHex = (num: number): string => num.toString(16).padStart(2, "0")
 
@@ -51,9 +50,14 @@ export default function Header({
   const translateY = useTransform(smoothPercentage, [0, 1], ["0%", "-50%"])
 
   return (
-    <Container style={{ background }}>
-      <Content>
-        <HeaderContent style={{ translateY }}>
+    <MotionFlex col grow style={{ background }}>
+      <Flex
+        col
+        grow
+        width="full"
+        className="max-w-screen-md max-md:max-w-screen max-md:p-4 self-center"
+      >
+        <MotionFlex col grow gap={4} center style={{ translateY }}>
           <Text
             size="display"
             weight="bold"
@@ -64,20 +68,8 @@ export default function Header({
           <Text size="lg" color="dimmer" multiline center>
             Create beautiful side-by-side LLM Comparisons
           </Text>
-        </HeaderContent>
-      </Content>
-    </Container>
+        </MotionFlex>
+      </Flex>
+    </MotionFlex>
   )
-}
-
-const { Container, Content, HeaderContent } = {
-  Container: styled(MotionDiv, {
-    base: "flex flex-col grow"
-  }),
-  Content: styled("div", {
-    base: "flex flex-col grow max-w-screen-md max-md:max-w-screen max-md:p-4 w-full self-center"
-  }),
-  HeaderContent: styled(MotionDiv, {
-    base: "flex flex-col gap-4 grow items-center justify-center"
-  })
 }

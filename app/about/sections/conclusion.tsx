@@ -1,8 +1,9 @@
+import { Container } from "@/components/container"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
 import Link from "next/link"
-import { styled } from "react-tailwind-variants"
 
 export default function Conclusion() {
   return (
@@ -16,8 +17,10 @@ export default function Conclusion() {
           tokens.colors.transparent
         )
       }}
+      center
+      className="border-t-2 border-default"
     >
-      <Content>
+      <Flex col gap={4} p={4}>
         <Text size="h1" weight="bold" center className="leading-tight">
           Final Notes
         </Text>
@@ -44,16 +47,7 @@ export default function Conclusion() {
           </a>
           .
         </Text>
-      </Content>
+      </Flex>
     </Container>
   )
-}
-
-const { Container, Content } = {
-  Container: styled("div", {
-    base: "flex flex-col grow border-t-2 border-default justify-center items-center min-h-screen"
-  }),
-  Content: styled("div", {
-    base: "flex flex-col gap-4 p-4"
-  })
 }

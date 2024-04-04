@@ -1,4 +1,5 @@
 import { LLMWithRelations } from "@/app/api/search/types"
+import Flex from "@/components/ui/flex"
 import Text from "@/components/ui/text"
 import useClientRect from "@/hooks/useElementSize"
 import { VoteStatus } from "@prisma/client"
@@ -48,7 +49,7 @@ export default function LLMItem({
         router.push(pathname + "?llm=" + llm.id, { scroll: false })
       }}
     >
-      <Header>
+      <Flex gap={2} align="center">
         <Text weight="medium" size="lg" className="grow" color="dimmer">
           {searchNodes(llm.name).map(({ text, highlighted }, i) =>
             highlighted ? (
@@ -81,14 +82,20 @@ export default function LLMItem({
               ? "Approved"
               : "Rejected"}
         </StatusBadge>
-      </Header>
+      </Flex>
 
       <Content>
-        <ContentSection ref={ref}>
+        <Flex col gap={2} grow noBasis ref={ref}>
           <Text weight="medium">Metadata Fields</Text>
           <FieldTable fields={llm.fields} capLength={3} />
-        </ContentSection>
-        <ContentSection style={{ maxHeight: box?.height || "unset" }}>
+        </Flex>
+        <Flex
+          col
+          gap={2}
+          grow
+          noBasis
+          style={{ maxHeight: box?.height || "unset" }}
+        >
           <Text weight="medium">Source Description</Text>
           <Text multiline="clamp-4" color="dimmer">
             {searchNodes(llm.sourceDescription).map(
@@ -102,7 +109,7 @@ export default function LLMItem({
                 )
             )}
           </Text>
-        </ContentSection>
+        </Flex>
         <ContentOverlay />
       </Content>
     </Container>
@@ -111,10 +118,8 @@ export default function LLMItem({
 
 const {
   Container,
-  Header,
   Content,
   ContentOverlay,
-  ContentSection,
   StatusBadge,
   StatusBar,
   StatusVote
@@ -122,17 +127,11 @@ const {
   Container: styled("div", {
     base: "flex flex-col gap-2 p-2 rounded-lg border-2 border-outline-dimmest bg-default hover:border-accent-dimmer cursor-pointer transition-colors"
   }),
-  Header: styled("div", {
-    base: "flex gap-2 items-center"
-  }),
   Content: styled("div", {
     base: "flex gap-2 items-start w-full overflow-hidden relative max-h-[200px]"
   }),
   ContentOverlay: styled("div", {
     base: `absolute inset-0 bg-gradient-to-t from-default via-transparent via-transparent to-transparent flex flex-col justify-end max-h-[200px]`
-  }),
-  ContentSection: styled("div", {
-    base: "flex flex-col gap-2 grow basis-0"
   }),
   StatusBadge: styled("div", {
     base: "rounded-md px-1.5 py-0.5 text-xs",
