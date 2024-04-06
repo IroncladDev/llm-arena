@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 const envSchema = z.object({
-  SENDGRID_API_KEY: z.string(),
+  RESEND_API_KEY: z.string(),
   NEXTAUTH_URL: z.string().url(),
   NEXTAUTH_SECRET: z.string(),
   GITHUB_ID: z.string(),

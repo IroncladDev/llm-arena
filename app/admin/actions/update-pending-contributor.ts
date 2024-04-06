@@ -1,7 +1,7 @@
 "use server"
 
 import { formatError } from "@/lib/errors"
-import { baseEmail, send } from "@/lib/server/email"
+import { baseEmail, resend } from "@/lib/server/email"
 import prisma from "@/lib/server/prisma"
 import { requireAdmin } from "@/lib/server/utils/auth"
 import { getSession } from "@/lib/server/utils/session"
@@ -57,12 +57,11 @@ export async function updatePendingContributor(
     })
 
     if (status === VoteStatus.approve) {
-      await send({
-        from: `LLM Arena <noreply@llmarena.ai>`,
-        replyTo: user.email,
+      await resend.emails.send({
+        from: `LLM Arena <admin@mail.llmarena.ai>`,
         to: userToUpdate.email,
         subject: "Contribution Request Approved",
-        text: "Congratulations! We've approved your request to become a contributor to LLM Arena. To get started, check out the Contributor Guide: https://github.com/IroncladDev/llm-arena/blob/main/docs/contributor-guide.md",
+        text: `Congratulations! We've approved your request to become a contributor to LLM Arena. To get started, check out the Contributor Guide: https://github.com/IroncladDev/llm-arena/blob/main/docs/contributor-guide.md. Join the <a href="${process.env.DISCORD_INVITE}">Discord Server</a> to stay up-to-date on announcements, updates, and more.`,
         html: baseEmail({
           title: "Contribution Request Approved",
           paragraphs: [
@@ -79,9 +78,8 @@ export async function updatePendingContributor(
         })
       })
     } else {
-      await send({
-        from: `LLM Arena <noreply@llmarena.ai>`,
-        replyTo: user.email,
+      await resend.emails.send({
+        from: `LLM Arena <admin@mail.llmarena.ai>`,
         to: userToUpdate.email,
         subject: "Contribution Request Denied",
         text: "Thanks for your interest in contributing to LLM Arena. At the moment we've decided not to move forward with your request.\n\nIf you have any questions, you may respond to this email directly.",
