@@ -336,7 +336,7 @@ export default function Sidebar({
         />
         {llms.map(item => (
           <LLMListItem key={item.id}>
-            <LLMIcon llm={item} className="w-6 h-6" />
+            <LLMIcon size="sm" />
             <Text className="grow" color="dimmer">
               {item.name}
             </Text>

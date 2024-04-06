@@ -71,7 +71,7 @@ export default function Selector() {
                 onClick={() => setSelectedLLM(llm)}
               >
                 <IconContainer>
-                  <LLMIcon llm={llm} />
+                  <LLMIcon size="md" />
                   <CloseButton>
                     <XIcon
                       className="w-4 h-4 text-foreground-dimmest"
