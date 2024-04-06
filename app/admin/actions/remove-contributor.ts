@@ -1,7 +1,7 @@
 "use server"
 
 import { formatError } from "@/lib/errors"
-import { baseEmail, send } from "@/lib/server/email"
+import { baseEmail, resend } from "@/lib/server/email"
 import prisma from "@/lib/server/prisma"
 import { requireAdmin } from "@/lib/server/utils/auth"
 import { getSession } from "@/lib/server/utils/session"
@@ -29,7 +29,7 @@ export async function removeContributor(e: RemoveContributorInput) {
     const { user } = res
     requireAdmin(user)
 
-    const { userId } = removeContributorInput.parse(e)
+    const { userId, reason } = removeContributorInput.parse(e)
 
     const contributor = await prisma.user.findFirst({
       where: {
@@ -52,16 +52,15 @@ export async function removeContributor(e: RemoveContributorInput) {
       }
     })
 
-    await send({
-      from: `LLM Arena <noreply@llmarena.ai>`,
-      replyTo: user.email,
+    await resend.emails.send({
+      from: `LLM Arena <admin@mail.llmarena.ai>`,
       to: contributor.email,
       subject: "Your contributor status has been removed",
-      text: "Your contributor status has been revoked by an administrator. If you have any questions or if you believe this was done in error, you may respond directly to this email.",
+      text: `Your contributor status has been revoked by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`,
       html: baseEmail({
         title: "Your contributor status has been removed",
         paragraphs: [
-          "Your contributor status has been revoked by an administrator. If you have any questions or if you believe this was done in error, you may respond directly to this email."
+          `Your contributor status has been revoked by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`
         ],
         buttonLinks: []
       })

@@ -11,7 +11,7 @@ module.exports = {
 
     // For Discord.js to work in Server Actions
     config.module.rules.push({
-      test: /\.node/,
+      test: /zlib_sync\.node$/,
       use: "node-loader"
     })
 

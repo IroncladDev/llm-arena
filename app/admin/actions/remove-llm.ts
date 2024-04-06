@@ -1,7 +1,7 @@
 "use server"
 
 import { formatError } from "@/lib/errors"
-import { baseEmail, send } from "@/lib/server/email"
+import { baseEmail, resend } from "@/lib/server/email"
 import prisma from "@/lib/server/prisma"
 import { requireAdmin } from "@/lib/server/utils/auth"
 import { getSession } from "@/lib/server/utils/session"
@@ -59,9 +59,8 @@ export async function removeLLM(e: RemoveLLMInput) {
       where: { id: llmId }
     })
 
-    await send({
-      from: `LLM Arena <noreply@llmarena.ai>`,
-      replyTo: user.email,
+    await resend.emails.send({
+      from: `LLM Arena <admin@mail.llmarena.ai>`,
       to: llm.user.email,
       subject: `Your LLM "${llm.name}" has been removed`,
       text: `Your LLM with the name "${llm.name}" has been removed from LLM Arena by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`,

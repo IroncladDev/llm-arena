@@ -39,8 +39,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: coverImage,
-        width: 3000,
-        height: 1700
+        width: 1664,
+        height: 1040
       }
     ],
     type: "website"
