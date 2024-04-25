@@ -23,30 +23,30 @@ export default function WaitlistPage({ position }: { position: number }) {
         tokens.colors.red[600] + "88",
         tokens.colors.red[600] + "44 30%",
         "transparent 70%",
-        "transparent"
+        "transparent",
       ),
       gr.radial(
         `circle at ${p * 100 - 50}% ${100 - p * 50}%`,
         tokens.colors.red[600] + "44",
         tokens.colors.red[600] + "22 50%",
         "transparent 70%",
-        "transparent"
+        "transparent",
       ),
       gr.rRadial(
         "circle at 0% 100%",
         ...gr.stack(
           ["transparent", `calc(${60 - 40 * p}% - 2px)`],
-          [colors.outline.dimmest, `calc(${60 - 40 * p}%)`]
-        )
+          [colors.outline.dimmest, `calc(${60 - 40 * p}%)`],
+        ),
       ),
       gr.radial(
         `circle at 50% ${50 * p}%`,
         ...gr.stack(
           [colors.clear, "calc(60% - 2px)"],
           [colors.outline.dimmest, "calc(60%)"],
-          [colors.clear, "100%"]
-        )
-      )
+          [colors.clear, "100%"],
+        ),
+      ),
     )
   }, [])
 
@@ -67,7 +67,7 @@ export default function WaitlistPage({ position }: { position: number }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       style={{
-        background
+        background,
       }}
     >
       <Content>
@@ -89,5 +89,5 @@ export default function WaitlistPage({ position }: { position: number }) {
 }
 
 const Content = styled(MotionDiv, {
-  base: "border-2 border-outline-dimmer bg-gradient-to-b from-higher to-root rounded-xl p-6 flex flex-col gap-3 shadow-lg shadow-black/50 max-w-sm"
+  base: "border-2 border-outline-dimmer bg-gradient-to-b from-higher to-root rounded-xl p-6 flex flex-col gap-3 shadow-lg shadow-black/50 max-w-sm",
 })

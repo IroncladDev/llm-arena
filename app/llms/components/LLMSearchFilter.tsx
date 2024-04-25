@@ -5,14 +5,14 @@ import Flex from "@/components/ui/flex"
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger
+  PopoverTrigger,
 } from "@/components/ui/popover"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import Text from "@/components/ui/text"
 import {
   Tooltip,
   TooltipContent,
-  TooltipTrigger
+  TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { InfoIcon, SlidersHorizontal } from "lucide-react"
 import { Dispatch, SetStateAction } from "react"
@@ -22,7 +22,7 @@ export default function LLMSearchFilter({
   search,
   setSearch,
   searchBy,
-  setSearchBy
+  setSearchBy,
 }: {
   search: Omit<SearchInput, "searchBy" | "limit">
   setSearch: Dispatch<SetStateAction<Omit<SearchInput, "searchBy" | "limit">>>
@@ -58,7 +58,7 @@ export default function LLMSearchFilter({
               onCheckedChange={checked =>
                 setSearchBy({
                   ...searchBy,
-                  sourceDescription: Boolean(checked)
+                  sourceDescription: Boolean(checked),
                 })
               }
             />
@@ -127,7 +127,7 @@ export default function LLMSearchFilter({
             onValueChange={value =>
               setSearch({
                 ...search,
-                status: value as SearchInput["status"]
+                status: value as SearchInput["status"],
               })
             }
           >
@@ -163,5 +163,5 @@ export default function LLMSearchFilter({
 }
 
 const FilterField = styled("div", {
-  base: "flex items-center gap-2 pl-2"
+  base: "flex items-center gap-2 pl-2",
 })

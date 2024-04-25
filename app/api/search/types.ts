@@ -10,13 +10,13 @@ export const searchInput = z.object({
   searchBy: z.object({
     name: z.boolean().default(true),
     sourceDescription: z.boolean().default(true),
-    fields: z.boolean().default(true)
-  })
+    fields: z.boolean().default(true),
+  }),
 })
 
 export type SearchInput = z.infer<typeof searchInput>
 
-export type LLMWithRelations<T = Vote> = LLM & {
+export type LLMWithRelations<T extends Vote = Vote> = LLM & {
   fields: Array<Field & { metaProperty: MetaProperty }>
   votes: Array<T>
   user: User

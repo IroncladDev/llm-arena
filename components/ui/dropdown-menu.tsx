@@ -17,23 +17,23 @@ const DropdownMenuContent = styled(DropdownMenuPrimitive.Content, {
   variants: {
     elevated: {
       true: "border-accent-dimmer bg-higher",
-      false: "border-accent-dimmest bg-default"
-    }
-  }
+      false: "border-accent-dimmest bg-default",
+    },
+  },
 })
 
 const DropdownMenuItem = styled(DropdownMenuPrimitive.Item, {
   base: `relative flex w-full cursor-pointer select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none text-foreground-dimmer focus:bg-highest focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-colors`,
   variants: {
     inset: {
-      true: "pl-8"
-    }
-  }
+      true: "pl-8",
+    },
+  },
 })
 
 const DropdownMenuCheckboxItemBase = styled(
   DropdownMenuPrimitive.CheckboxItem,
-  extractVariantsConfig(DropdownMenuItem)
+  extractVariantsConfig(DropdownMenuItem),
 )
 
 const DropdownMenuCheckboxItem = React.forwardRef<
@@ -54,7 +54,7 @@ DropdownMenuCheckboxItem.displayName =
 
 const DropdownMenuRadioItemBase = styled(
   DropdownMenuPrimitive.RadioItem,
-  extractVariantsConfig(DropdownMenuItem)
+  extractVariantsConfig(DropdownMenuItem),
 )
 
 const DropdownMenuRadioItem = React.forwardRef<
@@ -82,5 +82,5 @@ export {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSub,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 }

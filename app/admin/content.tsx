@@ -44,7 +44,7 @@ export default function AdminPage({ waitlist }: { waitlist: Array<User> }) {
 
 const UserRow = ({
   user,
-  setUsers
+  setUsers,
 }: {
   user: User
   setUsers: React.Dispatch<React.SetStateAction<User[]>>
@@ -52,7 +52,7 @@ const UserRow = ({
   const submit = async (status: VoteStatus) => {
     const res = await updatePendingContributor({
       status,
-      userId: user.id
+      userId: user.id,
     })
 
     if (res.success) {

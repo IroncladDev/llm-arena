@@ -5,7 +5,7 @@ import { XIcon } from "lucide-react"
 
 export default function Header({
   children = null,
-  className
+  className,
 }: {
   children?: React.ReactNode
   className?: string

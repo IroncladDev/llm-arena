@@ -9,12 +9,12 @@ import { MotionValue, useSpring, useTransform } from "framer-motion"
 import { styled } from "react-tailwind-variants"
 
 export default function Intro({
-  percentage
+  percentage,
 }: {
   percentage: MotionValue<number>
 }) {
   const smoothPercentage = useSpring(percentage, {
-    mass: 0.05
+    mass: 0.05,
   })
 
   const slideWidgetsX = useTransform(smoothPercentage, [0, 1], ["0", "-100%"])
@@ -27,8 +27,8 @@ export default function Intro({
           tokens.colors.default + "ac",
           tokens.colors.default + "87 20%",
           tokens.colors.root + " 85%",
-          tokens.colors.root
-        )
+          tokens.colors.root,
+        ),
       }}
       center
       className="border-t-2 border-default"
@@ -53,7 +53,7 @@ export default function Intro({
             gap={4}
             center
             style={{
-              translateX: slideWidgetsX
+              translateX: slideWidgetsX,
             }}
           >
             <CompareItem
@@ -64,22 +64,22 @@ export default function Intro({
                 values: [
                   [
                     "code-llama",
-                    { value: 0.288, type: MetaPropertyType.Number }
+                    { value: 0.288, type: MetaPropertyType.Number },
                   ],
                   [
                     "mistral-7b",
-                    { value: 0.305, type: MetaPropertyType.Number }
+                    { value: 0.305, type: MetaPropertyType.Number },
                   ],
                   [
                     "gemini pro",
-                    { value: 0.677, type: MetaPropertyType.Number }
+                    { value: 0.677, type: MetaPropertyType.Number },
                   ],
                   ["PaLM 8b", { value: 0.036, type: MetaPropertyType.Number }],
                   [
                     "code-davinci-002",
-                    { value: 0.658, type: MetaPropertyType.Number }
-                  ]
-                ]
+                    { value: 0.658, type: MetaPropertyType.Number },
+                  ],
+                ],
               }}
             />
             <CompareItem
@@ -91,18 +91,21 @@ export default function Intro({
                   ["gpt-4", { value: 8192, type: MetaPropertyType.Number }],
                   [
                     "gpt-3.5-turbo",
-                    { value: 4096, type: MetaPropertyType.Number }
+                    { value: 4096, type: MetaPropertyType.Number },
                   ],
                   [
                     "gpt-4-turbo-preview",
-                    { value: 128000, type: MetaPropertyType.Number }
+                    { value: 128000, type: MetaPropertyType.Number },
                   ],
                   [
                     "replit-code-v1-3b",
-                    { value: 32000, type: MetaPropertyType.Number }
+                    { value: 32000, type: MetaPropertyType.Number },
                   ],
-                  ["llama-2-7b", { value: 4000, type: MetaPropertyType.Number }]
-                ]
+                  [
+                    "llama-2-7b",
+                    { value: 4000, type: MetaPropertyType.Number },
+                  ],
+                ],
               }}
             />
             <CompareItem
@@ -115,29 +118,29 @@ export default function Intro({
                     "gpt-4",
                     {
                       value: "multimodal",
-                      type: MetaPropertyType.String
-                    }
+                      type: MetaPropertyType.String,
+                    },
                   ],
                   [
                     "dalle-2",
-                    { value: "text-to-image", type: MetaPropertyType.String }
+                    { value: "text-to-image", type: MetaPropertyType.String },
                   ],
                   [
                     "sora",
-                    { value: "text-to-video", type: MetaPropertyType.String }
+                    { value: "text-to-video", type: MetaPropertyType.String },
                   ],
                   [
                     "CodeLlama-70b-hf",
                     {
                       value: "code generation",
-                      type: MetaPropertyType.String
-                    }
+                      type: MetaPropertyType.String,
+                    },
                   ],
                   [
                     "musicgen-small",
-                    { value: "text-to-music", type: MetaPropertyType.String }
-                  ]
-                ]
+                    { value: "text-to-music", type: MetaPropertyType.String },
+                  ],
+                ],
               }}
             />
           </WidgetContainer>
@@ -149,9 +152,9 @@ export default function Intro({
 
 const { WidgetGutter, WidgetContainer } = {
   WidgetGutter: styled("div", {
-    base: "w-full px-4 h-[256px] relative"
+    base: "w-full px-4 h-[256px] relative",
   }),
   WidgetContainer: styled(MotionFlex, {
-    base: "absolute top-0 left-0 *:shrink-0"
-  })
+    base: "absolute top-0 left-0 *:shrink-0",
+  }),
 }

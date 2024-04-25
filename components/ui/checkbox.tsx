@@ -18,11 +18,11 @@ const Checkbox = React.forwardRef<
 Checkbox.displayName = CheckboxPrimitive.Root.displayName
 
 const CheckboxBase = styled(CheckboxPrimitive.Root, {
-  base: `peer h-5 w-5 shrink-0 rounded border-2 border-outline-dimmer bg-highest disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-accent-dimmest data-[state=checked]:text-foreground data-[state=checked]:border-accent-dimmer transition-colors`
+  base: `peer h-5 w-5 shrink-0 rounded border-2 border-outline-dimmer bg-highest disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-accent-dimmest data-[state=checked]:text-foreground data-[state=checked]:border-accent-dimmer transition-colors`,
 })
 
 const CheckboxIndicator = styled(CheckboxPrimitive.Indicator, {
-  base: `flex items-center justify-center text-current`
+  base: `flex items-center justify-center text-current`,
 })
 
 export { Checkbox }

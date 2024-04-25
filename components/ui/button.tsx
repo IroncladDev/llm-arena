@@ -18,19 +18,19 @@ const Button = styled("button", {
       outline:
         "border-2 border-outline-dimmest hover:border-outline-dimmer text-foreground-dimmer",
       outlineHighlight:
-        "border-2 border-outline-dimmest hover:border-red-900/50 hover:border-accent-dimmest"
+        "border-2 border-outline-dimmest hover:border-red-900/50 hover:border-accent-dimmest",
     },
     size: {
       default: "h-10 px-4 py-2",
       sm: "h-8 rounded-md px-2 py-1 text-xs",
       lg: "h-12 rounded-xl px-8 text-base",
-      icon: "h-8 w-8"
-    }
+      icon: "h-8 w-8",
+    },
   },
   defaultVariants: {
     variant: "default",
-    size: "default"
-  }
+    size: "default",
+  },
 })
 
 export { Button }

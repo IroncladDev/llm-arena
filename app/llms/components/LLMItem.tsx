@@ -10,7 +10,7 @@ import FieldTable from "./FieldTable"
 
 export default function LLMItem({
   query,
-  llm
+  llm,
 }: {
   query: string
   llm: LLMWithRelations
@@ -30,7 +30,7 @@ export default function LLMItem({
       (acc, node, i) => {
         acc.push({
           text: node,
-          highlighted: false
+          highlighted: false,
         })
 
         if (i < splitText.length - 1 && matches) {
@@ -39,7 +39,7 @@ export default function LLMItem({
 
         return acc
       },
-      [] as Array<{ text: string; highlighted: boolean }>
+      [] as Array<{ text: string; highlighted: boolean }>,
     )
   }
 
@@ -58,7 +58,7 @@ export default function LLMItem({
               </span>
             ) : (
               <Fragment key={i}>{text}</Fragment>
-            )
+            ),
           )}
         </Text>
         <Text color="dimmer" size="sm">
@@ -69,7 +69,7 @@ export default function LLMItem({
             .sort(
               (a, b) =>
                 Number(b.status === VoteStatus.approve) -
-                Number(a.status === VoteStatus.approve)
+                Number(a.status === VoteStatus.approve),
             )
             .map((vote, i) => (
               <StatusVote key={i} status={vote.status} />
@@ -106,7 +106,7 @@ export default function LLMItem({
                   </span>
                 ) : (
                   text
-                )
+                ),
             )}
           </Text>
         </Flex>
@@ -122,16 +122,16 @@ const {
   ContentOverlay,
   StatusBadge,
   StatusBar,
-  StatusVote
+  StatusVote,
 } = {
   Container: styled("div", {
-    base: "flex flex-col gap-2 p-2 rounded-lg border-2 border-outline-dimmest bg-default hover:border-accent-dimmer cursor-pointer transition-colors"
+    base: "flex flex-col gap-2 p-2 rounded-lg border-2 border-outline-dimmest bg-default hover:border-accent-dimmer cursor-pointer transition-colors",
   }),
   Content: styled("div", {
-    base: "flex gap-2 items-start w-full overflow-hidden relative max-h-[200px]"
+    base: "flex gap-2 items-start w-full overflow-hidden relative max-h-[200px]",
   }),
   ContentOverlay: styled("div", {
-    base: `absolute inset-0 bg-gradient-to-t from-default via-transparent via-transparent to-transparent flex flex-col justify-end max-h-[200px]`
+    base: `absolute inset-0 bg-gradient-to-t from-default via-transparent via-transparent to-transparent flex flex-col justify-end max-h-[200px]`,
   }),
   StatusBadge: styled("div", {
     base: "rounded-md px-1.5 py-0.5 text-xs",
@@ -139,20 +139,20 @@ const {
       status: {
         pending: "bg-amber-500/25 text-amber-300/75",
         approved: "bg-emerald-500/25 text-emerald-300/75",
-        rejected: "bg-rose-500/25 text-rose-300/75"
-      }
-    }
+        rejected: "bg-rose-500/25 text-rose-300/75",
+      },
+    },
   }),
   StatusBar: styled("div", {
-    base: "rounded-full h-1.5 w-[120px] bg-higher flex"
+    base: "rounded-full h-1.5 w-[120px] bg-higher flex",
   }),
   StatusVote: styled("div", {
     base: "grow basis-0 h-full first:rounded-l-full last:rounded-r-full shadow-[2px_0_0_2px,-2px_0_0_2px]",
     variants: {
       status: {
         approve: "bg-emerald-600 shadow-emerald-600/10",
-        reject: "bg-rose-600 shadow-rose-600/10"
-      }
-    }
-  })
+        reject: "bg-rose-600 shadow-rose-600/10",
+      },
+    },
+  }),
 }

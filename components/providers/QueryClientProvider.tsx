@@ -2,13 +2,13 @@
 
 import {
   QueryClient,
-  QueryClientProvider as TanstackQueryClientProvider
+  QueryClientProvider as TanstackQueryClientProvider,
 } from "@tanstack/react-query"
 
 const client = new QueryClient()
 
 export function QueryClientProvider({
-  children
+  children,
 }: {
   children: React.ReactNode
 }) {

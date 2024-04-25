@@ -30,13 +30,13 @@ const SelectTriggerBase = styled(SelectPrimitive.Trigger, {
     elevated: {
       true: "bg-higher border-outline-dimmer focus:border-accent-dimmer data-[state=open]:border-accent-dimmer",
       false:
-        "bg-default border-outline-dimmest focus:border-accent-dimmest data-[state=open]:border-accent-dimmer"
+        "bg-default border-outline-dimmest focus:border-accent-dimmest data-[state=open]:border-accent-dimmer",
     },
     small: {
       true: "h-8 rounded-md",
-      false: "h-10 py-2 rounded-lg"
-    }
-  }
+      false: "h-10 py-2 rounded-lg",
+    },
+  },
 })
 
 const SelectScrollUpButton = React.forwardRef<
@@ -50,7 +50,7 @@ const SelectScrollUpButton = React.forwardRef<
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
 
 const SelectScrollButtonBase = styled(SelectPrimitive.ScrollUpButton, {
-  base: `flex cursor-default items-center justify-center py-1`
+  base: `flex cursor-default items-center justify-center py-1`,
 })
 
 const SelectScrollDownButton = React.forwardRef<
@@ -86,12 +86,12 @@ const SelectViewportBase = styled(SelectPrimitive.Viewport, {
     position: {
       popper: "h-8 w-full",
       item: "",
-      "item-aligned": ""
-    }
+      "item-aligned": "",
+    },
   },
   defaultVariants: {
-    position: "popper"
-  }
+    position: "popper",
+  },
 })
 
 const SelectContentBase = styled(SelectPrimitive.Content, {
@@ -99,18 +99,18 @@ const SelectContentBase = styled(SelectPrimitive.Content, {
   variants: {
     elevated: {
       true: "border-accent-dimmer bg-higher",
-      false: "border-accent-dimmest bg-default"
+      false: "border-accent-dimmest bg-default",
     },
     position: {
       popper:
         "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
       item: "",
-      "item-aligned": ""
-    }
+      "item-aligned": "",
+    },
   },
   defaultVariants: {
-    position: "popper"
-  }
+    position: "popper",
+  },
 })
 
 const SelectItem = React.forwardRef<
@@ -130,11 +130,11 @@ const SelectItem = React.forwardRef<
 SelectItem.displayName = SelectPrimitive.Item.displayName
 
 const SelectItemBase = styled(SelectPrimitive.Item, {
-  base: `relative flex w-full cursor-pointer select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none text-foreground-dimmer focus:bg-highest focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-colors`
+  base: `relative flex w-full cursor-pointer select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm outline-none text-foreground-dimmer focus:bg-highest focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-colors`,
 })
 
 const SelectItemIndicatorContainer = styled("span", {
-  base: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center"
+  base: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center",
 })
 
 export {
@@ -145,5 +145,5 @@ export {
   SelectScrollDownButton,
   SelectScrollUpButton,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 }

@@ -2,7 +2,7 @@ import { RefObject, useCallback, useEffect, useRef, useState } from "react"
 
 const useClientRect = <T extends HTMLElement = HTMLElement>(): [
   RefObject<T>,
-  DOMRect | undefined
+  DOMRect | undefined,
 ] => {
   const elementRef = useRef<T | null>(null)
   const [box, setBox] = useState<DOMRect>()

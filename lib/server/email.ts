@@ -14,6 +14,6 @@ type BaseEmailArgs = {
 export const baseEmail = (args: BaseEmailArgs) =>
   juice(
     Handlebars.compile<BaseEmailArgs>(
-      fs.readFileSync("emails/base.html", "utf8")
-    )(args)
+      fs.readFileSync("emails/base.html", "utf8"),
+    )(args),
   )

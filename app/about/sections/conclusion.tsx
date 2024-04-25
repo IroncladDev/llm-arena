@@ -14,8 +14,8 @@ export default function Conclusion() {
           tokens.colors.accent.dimmer + "75",
           tokens.colors.accent.dimmer + "25 30%",
           tokens.colors.transparent + " 50%",
-          tokens.colors.transparent
-        )
+          tokens.colors.transparent,
+        ),
       }}
       center
       className="border-t-2 border-default"

@@ -5,7 +5,7 @@ import { styled } from "react-tailwind-variants"
 
 export default function FieldTable({
   fields,
-  capLength
+  capLength,
 }: {
   fields: Array<Field & { metaProperty: MetaProperty }>
   capLength?: number
@@ -57,15 +57,15 @@ export default function FieldTable({
 
 const Table = {
   Container: styled("div", {
-    base: "table border border-outline-dimmer w-full max-w-[640px]"
+    base: "table border border-outline-dimmer w-full max-w-[640px]",
   }),
   Row: styled("div", {
-    base: "table-row"
+    base: "table-row",
   }),
   Cell: styled("div", {
-    base: "table-cell min-h-10 first:max-w-[200px] last:w-full border border-outline-dimmer align-middle"
+    base: "table-cell min-h-10 first:max-w-[200px] last:w-full border border-outline-dimmer align-middle",
   }),
   CellContent: styled("div", {
-    base: "flex flex-col h-full min-h-10 px-2 justify-center"
-  })
+    base: "flex flex-col h-full min-h-10 px-2 justify-center",
+  }),
 }

@@ -4,7 +4,7 @@ import Content from "./content"
 import { optionsSchema, OptionsType } from "./state"
 
 export default async function ComparePage({
-  searchParams
+  searchParams,
 }: {
   searchParams: OptionsType
 }) {
@@ -20,17 +20,17 @@ export default async function ComparePage({
     const llms = await prisma.lLM.findMany({
       where: {
         id: {
-          in: ids
-        }
+          in: ids,
+        },
       },
       include: {
         fields: {
           include: {
-            metaProperty: true
-          }
+            metaProperty: true,
+          },
         },
-        user: true
-      }
+        user: true,
+      },
     })
 
     return <Content initialLLMs={llms} />
@@ -40,7 +40,7 @@ export default async function ComparePage({
 }
 
 export async function generateMetadata({
-  searchParams
+  searchParams,
 }: {
   searchParams: OptionsType
 }) {
@@ -50,9 +50,9 @@ export async function generateMetadata({
     const llms = await prisma.lLM.findMany({
       where: {
         id: {
-          in: params.llms.split(",").map(Number)
-        }
-      }
+          in: params.llms.split(",").map(Number),
+        },
+      },
     })
 
     let title: string
@@ -78,12 +78,12 @@ export async function generateMetadata({
 
     return {
       title,
-      description
+      description,
     }
   } catch {
     return {
       title: "Error",
-      description: "An error occurred"
+      description: "An error occurred",
     }
   }
 }

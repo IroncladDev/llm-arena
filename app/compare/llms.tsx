@@ -28,35 +28,35 @@ const LLMContainer = forwardRef<
   const containerWidth = useMotionValue(Number(width))
 
   const springPadding = useSpring(padding, {
-    mass: 0.05
+    mass: 0.05,
   })
 
   const {
     background,
-    foreground: [, fg2]
+    foreground: [, fg2],
   } = themeData[theme]
 
   const items = allItems
     .filter(l =>
-      filter.includes(FilterEnum.standalone) ? true : l.nonNullCount > 1
+      filter.includes(FilterEnum.standalone) ? true : l.nonNullCount > 1,
     )
     .filter(l =>
       filter.includes(FilterEnum.number)
         ? true
-        : l.type !== MetaPropertyType.Number
+        : l.type !== MetaPropertyType.Number,
     )
     .filter(l =>
       filter.includes(FilterEnum.string)
         ? true
-        : l.type !== MetaPropertyType.String
+        : l.type !== MetaPropertyType.String,
     )
     .filter(l =>
       filter.includes(FilterEnum.boolean)
         ? true
-        : l.type !== MetaPropertyType.Boolean
+        : l.type !== MetaPropertyType.Boolean,
     )
     .filter(l =>
-      filter.includes(FilterEnum.nullFields) ? true : l.nonNullCount > 0
+      filter.includes(FilterEnum.nullFields) ? true : l.nonNullCount > 0,
     )
     .filter(l => !ommitted.includes(l.name))
 
@@ -71,7 +71,7 @@ const LLMContainer = forwardRef<
           style={{
             background: gr.radial(...background),
             width: containerWidth,
-            borderColor: fg2
+            borderColor: fg2,
           }}
           ref={ref}
         >
@@ -84,7 +84,7 @@ const LLMContainer = forwardRef<
               if (!box) return
 
               let newWidth = Math.round(
-                (box.left + box.width / 2 - info.point.x) * 2 + padding
+                (box.left + box.width / 2 - info.point.x) * 2 + padding,
               )
 
               containerWidth.set(newWidth)
@@ -100,12 +100,12 @@ const LLMContainer = forwardRef<
               paddingLeft: springPadding,
               paddingRight: springPadding,
               // not animating since it would cause issues with animating the gap
-              paddingBottom: spacing
+              paddingBottom: spacing,
             }}
           >
             <HeaderWidget
               style={{
-                borderColor: fg2 + "65"
+                borderColor: fg2 + "65",
               }}
             >
               <Text size="lg" weight="bold" center multiline asChild>
@@ -131,7 +131,7 @@ const LLMContainer = forwardRef<
               paddingRight: springPadding,
               paddingBottom: springPadding,
               // gap can't be animated, using the direct state value
-              gap: spacing
+              gap: spacing,
             }}
           >
             {items.map((x, i) => (
@@ -147,7 +147,7 @@ const LLMContainer = forwardRef<
               if (!box) return
 
               const newWidth = Math.round(
-                (info.point.x - (box.left + box.width / 2)) * 2 + padding
+                (info.point.x - (box.left + box.width / 2)) * 2 + padding,
               )
 
               containerWidth.set(newWidth)
@@ -171,41 +171,41 @@ const {
   DisplayContainer,
   HeaderWidget,
   DragHandle,
-  DragHandleBar
+  DragHandleBar,
 } = {
   Container: styled(MotionDiv, {
-    base: "relative grow basis-0"
+    base: "relative grow basis-0",
   }),
   Overflow: styled("div", {
-    base: "absolute left-0 top-1/2 -translate-y-1/2 overflow-y-auto max-h-full w-full flex justify-center px-4 py-8 pb-[96px]"
+    base: "absolute left-0 top-1/2 -translate-y-1/2 overflow-y-auto max-h-full w-full flex justify-center px-4 py-8 pb-[96px]",
   }),
   DisplayContainer: styled(MotionDiv, {
-    base: "flex flex-col border-2 rounded-xl max-w-[1600px] min-w-[360px] h-full bg-root relative group/outer"
+    base: "flex flex-col border-2 rounded-xl max-w-[1600px] min-w-[360px] h-full bg-root relative group/outer",
   }),
   HeaderWidget: styled("div", {
-    base: "flex flex-col gap-2 border-2 rounded-lg bg-root/50 w-full p-4"
+    base: "flex flex-col gap-2 border-2 rounded-lg bg-root/50 w-full p-4",
   }),
   ItemsContainer: styled(MotionDiv, {
     base: "flex rounded-xl w-full h-full",
     variants: {
       view: {
         grid: "flex-row flex-wrap",
-        list: "flex-col"
-      }
-    }
+        list: "flex-col",
+      },
+    },
   }),
   DragHandle: styled(MotionDiv, {
     base: "flex items-center justify-center md:opacity-0 group-hover/outer:opacity-100 cursor-ew-resize z-10 absolute top-0 bottom-0 h-full transition-opacity",
     variants: {
       position: {
         left: "left-0",
-        right: "right-0"
-      }
-    }
+        right: "right-0",
+      },
+    },
   }),
   DragHandleBar: styled("div", {
-    base: "bg-white/10 rounded-full w-[4px] h-24 cursor-ew-resize active:bg-white/5 transition-colors"
-  })
+    base: "bg-white/10 rounded-full w-[4px] h-24 cursor-ew-resize active:bg-white/5 transition-colors",
+  }),
 }
 
 export default LLMContainer

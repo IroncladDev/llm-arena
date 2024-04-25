@@ -61,7 +61,7 @@ const FadeIn = ({ children }: { children: React.ReactNode }) => {
       gap={4}
       initial={{ opacity: 0 }}
       whileInView={{
-        opacity: 1
+        opacity: 1,
       }}
       viewport={{ margin: "0px 0px 200px 0px", amount: 0.5 }}
     >

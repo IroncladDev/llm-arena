@@ -29,7 +29,7 @@ const LLMSearch = forwardRef<
       const res = await fetch(searchUrl)
 
       return await res.json()
-    }
+    },
   })
 
   const sortSelected = (llm: LLMWithMetadata) =>
@@ -44,7 +44,7 @@ const LLMSearch = forwardRef<
     highlightedIndex,
     getItemProps,
     setInputValue,
-    reset
+    reset,
   } = useCombobox({
     items,
     defaultHighlightedIndex: 0,
@@ -62,7 +62,7 @@ const LLMSearch = forwardRef<
         setInputValue("")
         reset()
       }
-    }
+    },
   })
 
   return (
@@ -103,57 +103,57 @@ const {
   Item,
   ItemInfo,
   ItemIcon,
-  EmptyState
+  EmptyState,
 } = {
   Search: styled("div", {
-    base: "flex relative basis-0 w-full min-w-0 grow"
+    base: "flex relative basis-0 w-full min-w-0 grow",
   }),
   DownshiftPopover: styled("div", {
     base: "w-full rounded-lg border-2 border-outline-dimmer/75 absolute top-12 left-0 bg-default z-10 shadow-lg",
     variants: {
       inputSize: {
         default: "top-12",
-        lg: "top-14"
+        lg: "top-14",
       },
       loading: {
-        true: "animate-pulse"
-      }
+        true: "animate-pulse",
+      },
     },
     defaultVariants: {
-      inputSize: "default"
-    }
+      inputSize: "default",
+    },
   }),
   ItemsContainer: styled("ul", {
     base: "flex-col hidden",
     variants: {
       visible: {
-        true: "flex"
-      }
-    }
+        true: "flex",
+      },
+    },
   }),
   Item: styled("li", {
     base: "flex gap-2 justify-between p-2 first:rounded-t-md last:rounded-b-md",
     variants: {
       highlighted: {
-        true: "bg-higher"
-      }
-    }
+        true: "bg-higher",
+      },
+    },
   }),
   ItemInfo: styled("div", {
-    base: "flex gap-2 items-center"
+    base: "flex gap-2 items-center",
   }),
   ItemIcon: styled(Hexagon, {
     base: "w-4 h-4",
     variants: {
       selected: {
         true: "text-accent-dimmer fill-accent-dimmest/50",
-        false: "text-foreground-dimmest"
-      }
-    }
+        false: "text-foreground-dimmest",
+      },
+    },
   }),
   EmptyState: styled("div", {
-    base: "flex justify-center items-center p-4"
-  })
+    base: "flex justify-center items-center p-4",
+  }),
 }
 
 export default LLMSearch

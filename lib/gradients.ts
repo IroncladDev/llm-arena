@@ -19,11 +19,11 @@ function stack(...stops: Array<[string, number | string]>): Array<string> {
 
         return acc
       },
-      [] as Array<[string, number | string]>
+      [] as Array<[string, number | string]>,
     )
     .map(
       ([color, stop]) =>
-        `${color} ${stop + (typeof stop === "number" ? "px" : "")}`
+        `${color} ${stop + (typeof stop === "number" ? "px" : "")}`,
     )
 }
 
@@ -102,7 +102,7 @@ const gr = {
   merge,
   radial,
   rLinear,
-  rRadial
+  rRadial,
 }
 
 export default gr

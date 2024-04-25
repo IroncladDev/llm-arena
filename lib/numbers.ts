@@ -4,7 +4,7 @@
  * @param {string | number} input - The input to parse.
  */
 export const parseAbbrNumber = (
-  input: string | number
+  input: string | number,
 ): { success: true; value: number } | { success: false; message: string } => {
   if (typeof input === "number") {
     return { success: true, value: input }
@@ -18,7 +18,7 @@ export const parseAbbrNumber = (
     K: 1000,
     M: 1000000,
     B: 1000000000,
-    T: 1000000000000
+    T: 1000000000000,
   }
 
   const unit = input.match(/[KMBT%]$/)?.[0] as keyof typeof units | undefined
@@ -45,7 +45,7 @@ export const abbrNumber = (input: number): string => {
     { threshold: 1000000000000, symbol: "T" },
     { threshold: 1000000000, symbol: "B" },
     { threshold: 1000000, symbol: "M" },
-    { threshold: 1000, symbol: "K" }
+    { threshold: 1000, symbol: "K" },
   ]
 
   const unit = units.find(u => input >= u.threshold)

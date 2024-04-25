@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] })
 export { metadata } from "./metadata"
 
 export default async function RootLayout({
-  children
+  children,
 }: {
   children: React.ReactNode
 }) {

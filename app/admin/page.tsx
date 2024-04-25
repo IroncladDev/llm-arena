@@ -16,8 +16,8 @@ export default async function Admin() {
 
   const waitlist = await prisma.user.findMany({
     where: {
-      role: "pending"
-    }
+      role: "pending",
+    },
   })
 
   return <AdminPage waitlist={waitlist} />

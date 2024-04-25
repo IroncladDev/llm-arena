@@ -10,13 +10,13 @@ import {
   LLMStatus,
   MetaProperty,
   MetaPropertyType,
-  UserRole
+  UserRole,
 } from "@prisma/client"
 import { EmbedBuilder, WebhookClient } from "discord.js"
 import { z } from "zod"
 
 const webhook = new WebhookClient({
-  url: process.env.DISCORD_WEBHOOK_URL_PUBLIC
+  url: process.env.DISCORD_WEBHOOK_URL_PUBLIC,
 })
 
 export type SubmitReturn = {
@@ -39,7 +39,7 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
       throw new Error("Unauthorized")
 
     const { name, description, metadata } = formInput.parse(
-      Object.fromEntries(e.entries())
+      Object.fromEntries(e.entries()),
     )
     const meta = z.array(metaField).parse(JSON.parse(metadata))
 
@@ -62,8 +62,8 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
       },
       {
         names: {} as Record<string, boolean>,
-        hasDuplicates: false
-      }
+        hasDuplicates: false,
+      },
     )
 
     if (hasDuplicates)
@@ -73,10 +73,10 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
       where: {
         name: {
           equals: name,
-          mode: "insensitive"
+          mode: "insensitive",
         },
-        status: LLMStatus.approved
-      }
+        status: LLMStatus.approved,
+      },
     })
 
     if (existingLLM)
@@ -86,8 +86,8 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
       data: {
         name,
         sourceDescription: description,
-        userId: user.id
-      }
+        userId: user.id,
+      },
     })
 
     for (const field of meta) {
@@ -97,25 +97,25 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
             value: String(field.value),
             metaPropertyId: property.id,
             llmId: llm.id,
-            note: field.note
-          }
+            note: field.note,
+          },
         })
 
         await prisma.metaProperty.update({
           where: {
-            id: property.id
+            id: property.id,
           },
           data: {
-            useCount: property.useCount + 1
-          }
+            useCount: property.useCount + 1,
+          },
         })
       }
 
       if (field.property) {
         const existingProperty = await prisma.metaProperty.findFirst({
           where: {
-            id: field.property.id
-          }
+            id: field.property.id,
+          },
         })
 
         // Ensure the existing property matches the field
@@ -129,8 +129,8 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
         // Avoid creating duplicate properties with the same name
         const existingProperty = await prisma.metaProperty.findFirst({
           where: {
-            name: field.name
-          }
+            name: field.name,
+          },
         })
 
         if (existingProperty) {
@@ -141,8 +141,8 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
           const property = await prisma.metaProperty.create({
             data: {
               type: field.type,
-              name: field.name
-            }
+              name: field.name,
+            },
           })
 
           await prisma.field.create({
@@ -150,8 +150,8 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
               value: String(field.value),
               metaPropertyId: property.id,
               llmId: llm.id,
-              note: field.note
-            }
+              note: field.note,
+            },
           })
         }
       }
@@ -170,26 +170,26 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
     if (meta.length > 5) {
       fieldsToAdd.push({
         name: "...",
-        value: `${meta.length - 5} more`
+        value: `${meta.length - 5} more`,
       })
     }
 
     embed.addFields(fieldsToAdd)
 
     await webhook.send({
-      embeds: [embed]
+      embeds: [embed],
     })
 
     return {
       success: true,
       data: {
-        llm
-      }
+        llm,
+      },
     }
   } catch (e) {
     return {
       success: false,
-      message: formatError(e)
+      message: formatError(e),
     }
   }
 }
@@ -197,7 +197,7 @@ export async function submit(_prevState: SubmitReturn, e: FormData) {
 const metaProperty = z.enum([
   MetaPropertyType.Number,
   MetaPropertyType.String,
-  MetaPropertyType.Boolean
+  MetaPropertyType.Boolean,
 ])
 
 const property = z.object({
@@ -205,7 +205,7 @@ const property = z.object({
   name: z.string(),
   type: metaProperty,
   useCount: z.number(),
-  createdAt: z.string()
+  createdAt: z.string(),
 })
 
 const metaField = z.object({
@@ -213,11 +213,11 @@ const metaField = z.object({
   value: z.union([z.string(), z.number(), z.boolean()]),
   name: z.string().min(1).max(64),
   property: property.nullish(),
-  note: z.string().min(1).max(64).optional()
+  note: z.string().min(1).max(64).optional(),
 })
 
 const formInput = z.object({
   name: z.string().min(3).max(64),
   metadata: z.string(),
-  description: z.string().min(16).max(2048)
+  description: z.string().min(16).max(2048),
 })

@@ -17,15 +17,15 @@ export default function LLMsPage() {
   const [searchBy, setSearchBy] = useState<SearchInput["searchBy"]>({
     name: true,
     sourceDescription: true,
-    fields: true
+    fields: true,
   })
   const [search, setSearch] = useState<Omit<SearchInput, "searchBy" | "limit">>(
     {
       query: "",
       advanced: false,
       status: "pending",
-      skip: 0
-    }
+      skip: 0,
+    },
   )
 
   const { data: llms } = useQuery<Array<LLMWithRelations>>({
@@ -35,17 +35,17 @@ export default function LLMsPage() {
         const res = await fetch("/api/search", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             searchBy,
-            ...search
-          })
+            ...search,
+          }),
         })
           .then(res => res.json())
           .catch(err => ({
             success: false,
-            error: (err as Error).message
+            error: (err as Error).message,
           }))
 
         if (res.success) {
@@ -59,7 +59,7 @@ export default function LLMsPage() {
         return []
       }
     },
-    placeholderData: keepPreviousData
+    placeholderData: keepPreviousData,
   })
 
   return (
@@ -95,9 +95,9 @@ export default function LLMsPage() {
 
 const { Content, Header } = {
   Content: styled("div", {
-    base: "flex flex-col gap-4 max-w-3xl self-center min-h-screen h-full w-full p-4"
+    base: "flex flex-col gap-4 max-w-3xl self-center min-h-screen h-full w-full p-4",
   }),
   Header: styled("div", {
-    base: "flex items-center gap-4 justify-between pb-4 border-b-2 border-outline-dimmest"
-  })
+    base: "flex items-center gap-4 justify-between pb-4 border-b-2 border-outline-dimmest",
+  }),
 }

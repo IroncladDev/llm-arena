@@ -13,8 +13,8 @@ export async function getSession() {
   const user = email
     ? await prisma.user.findFirst({
         where: {
-          email
-        }
+          email,
+        },
       })
     : null
 

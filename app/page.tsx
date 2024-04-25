@@ -18,9 +18,9 @@ export default function Page() {
             tokens.colors.default,
             tokens.colors.default + " 25%",
             tokens.colors.transparent + " 70%",
-            tokens.colors.transparent
-          )
-        )
+            tokens.colors.transparent,
+          ),
+        ),
       }}
     >
       <SelectorContainer>
@@ -33,8 +33,8 @@ export default function Page() {
             tokens.colors.red[500] + "45",
             tokens.colors.red[500] + "15 30%",
             tokens.colors.transparent + " 70%",
-            tokens.colors.transparent
-          )
+            tokens.colors.transparent,
+          ),
         }}
       >
         <FooterLinks>
@@ -74,24 +74,24 @@ const {
   Footer,
   FooterLink,
   FooterLinks,
-  AuthorLink
+  AuthorLink,
 } = {
   Content: styled(Container, {
-    base: "flex flex-col h-screen"
+    base: "flex flex-col h-screen",
   }),
   SelectorContainer: styled("div", {
-    base: "flex flex-col items-center justify-center grow p-4"
+    base: "flex flex-col items-center justify-center grow p-4",
   }),
   Footer: styled("footer", {
-    base: "flex flex-col gap-6 items-center w-full p-8"
+    base: "flex flex-col gap-6 items-center w-full p-8",
   }),
   FooterLinks: styled("div", {
-    base: "flex gap-8 items-center justify-center w-full"
+    base: "flex gap-8 items-center justify-center w-full",
   }),
   FooterLink: styled(Text, {
-    base: "text-accent-dimmer hover:text-accent transition-colors"
+    base: "text-accent-dimmer hover:text-accent transition-colors",
   }),
   AuthorLink: styled("a", {
-    base: "text-accent-dimmer hover:text-accent transition-colors"
-  })
+    base: "text-accent-dimmer hover:text-accent transition-colors",
+  }),
 }

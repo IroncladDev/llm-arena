@@ -8,7 +8,7 @@ import {
   ExternalLinkIcon,
   HexagonIcon,
   PlusIcon,
-  XIcon
+  XIcon,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
@@ -110,7 +110,7 @@ export default function Selector() {
         disabled={llms.length < 2}
         onClick={() => {
           router.push(
-            `/compare?llms=${llms.map(x => x.id).join(",")}&mode=edit`
+            `/compare?llms=${llms.map(x => x.id).join(",")}&mode=edit`,
           )
         }}
       >
@@ -166,18 +166,18 @@ export default function Selector() {
 const { LLMItem, IconContainer, SpecsContainer, CloseButton, PlaceholderLLM } =
   {
     LLMItem: styled("div", {
-      base: "flex flex-col rounded-xl border-2 border-outline-dimmer bg-default grow basis-0 max-w-[320px] min-w-[160px] shadow-md cursor-pointer hover:border-accent-dimmest transition-colors"
+      base: "flex flex-col rounded-xl border-2 border-outline-dimmer bg-default grow basis-0 max-w-[320px] min-w-[160px] shadow-md cursor-pointer hover:border-accent-dimmest transition-colors",
     }),
     IconContainer: styled("div", {
-      base: "flex items-center justify-center py-4 bg-root rounded-t-xl relative"
+      base: "flex items-center justify-center py-4 bg-root rounded-t-xl relative",
     }),
     SpecsContainer: styled("div", {
-      base: "flex flex-col gap-1 items-center w-full rounded-b-lg px-4 py-2"
+      base: "flex flex-col gap-1 items-center w-full rounded-b-lg px-4 py-2",
     }),
     CloseButton: styled("button", {
-      base: "absolute top-2 right-2 w-4 h-4"
+      base: "absolute top-2 right-2 w-4 h-4",
     }),
     PlaceholderLLM: styled("label", {
-      base: "flex flex-col gap-2 rounded-xl max-w-[320px] min-w-[160px] items-center align-self-stretch justify-center min-h-[124px] grow basis-0 border-2 border-dashed border-outline-dimmest text-outline-dimmer hover:text-foreground-dimmest hover:border-outline-dimmer transition-colors cursor-pointer"
-    })
+      base: "flex flex-col gap-2 rounded-xl max-w-[320px] min-w-[160px] items-center align-self-stretch justify-center min-h-[124px] grow basis-0 border-2 border-dashed border-outline-dimmest text-outline-dimmer hover:text-foreground-dimmest hover:border-outline-dimmer transition-colors cursor-pointer",
+    }),
   }

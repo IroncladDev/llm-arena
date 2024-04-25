@@ -5,14 +5,14 @@ import { FilterEnum, themeData } from "../types"
 import Table from "./tables"
 
 export default function StringTable({
-  field
+  field,
 }: {
   field: ComparableFieldGroup
 }) {
   const { theme, filters } = useURLState()
 
   const {
-    foreground: [fg1]
+    foreground: [fg1],
   } = themeData[theme]
 
   const fields = filters.includes(FilterEnum.nullFields)

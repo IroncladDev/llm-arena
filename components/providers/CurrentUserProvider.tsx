@@ -7,7 +7,7 @@ const CurrentUserContext = createContext<User | null>(null)
 
 export function CurrentUserProvider({
   children,
-  user
+  user,
 }: {
   children: ReactNode
   user: User | null

@@ -3,10 +3,11 @@
 import { UserRole } from "@prisma/client"
 import {
   ExternalLink,
+  GitPullRequestIcon,
+  HexagonIcon,
   HomeIcon,
-  ListIcon,
   PlusIcon,
-  SettingsIcon
+  SettingsIcon,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -31,8 +32,15 @@ export default function Navbar() {
 
           <NavLink asChild highlighted={pathname === "/llms"}>
             <Link href="/llms">
-              <ListIcon className="w-4 h-4" />
+              <HexagonIcon className="w-4 h-4" />
               LLMs
+            </Link>
+          </NavLink>
+
+          <NavLink asChild highlighted={pathname === "/changes"}>
+            <Link href="/changes">
+              <GitPullRequestIcon className="w-4 h-4" />
+              Change Requests
             </Link>
           </NavLink>
 
@@ -76,17 +84,17 @@ export default function Navbar() {
 
 const { Container, Content, NavLink } = {
   Container: styled("div", {
-    base: "flex items-center justify-center p-4 w-full border-b-2 border-b-higher bg-default"
+    base: "flex items-center justify-center p-4 w-full border-b-2 border-b-higher bg-default",
   }),
   Content: styled("div", {
-    base: "max-w-[1024px] flex flex-wrap justify-center items-center divide-x-2 divide-higher gap-y-2"
+    base: "max-w-[1024px] flex flex-wrap justify-center items-center divide-x-2 divide-higher gap-y-2",
   }),
   NavLink: styled("a", {
     base: "text-foreground-dimmer text-xs hover:text-accent-dimmer transition-colors px-4 inline-flex items-center gap-1",
     variants: {
       highlighted: {
-        true: "text-accent"
-      }
-    }
-  })
+        true: "text-accent",
+      },
+    },
+  }),
 }

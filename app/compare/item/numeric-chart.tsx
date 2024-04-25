@@ -9,14 +9,14 @@ import { FilterEnum, themeData } from "../types"
 import Table from "./tables"
 
 export default function NumericChart({
-  field
+  field,
 }: {
   field: ComparableFieldGroup
 }) {
   const { theme, filters } = useURLState()
 
   const {
-    foreground: [fg1, fg2]
+    foreground: [fg1, fg2],
   } = themeData[theme]
 
   const rows = filters.includes(FilterEnum.nullFields)
@@ -58,7 +58,7 @@ export default function NumericChart({
                   borderColor:
                     value === null
                       ? tokens.colors.foreground.dimmest + "9f"
-                      : fg1
+                      : fg1,
                 }}
               />
               <BarValue
@@ -79,16 +79,16 @@ export default function NumericChart({
 
 const { Bar, BarContainer, BarValue } = {
   Bar: styled("div", {
-    base: "h-5 rounded-r-md my-0.5 border-2 border-l-0"
+    base: "h-5 rounded-r-md my-0.5 border-2 border-l-0",
   }),
   BarContainer: styled("div", {
-    base: "flex gap-2 items-center w-full absolute top-1/2 transform -translate-y-1/2"
+    base: "flex gap-2 items-center w-full absolute top-1/2 transform -translate-y-1/2",
   }),
   BarValue: styled(Text, {
     variants: {
       isNullValue: {
-        true: "opacity-50"
-      }
-    }
-  })
+        true: "opacity-50",
+      },
+    },
+  }),
 }
