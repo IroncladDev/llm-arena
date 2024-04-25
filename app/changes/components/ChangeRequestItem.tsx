@@ -216,7 +216,7 @@ export default function ChangeRequestItem({
           </Table.Row>
         </Table.Container>
       </Flex>
-      <Text multiline color="dimmer">
+      <Text multiline color="dimmer" markdown>
         {request.sourceDescription}
       </Text>
     </Container>
