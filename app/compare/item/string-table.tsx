@@ -1,7 +1,7 @@
 import Text from "@/components/ui/text"
 import { ComparableFieldGroup } from "@/lib/comparison"
-import { useURLState } from "../state"
 import { FilterEnum, themeData } from "../types"
+import { useURLState } from "../use-url-state"
 import Table from "./tables"
 
 export default function StringTable({

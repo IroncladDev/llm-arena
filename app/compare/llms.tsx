@@ -11,8 +11,8 @@ import { useMotionValue, useSpring } from "framer-motion"
 import { Fragment, forwardRef, useEffect } from "react"
 import { styled } from "react-tailwind-variants"
 import CompareItem from "./item"
-import { useURLState } from "./state"
 import { FilterEnum, LLMWithMetadata, themeData } from "./types"
+import { useURLState } from "./use-url-state"
 
 const LLMContainer = forwardRef<
   HTMLDivElement,

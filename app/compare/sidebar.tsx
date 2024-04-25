@@ -39,7 +39,6 @@ import {
 import { createElement, useEffect, useState } from "react"
 import { styled } from "react-tailwind-variants"
 import LLMSearch from "./search"
-import { useURLState } from "./state"
 import {
   FilterEnum,
   LLMWithMetadata,
@@ -50,6 +49,7 @@ import {
   themeData,
   viewData,
 } from "./types"
+import { useURLState } from "./use-url-state"
 
 export default function Sidebar({
   onOpenChange,

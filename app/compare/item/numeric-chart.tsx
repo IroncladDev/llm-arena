@@ -4,8 +4,8 @@ import gr from "@/lib/gradients"
 import { abbrNumber } from "@/lib/numbers"
 import { tokens } from "@/tailwind.config"
 import { styled } from "react-tailwind-variants"
-import { useURLState } from "../state"
 import { FilterEnum, themeData } from "../types"
+import { useURLState } from "../use-url-state"
 import Table from "./tables"
 
 export default function NumericChart({

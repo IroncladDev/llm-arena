@@ -12,8 +12,8 @@ import { styled } from "react-tailwind-variants"
 import { name, title } from "../metadata"
 import LLMContainer from "./llms"
 import Sidebar from "./sidebar"
-import { useURLState } from "./state"
 import { LLMWithMetadata, ModeEnum } from "./types"
+import { useURLState } from "./use-url-state"
 
 export default function Content({
   initialLLMs,
