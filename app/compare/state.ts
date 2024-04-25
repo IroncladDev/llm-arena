@@ -1,3 +1,5 @@
+"use client"
+
 import { useRouter, useSearchParams } from "next/navigation"
 import { z } from "zod"
 import { FilterEnum, ModeEnum, ThemeEnum, ViewEnum } from "./types"
