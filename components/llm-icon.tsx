@@ -8,19 +8,19 @@ const LLMIcon = styled(Hexagon, {
       accent: "text-accent-dimmer",
       default: "text-foreground",
       dimmer: "text-foreground-dimmer",
-      dimmest: "text-foreground-dimmest"
+      dimmest: "text-foreground-dimmest",
     },
     size: {
       sm: "w-4 h-4",
       default: "w-6 h-6",
       md: "w-8 h-8",
-      lg: "w-12 h-12"
-    }
+      lg: "w-12 h-12",
+    },
   },
   defaultVariants: {
     color: "accent",
-    size: "default"
-  }
+    size: "default",
+  },
 })
 
 export default LLMIcon

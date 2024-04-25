@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   keywords: ["Compare", "LLMs", "AI", "Models"],
   authors: [
     { name: "IroncladDev", url: "https://x.com/IroncladDev" },
-    { name: "Amjad Masad", url: "https://x.com/amasad" }
+    { name: "Amjad Masad", url: "https://x.com/amasad" },
   ],
   applicationName: name,
   creator: "IroncladDev",
@@ -23,13 +23,13 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: [coverImage]
+    images: [coverImage],
   },
   robots: {
     "max-image-preview": "large",
     index: true,
     follow: true,
-    nocache: true
+    nocache: true,
   },
   openGraph: {
     title,
@@ -40,9 +40,9 @@ export const metadata: Metadata = {
       {
         url: coverImage,
         width: 1664,
-        height: 1040
-      }
+        height: 1040,
+      },
     ],
-    type: "website"
-  }
+    type: "website",
+  },
 }

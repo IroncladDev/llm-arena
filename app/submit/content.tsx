@@ -26,7 +26,7 @@ export type MetaField = {
 }
 
 export default function Content({
-  commonMeta
+  commonMeta,
 }: {
   commonMeta: MetaProperty[]
 }) {
@@ -43,8 +43,8 @@ export default function Content({
           ? ""
           : m.type === MetaPropertyType.Boolean
             ? true
-            : 0
-    }))
+            : 0,
+    })),
   )
 
   const appendNewField = () => {
@@ -55,8 +55,8 @@ export default function Content({
         type: MetaPropertyType.Number,
         value: "",
         id: Math.random(),
-        property: null
-      }
+        property: null,
+      },
     ])
   }
 
@@ -121,7 +121,7 @@ export default function Content({
                       onChange={(args: Partial<MetaField>) => {
                         setMetadata(newMetadata => {
                           return newMetadata.map((m, j) =>
-                            j === i ? { ...m, ...args } : m
+                            j === i ? { ...m, ...args } : m,
                           )
                         })
                       }}
@@ -230,28 +230,28 @@ const {
   FormFields,
   FormField,
   Label,
-  AgreementContainer
+  AgreementContainer,
 } = {
   MetaHeaders: styled("div", {
-    base: "flex items-center ml-3 w-[calc(100%-70px)]"
+    base: "flex items-center ml-3 w-[calc(100%-70px)]",
   }),
   MetaPropertyContainer: styled("div", {
-    base: "flex flex-col mx-3"
+    base: "flex flex-col mx-3",
   }),
   EmptyMetaContainer: styled("div", {
-    base: "flex flex-col p-4 items-center justify-center border-2 border-dashed border-outline-dimmer min-h-[160px] rounded-lg gap-2"
+    base: "flex flex-col p-4 items-center justify-center border-2 border-dashed border-outline-dimmer min-h-[160px] rounded-lg gap-2",
   }),
   FormContent: styled("form", {
-    base: "w-full max-w-3xl flex flex-col gap-4 py-6 px-4"
+    base: "w-full max-w-3xl flex flex-col gap-4 py-6 px-4",
   }),
   FormFields: styled("div", { base: "flex flex-col" }),
   FormField: styled("div", {
-    base: "flex flex-col gap-1 p-2 w-full"
+    base: "flex flex-col gap-1 p-2 w-full",
   }),
   Label: styled("label", {
-    base: "text-lg font-medium text-foreground-dimmer pl-2"
+    base: "text-lg font-medium text-foreground-dimmer pl-2",
   }),
   AgreementContainer: styled("label", {
-    base: "flex items-center gap-2 pl-3"
-  })
+    base: "flex items-center gap-2 pl-3",
+  }),
 }

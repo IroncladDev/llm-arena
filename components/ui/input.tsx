@@ -5,15 +5,15 @@ export const Input = styled("input", {
   variants: {
     variant: {
       default: "bg-default text-foreground border-2 border-outline-dimmest",
-      elevated: "bg-higher text-foreground border-2 border-outline-dimmer"
+      elevated: "bg-higher text-foreground border-2 border-outline-dimmer",
     },
     size: {
       default: "h-10 px-4 py-2",
-      lg: "h-12 rounded-xl px-4 text-base"
-    }
+      lg: "h-12 rounded-xl px-4 text-base",
+    },
   },
   defaultVariants: {
     variant: "default",
-    size: "default"
-  }
+    size: "default",
+  },
 })

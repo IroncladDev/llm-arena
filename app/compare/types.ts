@@ -9,7 +9,7 @@ export type LLMWithMetadata = LLM & {
 
 export enum ViewEnum {
   grid = "grid",
-  list = "list"
+  list = "list",
 }
 
 export enum ThemeEnum {
@@ -18,7 +18,7 @@ export enum ThemeEnum {
   amber = "amber",
   cerulean = "cerulean",
   amethyst = "amethyst",
-  evergreen = "evergreen"
+  evergreen = "evergreen",
 }
 
 export enum FilterEnum {
@@ -26,12 +26,12 @@ export enum FilterEnum {
   string = "string",
   boolean = "boolean",
   nullFields = "nullFields",
-  standalone = "standalone"
+  standalone = "standalone",
 }
 
 export enum ModeEnum {
   view = "view",
-  edit = "edit"
+  edit = "edit",
 }
 
 interface ControlOption {
@@ -48,35 +48,35 @@ interface ThemeOption {
 export const viewData: Record<ViewEnum, ControlOption> = {
   [ViewEnum.grid]: {
     icon: "LayoutGrid",
-    label: "Grid"
+    label: "Grid",
   },
   [ViewEnum.list]: {
     icon: "StretchHorizontal",
-    label: "List"
-  }
+    label: "List",
+  },
 }
 
 export const filterData: Record<FilterEnum, ControlOption> = {
   [FilterEnum.number]: {
     icon: "Hash",
-    label: "Number"
+    label: "Number",
   },
   [FilterEnum.string]: {
     icon: "Type",
-    label: "String"
+    label: "String",
   },
   [FilterEnum.boolean]: {
     icon: "ThumbsUp",
-    label: "Boolean"
+    label: "Boolean",
   },
   [FilterEnum.nullFields]: {
     icon: "CircleDashed",
-    label: "Null Fields"
+    label: "Null Fields",
   },
   [FilterEnum.standalone]: {
     icon: "BarChart",
-    label: "Standalone"
-  }
+    label: "Standalone",
+  },
 }
 
 export const themeData: Record<ThemeEnum, ThemeOption> = {
@@ -85,9 +85,9 @@ export const themeData: Record<ThemeEnum, ThemeOption> = {
     background: [
       "circle at 75% -10%",
       tokens.colors.accent.dimmest,
-      tokens.colors.root
+      tokens.colors.root,
     ],
-    label: "Crimson"
+    label: "Crimson",
   },
   [ThemeEnum.amber]: {
     foreground: [tokens.colors.amber[500], tokens.colors.amber[600]],
@@ -97,14 +97,14 @@ export const themeData: Record<ThemeEnum, ThemeOption> = {
       tokens.colors.yellow[700] + " 30%",
       tokens.colors.yellow[900] + " 50%",
       tokens.colors.root + " 90%",
-      tokens.colors.root
+      tokens.colors.root,
     ],
-    label: "Amber"
+    label: "Amber",
   },
   [ThemeEnum.evergreen]: {
     foreground: [tokens.colors.green[500], tokens.colors.green[700]],
     background: [tokens.colors.emerald[800], tokens.colors.emerald[950]],
-    label: "Evergreen"
+    label: "Evergreen",
   },
   [ThemeEnum.cerulean]: {
     foreground: [tokens.colors.teal[500], tokens.colors.teal[700]],
@@ -113,9 +113,9 @@ export const themeData: Record<ThemeEnum, ThemeOption> = {
       tokens.colors.teal[800],
       tokens.colors.teal[900] + " 20%",
       tokens.colors.cyan[900] + " 70%",
-      tokens.colors.cyan[950]
+      tokens.colors.cyan[950],
     ],
-    label: "Cerulean"
+    label: "Cerulean",
   },
   [ThemeEnum.amethyst]: {
     foreground: [tokens.colors.indigo[500], tokens.colors.indigo[700]],
@@ -125,9 +125,9 @@ export const themeData: Record<ThemeEnum, ThemeOption> = {
       tokens.colors.violet[800] + "95 20%",
       tokens.colors.blue[950] + " 70%",
       tokens.colors.blue[800] + " 90%",
-      tokens.colors.blue[500]
+      tokens.colors.blue[500],
     ],
-    label: "Amethyst"
+    label: "Amethyst",
   },
   [ThemeEnum.midnight]: {
     foreground: [tokens.colors.outline.default, tokens.colors.outline.dimmer],
@@ -135,8 +135,8 @@ export const themeData: Record<ThemeEnum, ThemeOption> = {
       "circle at 75% -10%",
       tokens.colors.highest,
       tokens.colors.default,
-      tokens.colors.root
+      tokens.colors.root,
     ],
-    label: "Midnight"
-  }
+    label: "Midnight",
+  },
 }

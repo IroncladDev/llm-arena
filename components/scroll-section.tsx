@@ -2,13 +2,13 @@ import {
   MotionValue,
   useMotionValue,
   useMotionValueEvent,
-  useScroll
+  useScroll,
 } from "framer-motion"
 import { useRef } from "react"
 
 export default function ScrollSection({
   height,
-  children
+  children,
 }: {
   height: string
   children: (percentage: MotionValue<number>) => React.ReactNode

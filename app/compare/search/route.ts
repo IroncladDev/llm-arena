@@ -15,20 +15,20 @@ export async function GET(req: Request) {
       where: {
         status: LLMStatus.approved,
         id: {
-          notIn: idsToExclude
+          notIn: idsToExclude,
         },
         OR: [
           {
             name: {
               contains: query,
-              mode: "insensitive"
-            }
+              mode: "insensitive",
+            },
           },
           {
             sourceDescription: {
               contains: query,
-              mode: "insensitive"
-            }
+              mode: "insensitive",
+            },
           },
           {
             fields: {
@@ -36,23 +36,23 @@ export async function GET(req: Request) {
                 metaProperty: {
                   name: {
                     contains: query,
-                    mode: "insensitive"
-                  }
-                }
-              }
-            }
-          }
-        ].filter(Boolean) as Array<Prisma.LLMWhereInput>
+                    mode: "insensitive",
+                  },
+                },
+              },
+            },
+          },
+        ].filter(Boolean) as Array<Prisma.LLMWhereInput>,
       },
       take: 10,
       include: {
         fields: {
           include: {
-            metaProperty: true
-          }
+            metaProperty: true,
+          },
         },
-        user: true
-      }
+        user: true,
+      },
     })
 
     return Response.json(results)

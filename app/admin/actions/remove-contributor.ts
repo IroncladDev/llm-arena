@@ -10,12 +10,12 @@ import { EmbedBuilder, WebhookClient } from "discord.js"
 import { z } from "zod"
 
 const webhook = new WebhookClient({
-  url: process.env.DISCORD_WEBHOOK_URL_ADMIN
+  url: process.env.DISCORD_WEBHOOK_URL_ADMIN,
 })
 
 const removeContributorInput = z.object({
   userId: z.number(),
-  reason: z.string().min(3).max(255)
+  reason: z.string().min(3).max(255),
 })
 
 export type RemoveContributorInput = z.infer<typeof removeContributorInput>
@@ -33,8 +33,8 @@ export async function removeContributor(e: RemoveContributorInput) {
 
     const contributor = await prisma.user.findFirst({
       where: {
-        id: userId
-      }
+        id: userId,
+      },
     })
 
     if (!contributor) throw new Error("Contributor not found")
@@ -48,8 +48,8 @@ export async function removeContributor(e: RemoveContributorInput) {
     await prisma.user.update({
       where: { id: userId },
       data: {
-        role: UserRole.user
-      }
+        role: UserRole.user,
+      },
     })
 
     await resend.emails.send({
@@ -60,10 +60,10 @@ export async function removeContributor(e: RemoveContributorInput) {
       html: baseEmail({
         title: "Your contributor status has been removed",
         paragraphs: [
-          `Your contributor status has been revoked by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`
+          `Your contributor status has been revoked by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`,
         ],
-        buttonLinks: []
-      })
+        buttonLinks: [],
+      }),
     })
 
     const embed = new EmbedBuilder()
@@ -72,16 +72,16 @@ export async function removeContributor(e: RemoveContributorInput) {
       .setColor(0xef4444)
 
     await webhook.send({
-      embeds: [embed]
+      embeds: [embed],
     })
 
     return {
-      success: true
+      success: true,
     }
   } catch (error) {
     return {
       success: false,
-      message: formatError(error)
+      message: formatError(error),
     }
   }
 }

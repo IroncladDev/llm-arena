@@ -15,9 +15,9 @@ export async function GET(request: Request) {
 
     const mostUsed = await prisma.metaProperty.findMany({
       orderBy: {
-        useCount: "desc"
+        useCount: "desc",
       },
-      take: 10
+      take: 10,
     })
 
     if (!query) {
@@ -27,13 +27,13 @@ export async function GET(request: Request) {
     const results = await prisma.metaProperty.findMany({
       where: {
         name: {
-          contains: query
-        }
+          contains: query,
+        },
       },
       orderBy: {
-        useCount: "desc"
+        useCount: "desc",
       },
-      take: 10
+      take: 10,
     })
 
     return Response.json(results)

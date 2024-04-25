@@ -33,22 +33,22 @@ export async function POST(req: Request) {
           searchBy.name && {
             name: advanced
               ? {
-                  search: query
+                  search: query,
                 }
               : {
                   contains: query,
-                  mode: "insensitive"
-                }
+                  mode: "insensitive",
+                },
           },
           searchBy.sourceDescription && {
             sourceDescription: advanced
               ? {
-                  search: query
+                  search: query,
                 }
               : {
                   contains: query,
-                  mode: "insensitive"
-                }
+                  mode: "insensitive",
+                },
           },
           searchBy.fields && {
             fields: {
@@ -56,44 +56,44 @@ export async function POST(req: Request) {
                 metaProperty: {
                   name: advanced
                     ? {
-                        search: query
+                        search: query,
                       }
                     : {
                         contains: query,
-                        mode: "insensitive"
-                      }
-                }
-              }
-            }
-          }
-        ].filter(Boolean) as Array<Prisma.LLMWhereInput>
+                        mode: "insensitive",
+                      },
+                },
+              },
+            },
+          },
+        ].filter(Boolean) as Array<Prisma.LLMWhereInput>,
       },
       take: Math.min(limit, 100),
       skip,
       include: {
         fields: {
           include: {
-            metaProperty: true
-          }
+            metaProperty: true,
+          },
         },
         votes: true,
-        user: true
+        user: true,
       },
       orderBy: {
-        createdAt: status === LLMStatus.pending ? "asc" : "desc"
-      }
+        createdAt: status === LLMStatus.pending ? "asc" : "desc",
+      },
     })
 
     return Response.json({
       success: true,
-      data: results
+      data: results,
     })
   } catch (err) {
     console.error(err)
 
     return Response.json({
       success: false,
-      error: formatError(err)
+      error: formatError(err),
     })
   }
 }

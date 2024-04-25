@@ -35,14 +35,14 @@ export default function ContributorLoginPage() {
           tokens.colors.red[600] + "aa",
           tokens.colors.red[600] + "65 20%",
           "transparent 70%",
-          "transparent"
+          "transparent",
         ),
         gr.rRadial(
           "circle at 50% 50%",
           ...gr.stack(
             [colors.clear, `${25 + (1 - p) * 25}vw`],
-            [colors.outline.dimmest, `calc(${25 + (1 - p) * 25}vw + 2px)`]
-          )
+            [colors.outline.dimmest, `calc(${25 + (1 - p) * 25}vw + 2px)`],
+          ),
         ),
         gr.linear(
           90,
@@ -51,8 +51,8 @@ export default function ContributorLoginPage() {
             [colors.outline.dimmest, `calc(50% - ${hw - 2}px)`],
             [colors.clear, `calc(50% + ${hw}px)`],
             [colors.outline.dimmest, `calc(50% + ${hw + 2}px)`],
-            [colors.clear, `calc(50% + ${hh + 2}px)`]
-          )
+            [colors.clear, `calc(50% + ${hh + 2}px)`],
+          ),
         ),
         gr.linear(
           ...gr.stack(
@@ -60,18 +60,18 @@ export default function ContributorLoginPage() {
             [colors.outline.dimmest, `calc(50% - ${hh - 2}px)`],
             [colors.clear, `calc(50% + ${hh}px)`],
             [colors.outline.dimmest, `calc(50% + ${hh + 2}px)`],
-            [colors.clear, `calc(50% + ${hh + 2}px)`]
-          )
+            [colors.clear, `calc(50% + ${hh + 2}px)`],
+          ),
         ),
-        gr.linear(135, colors.root, "#292524")
+        gr.linear(135, colors.root, "#292524"),
       )
     },
-    [box]
+    [box],
   )
 
   const initialBackground = useMotionValue(gradient(0))
   const background = useSpring(initialBackground, {
-    damping: 25
+    damping: 25,
   })
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function ContributorLoginPage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       style={{
-        background
+        background,
       }}
     >
       <Content ref={ref}>
@@ -136,5 +136,5 @@ export default function ContributorLoginPage() {
 }
 
 const Content = styled(MotionDiv, {
-  base: "border-2 border-outline-dimmer bg-gradient-to-b from-higher to-root rounded-xl p-6 flex flex-col gap-3 shadow-lg shadow-black/50 max-w-sm"
+  base: "border-2 border-outline-dimmer bg-gradient-to-b from-higher to-root rounded-xl p-6 flex flex-col gap-3 shadow-lg shadow-black/50 max-w-sm",
 })

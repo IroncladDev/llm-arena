@@ -22,8 +22,8 @@ export default async function Login() {
     where: {
       role: "pending",
       id: { lte: user.id },
-      createdAt: { lt: new Date() }
-    }
+      createdAt: { lt: new Date() },
+    },
   })
 
   return <WaitlistPage position={waitlistNumber} />

@@ -9,12 +9,12 @@ import { EmbedBuilder, WebhookClient } from "discord.js"
 import { z } from "zod"
 
 const webhook = new WebhookClient({
-  url: process.env.DISCORD_WEBHOOK_URL_ADMIN
+  url: process.env.DISCORD_WEBHOOK_URL_ADMIN,
 })
 
 const removeLLMInput = z.object({
   llmId: z.number(),
-  reason: z.string().min(3).max(255)
+  reason: z.string().min(3).max(255),
 })
 
 export type RemoveLLMInput = z.infer<typeof removeLLMInput>
@@ -32,31 +32,31 @@ export async function removeLLM(e: RemoveLLMInput) {
 
     const llm = await prisma.lLM.findFirst({
       where: {
-        id: llmId
+        id: llmId,
       },
       include: {
         fields: true,
         votes: true,
-        user: true
-      }
+        user: true,
+      },
     })
 
     if (!llm) throw new Error("LLM not found")
 
     await prisma.field.deleteMany({
       where: {
-        llmId
-      }
+        llmId,
+      },
     })
 
     await prisma.vote.deleteMany({
       where: {
-        llmId
-      }
+        llmId,
+      },
     })
 
     await prisma.lLM.delete({
-      where: { id: llmId }
+      where: { id: llmId },
     })
 
     await resend.emails.send({
@@ -67,32 +67,32 @@ export async function removeLLM(e: RemoveLLMInput) {
       html: baseEmail({
         title: `Your LLM "${llm.name}" has been removed`,
         paragraphs: [
-          `Your LLM with the name "${llm.name}" has been removed from LLM Arena by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`
+          `Your LLM with the name "${llm.name}" has been removed from LLM Arena by an administrator for this reason: "${reason}". If you have any questions or if you believe this was done in error, you may respond directly to this email.`,
         ],
-        buttonLinks: []
-      })
+        buttonLinks: [],
+      }),
     })
 
     const embed = new EmbedBuilder()
       .setTitle(`[LLM Removed] ${llm.name}`)
       .setFields({
         name: "Reason",
-        value: reason
+        value: reason,
       })
       .setDescription(`${llm.votes.length} votes • ${llm.fields.length} fields`)
       .setColor(0xef4444)
 
     await webhook.send({
-      embeds: [embed]
+      embeds: [embed],
     })
 
     return {
-      success: true
+      success: true,
     }
   } catch (error) {
     return {
       success: false,
-      message: formatError(error)
+      message: formatError(error),
     }
   }
 }

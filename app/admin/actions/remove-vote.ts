@@ -10,12 +10,12 @@ import { EmbedBuilder, WebhookClient } from "discord.js"
 import { z } from "zod"
 
 const webhook = new WebhookClient({
-  url: process.env.DISCORD_WEBHOOK_URL_ADMIN
+  url: process.env.DISCORD_WEBHOOK_URL_ADMIN,
 })
 
 const removeVoteInput = z.object({
   voteId: z.number(),
-  reason: z.string().min(3).max(255)
+  reason: z.string().min(3).max(255),
 })
 
 export type RemoveVoteInput = z.infer<typeof removeVoteInput>
@@ -33,27 +33,27 @@ export async function removeVote(e: RemoveVoteInput) {
 
     const vote = await prisma.vote.findFirst({
       where: {
-        id: voteId
+        id: voteId,
       },
       include: {
-        user: true
-      }
+        user: true,
+      },
     })
 
     if (!vote?.comment)
       throw new Error("Cannot remove a vote lacking a comment")
 
     await prisma.vote.delete({
-      where: { id: voteId }
+      where: { id: voteId },
     })
 
     const llm = await prisma.lLM.findFirst({
       where: {
-        id: vote.llmId
+        id: vote.llmId,
       },
       include: {
-        votes: true
-      }
+        votes: true,
+      },
     })
 
     if (!llm) throw new Error("LLM not found")
@@ -62,11 +62,11 @@ export async function removeVote(e: RemoveVoteInput) {
 
     await prisma.lLM.update({
       where: {
-        id: llm.id
+        id: llm.id,
       },
       data: {
-        status: consensus.status
-      }
+        status: consensus.status,
+      },
     })
 
     const embed = new EmbedBuilder()
@@ -75,24 +75,24 @@ export async function removeVote(e: RemoveVoteInput) {
       .setDescription(`"${vote.comment}"`)
       .setFields({
         name: "Reason",
-        value: reason
+        value: reason,
       })
       .setFooter({
-        text: `- ${vote.user.handle}`
+        text: `- ${vote.user.handle}`,
       })
       .setColor(0xef4444)
 
     await webhook.send({
-      embeds: [embed]
+      embeds: [embed],
     })
 
     return {
-      success: true
+      success: true,
     }
   } catch (error) {
     return {
       success: false,
-      message: formatError(error)
+      message: formatError(error),
     }
   }
 }

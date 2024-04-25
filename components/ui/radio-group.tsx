@@ -6,7 +6,7 @@ import * as React from "react"
 import { styled } from "react-tailwind-variants"
 
 const RadioGroup = styled(RadioGroupPrimitive.Root, {
-  base: `grid gap-2`
+  base: `grid gap-2`,
 })
 
 const RadioGroupItem = React.forwardRef<
@@ -24,11 +24,11 @@ const RadioGroupItem = React.forwardRef<
 RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName
 
 const RadioGroupItemBase = styled(RadioGroupPrimitive.Item, {
-  base: `aspect-square h-4 w-4 rounded-full border-2 border-outline-dimmer data-[state=checked]:border-accent-dimmest text-accent-dimmer disabled:cursor-not-allowed disabled:opacity-50 transition-colors`
+  base: `aspect-square h-4 w-4 rounded-full border-2 border-outline-dimmer data-[state=checked]:border-accent-dimmest text-accent-dimmer disabled:cursor-not-allowed disabled:opacity-50 transition-colors`,
 })
 
 const RadioGroupIndicatorBase = styled(RadioGroupPrimitive.Indicator, {
-  base: `flex items-center justify-center`
+  base: `flex items-center justify-center`,
 })
 
 export { RadioGroup, RadioGroupItem }

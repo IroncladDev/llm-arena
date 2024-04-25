@@ -63,11 +63,11 @@ NumberInput.displayName = "NumberInput"
 
 const { Container, AlertButton } = {
   Container: styled("div", {
-    base: "flex basis-[33px] shrink-0 w-full grow relative items-center"
+    base: "flex basis-[33px] shrink-0 w-full grow relative items-center",
   }),
   AlertButton: styled("button", {
-    base: "absolute right-2 text-amber-500 bg-amber-500/15 hover:bg-amber-500/25 hover:text-amber-400 p-1 rounded-md"
-  })
+    base: "absolute right-2 text-amber-500 bg-amber-500/15 hover:bg-amber-500/25 hover:text-amber-400 p-1 rounded-md",
+  }),
 }
 
 export default NumberInput

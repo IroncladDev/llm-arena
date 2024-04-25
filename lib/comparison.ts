@@ -5,7 +5,7 @@ import { MetaPropertyType } from "@prisma/client"
  * Converts an array of LLMs with metadata to a comparable format grouped by field name
  */
 export function toMutualMetadata(
-  llms: LLMWithMetadata[]
+  llms: LLMWithMetadata[],
 ): Array<ComparableFieldGroup> {
   // Create a map of each field name and all its values
   const fieldsMap = new Map<string, Array<[string, ValuesValue]>>()
@@ -24,8 +24,8 @@ export function toMutualMetadata(
             innerLlm.name,
             {
               value: null,
-              type: metaProperty.type
-            }
+              type: metaProperty.type,
+            },
           ])
         })
 
@@ -41,7 +41,7 @@ export function toMutualMetadata(
             : String(value)
 
       const nullSlot = llmValuesMap.findIndex(
-        ([name, { value }]) => name === llm.name && value === null
+        ([name, { value }]) => name === llm.name && value === null,
       )
 
       // If a null slot for the field name exists, populate it. Otherwise, add a new one
@@ -51,8 +51,8 @@ export function toMutualMetadata(
           {
             value: fieldValue,
             note: note || undefined,
-            type: metaProperty.type
-          }
+            type: metaProperty.type,
+          },
         ]
       } else {
         llmValuesMap.push([
@@ -60,8 +60,8 @@ export function toMutualMetadata(
           {
             value: fieldValue,
             note: note || undefined,
-            type: metaProperty.type
-          }
+            type: metaProperty.type,
+          },
         ])
       }
     })
@@ -75,21 +75,21 @@ export function toMutualMetadata(
           ? -1
           : a.value === null && b.value !== null
             ? 1
-            : 0
+            : 0,
       )
       const nonNullCount = valuesArray.filter(
-        ([, v]) => v.value !== null
+        ([, v]) => v.value !== null,
       ).length
 
       return {
         name,
         values: valuesArray,
         nonNullCount,
-        type: valuesArray[0][1].type
+        type: valuesArray[0][1].type,
       }
     })
     .sort(
-      (a, b) => b.nonNullCount - a.nonNullCount
+      (a, b) => b.nonNullCount - a.nonNullCount,
     ) as Array<ComparableFieldGroup>
 
   return sortedFields
@@ -116,7 +116,7 @@ export type ComparableFieldGroup =
     }
 
 type ValuesValue<
-  T extends string | number | boolean = string | number | boolean
+  T extends string | number | boolean = string | number | boolean,
 > = {
   value: T | null
   note?: string

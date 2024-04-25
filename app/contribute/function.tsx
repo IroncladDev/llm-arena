@@ -8,7 +8,7 @@ import { MotionValue, useSpring, useTransform } from "framer-motion"
 import { styled } from "react-tailwind-variants"
 
 export default function Function({
-  percentage
+  percentage,
 }: {
   percentage: MotionValue<number>
 }) {
@@ -18,7 +18,7 @@ export default function Function({
   const translateX = useTransform(
     smoothPercentage,
     [0, 1],
-    ["calc(0px - 0%)", `calc(${box?.width || 768}px - 100%)`]
+    ["calc(0px - 0%)", `calc(${box?.width || 768}px - 100%)`],
   )
 
   return (
@@ -40,9 +40,9 @@ export default function Function({
                 style={{
                   backgroundImage: gr.merge(
                     gr.linear(0, tokens.colors.root + "85", "transparent"),
-                    "url(/images/1-data.png)"
+                    "url(/images/1-data.png)",
                   ),
-                  backgroundColor: tokens.colors.default
+                  backgroundColor: tokens.colors.default,
                 }}
               />
             </Step>
@@ -58,9 +58,9 @@ export default function Function({
                 style={{
                   backgroundImage: gr.merge(
                     gr.linear(0, tokens.colors.root + "85", "transparent"),
-                    "url(/images/2-src.png)"
+                    "url(/images/2-src.png)",
                   ),
-                  backgroundColor: tokens.colors.default
+                  backgroundColor: tokens.colors.default,
                 }}
               />
             </Step>
@@ -75,9 +75,9 @@ export default function Function({
                 style={{
                   backgroundImage: gr.merge(
                     gr.linear(0, tokens.colors.root + "85", "transparent"),
-                    "url(/images/3-approval.png)"
+                    "url(/images/3-approval.png)",
                   ),
-                  backgroundColor: tokens.colors.default
+                  backgroundColor: tokens.colors.default,
                 }}
               />
             </Step>
@@ -93,9 +93,9 @@ export default function Function({
                 style={{
                   backgroundImage: gr.merge(
                     gr.linear(0, tokens.colors.root + "85", "transparent"),
-                    "url(/images/4-comparison.png)"
+                    "url(/images/4-comparison.png)",
                   ),
-                  backgroundColor: tokens.colors.root
+                  backgroundColor: tokens.colors.root,
                 }}
               />
             </Step>
@@ -108,18 +108,18 @@ export default function Function({
 
 const { Content, StepContainer, Steps, Step, Preview } = {
   Content: styled(Flex, {
-    base: "max-w-screen-md self-center py-16 px-4"
+    base: "max-w-screen-md self-center py-16 px-4",
   }),
   StepContainer: styled("div", {
-    base: "grow relative"
+    base: "grow relative",
   }),
   Steps: styled(MotionDiv, {
-    base: "absolute top-0 left-0 w-auto h-full flex gap-4"
+    base: "absolute top-0 left-0 w-auto h-full flex gap-4",
   }),
   Step: styled("div", {
-    base: "h-full border-2 border-outline-dimmest rounded-xl p-8 grow min-w-[360px] w-[60vw] max-w-[600px] flex flex-col gap-4"
+    base: "h-full border-2 border-outline-dimmest rounded-xl p-8 grow min-w-[360px] w-[60vw] max-w-[600px] flex flex-col gap-4",
   }),
   Preview: styled("div", {
-    base: "grow bg-center bg-cover bg-contain bg-no-repeat rounded-xl p-2 rounded-lg border border-outline-dimmest"
-  })
+    base: "grow bg-center bg-cover bg-contain bg-no-repeat rounded-xl p-2 rounded-lg border border-outline-dimmest",
+  }),
 }

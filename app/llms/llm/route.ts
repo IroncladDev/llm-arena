@@ -20,21 +20,42 @@ export async function GET(req: Request) {
 
     const llm = await prisma.lLM.findFirst({
       where: {
-        id
+        id,
       },
       include: {
         fields: {
           include: {
-            metaProperty: true
-          }
+            metaProperty: true,
+          },
         },
         votes: {
           include: {
-            user: true
-          }
+            user: true,
+          },
         },
-        user: true
-      }
+        changeRequests: {
+          where: {
+            status: "pending",
+          },
+          include: {
+            user: true,
+            votes: {
+              include: {
+                user: true,
+              },
+            },
+            field: true,
+            metaProperty: true,
+            llm: true,
+          },
+          orderBy: {
+            votes: {
+              _count: "desc",
+            },
+          },
+        },
+        user: true,
+      },
     })
 
     if (!llm) {
@@ -43,12 +64,12 @@ export async function GET(req: Request) {
 
     return Response.json({
       data: llm,
-      success: true
+      success: true,
     })
   } catch (e) {
     return Response.json({
       message: formatError(e),
-      success: false
+      success: false,
     })
   }
 }

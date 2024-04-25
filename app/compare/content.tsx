@@ -16,7 +16,7 @@ import { useURLState } from "./state"
 import { LLMWithMetadata, ModeEnum } from "./types"
 
 export default function Content({
-  initialLLMs
+  initialLLMs,
 }: {
   initialLLMs: Array<LLMWithMetadata>
 }) {
@@ -47,7 +47,7 @@ export default function Content({
           llms={llms}
           setLLMs={items => {
             set({
-              llms: items.map(x => x.id).join(",")
+              llms: items.map(x => x.id).join(","),
             })
             setLLMs(items)
           }}
@@ -99,12 +99,12 @@ export default function Content({
 
 const { ContentContainer, SidebarButton, Footer } = {
   ContentContainer: styled("div", {
-    base: "flex flex-col gap-4 grow relative"
+    base: "flex flex-col gap-4 grow relative",
   }),
   SidebarButton: styled(Button, {
-    base: "absolute top-2 left-2 md:hidden"
+    base: "absolute top-2 left-2 md:hidden",
   }),
   Footer: styled("footer", {
-    base: "flex items-center justify-between p-4 gap-2 bg-gradient-to-b from-root/0 via-root to-root absolute bottom-0 left-0 right-0"
-  })
+    base: "flex items-center justify-between p-4 gap-2 bg-gradient-to-b from-root/0 via-root to-root absolute bottom-0 left-0 right-0",
+  }),
 }

@@ -1,4 +1,4 @@
-import { Vote, VoteStatus } from "@prisma/client"
+import { VoteStatus } from "@prisma/client"
 
 type DetermineConsensusResult =
   | {
@@ -19,12 +19,14 @@ type DetermineConsensusResult =
       rejections: number
     }
 
-export default function determineConsensus<T extends Vote>(
-  votes: Array<T>
-): DetermineConsensusResult {
+export default function determineConsensus<
+  T extends {
+    status: VoteStatus
+  },
+>(votes: Array<T>): DetermineConsensusResult {
   const totalVotes = votes.length
   const approvals = votes.filter(
-    vote => vote.status === VoteStatus.approve
+    vote => vote.status === VoteStatus.approve,
   ).length
   const rejections = totalVotes - approvals
 
@@ -38,7 +40,7 @@ export default function determineConsensus<T extends Vote>(
     return {
       status: isApproved ? "approved" : "rejected",
       approvals,
-      rejections
+      rejections,
     }
   } else {
     // Calculate the number of remaining approvals/rejections needed to reach consensus
@@ -50,7 +52,7 @@ export default function determineConsensus<T extends Vote>(
       remainingApprovals,
       remainingRejections,
       approvals,
-      rejections
+      rejections,
     }
   }
 }

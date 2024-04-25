@@ -16,9 +16,9 @@ export default async function Page() {
 
   const commonMeta = await prisma.metaProperty.findMany({
     orderBy: {
-      useCount: "desc"
+      useCount: "desc",
     },
-    take: 3
+    take: 3,
   })
 
   return <Content commonMeta={commonMeta || []} />

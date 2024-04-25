@@ -20,11 +20,11 @@ export const optionsSchema = z.object({
         return (
           options.length === 0 ||
           options.every(option =>
-            Object.values(FilterEnum).includes(option as FilterEnum)
+            Object.values(FilterEnum).includes(option as FilterEnum),
           )
         )
       },
-      { message: "Invalid filter option" }
+      { message: "Invalid filter option" },
     )
     .optional(),
   // Omit particular meta fields
@@ -38,14 +38,14 @@ export const optionsSchema = z.object({
         return fields.length === 0 || fields.every(x => /[a-z0-9\_]*/.test(x))
       },
       {
-        message: "Invalid ommitted field"
-      }
+        message: "Invalid ommitted field",
+      },
     )
     .optional(),
   mode: z.nativeEnum(ModeEnum).optional(),
   padding: z.string().optional(),
   spacing: z.string().optional(),
-  width: z.string().optional()
+  width: z.string().optional(),
 })
 
 export type OptionsType = z.infer<typeof optionsSchema>
@@ -59,15 +59,15 @@ export function useURLState() {
     theme = ThemeEnum.crimson,
     view = ViewEnum.grid,
     filter = [FilterEnum.number, FilterEnum.string, FilterEnum.boolean].join(
-      ","
+      ",",
     ),
     mode = ModeEnum.view,
     padding = "24",
     spacing = "16",
     width = "1600",
-    omit
+    omit,
   }: OptionsType = Object.fromEntries(
-    searchParams.entries()
+    searchParams.entries(),
   ) as unknown as OptionsType
 
   const set = (arg: Partial<OptionsType>, replace: boolean = false) => {
@@ -101,7 +101,7 @@ export function useURLState() {
 
     url.searchParams.set(
       "filter",
-      fts.length > 0 ? fts.filter(x => !!FilterEnum[x]).join(",") : ""
+      fts.length > 0 ? fts.filter(x => !!FilterEnum[x]).join(",") : "",
     )
 
     router.push(url.pathname + url.search, { scroll: false })
@@ -116,7 +116,7 @@ export function useURLState() {
 
     url.searchParams.set(
       "omit",
-      omtd.length > 0 ? omtd.filter(x => x.length > 0).join(",") : ""
+      omtd.length > 0 ? omtd.filter(x => x.length > 0).join(",") : "",
     )
 
     router.push(url.pathname + url.search, { scroll: false })
@@ -136,6 +136,6 @@ export function useURLState() {
     setOmmittedField,
     padding: Number(padding),
     spacing: Number(spacing),
-    width: Number(width)
+    width: Number(width),
   }
 }

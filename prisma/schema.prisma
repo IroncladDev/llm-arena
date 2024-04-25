@@ -2,9 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
-  engineType = "binary"
+  engineType      = "binary"
 }
 
 datasource db {
@@ -19,11 +19,13 @@ model User {
   provider  AuthProvider @default(github)
   role      UserRole     @default(user)
   createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt @default(now())
+  updatedAt DateTime     @default(now()) @updatedAt
 
   // Relations
-  votes     Vote[]
-  llms      LLM[]
+  votes              Vote[]
+  llms               LLM[]
+  changeRequestVotes ChangeRequestVote[]
+  changeRequests     ChangeRequest[]
 }
 
 model Vote {
@@ -35,46 +37,88 @@ model Vote {
   createdAt DateTime   @default(now())
 
   // Relations
-  user      User       @relation(fields: [userId], references: [id])
-  llm       LLM        @relation(fields: [llmId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  llm  LLM  @relation(fields: [llmId], references: [id])
 }
 
 model LLM {
-  id                 Int       @id @default(autoincrement())
-  name               String
-  sourceDescription  String
-  userId             Int
-  status             LLMStatus @default(pending)
-  createdAt          DateTime  @default(now())
+  id                Int       @id @default(autoincrement())
+  name              String
+  sourceDescription String
+  userId            Int
+  status            LLMStatus @default(pending)
+  createdAt         DateTime  @default(now())
 
   // Relations
-  votes              Vote[]
-  user               User      @relation(fields: [userId], references: [id])
-  fields             Field[]
+  votes          Vote[]
+  user           User            @relation(fields: [userId], references: [id])
+  fields         Field[]
+  changeRequests ChangeRequest[]
 }
 
 model MetaProperty {
-  id        Int        @id @default(autoincrement())
+  id        Int              @id @default(autoincrement())
   name      String
   type      MetaPropertyType
-  useCount  Int        @default(1)
-  createdAt DateTime   @default(now())
+  useCount  Int              @default(1)
+  createdAt DateTime         @default(now())
 
   // Relations
-  fields    Field[]
+  fields        Field[]
+  ChangeRequest ChangeRequest[]
 }
 
 model Field {
-  id             Int          @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   metaPropertyId Int
   llmId          Int
   value          String
-  createdAt      DateTime     @default(now())
+  createdAt      DateTime @default(now())
   note           String?
 
   // Relations
-  metaProperty   MetaProperty @relation(fields: [metaPropertyId], references: [id])
-  llm            LLM          @relation(fields: [llmId], references: [id])
+  metaProperty   MetaProperty    @relation(fields: [metaPropertyId], references: [id])
+  llm            LLM             @relation(fields: [llmId], references: [id])
+  ChangeRequests ChangeRequest[]
+}
+
+model ChangeRequest {
+  id                Int               @id @default(autoincrement())
+  llmId             Int
+  userId            Int
+  fieldId           Int?
+  metaPropertyId    Int
+  newValue          String?
+  newNote           String?
+  type              ChangeRequestType
+  sourceDescription String
+  createdAt         DateTime          @default(now())
+  status            LLMStatus         @default(pending)
+
+  // Relations
+  user         User                @relation(fields: [userId], references: [id])
+  llm          LLM                 @relation(fields: [llmId], references: [id])
+  field        Field?              @relation(fields: [fieldId], references: [id])
+  metaProperty MetaProperty        @relation(fields: [metaPropertyId], references: [id])
+  votes        ChangeRequestVote[]
+}
+
+model ChangeRequestVote {
+  id              Int        @id @default(autoincrement())
+  userId          Int
+  changeRequestId Int
+  status          VoteStatus
+  createdAt       DateTime   @default(now())
+
+  // Relations
+  user          User          @relation(fields: [userId], references: [id])
+  changeRequest ChangeRequest @relation(fields: [changeRequestId], references: [id])
+}
+
+enum ChangeRequestType {
+  add
+  edit
+  delete
 }
 
 enum AuthProvider {

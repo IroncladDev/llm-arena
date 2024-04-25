@@ -15,16 +15,16 @@ export default function Cta() {
           gr.radial(
             `circle at 50% 100%`,
             tokens.colors.red[500] + "35",
-            "transparent"
+            "transparent",
           ),
           gr.rRadial(
             "circle at 50% 110%",
             ...gr.stack(
               ["transparent", 300],
-              [tokens.colors.outline.dimmest + "85", 302]
-            )
-          )
-        )
+              [tokens.colors.outline.dimmest + "85", 302],
+            ),
+          ),
+        ),
       }}
     >
       <Content col grow width="full" center gap={8}>
@@ -44,5 +44,5 @@ export default function Cta() {
 }
 
 const Content = styled(Flex, {
-  base: "max-w-screen-md max-md:max-w-screen max-md:px-4 py-16 self-center"
+  base: "max-w-screen-md max-md:max-w-screen max-md:px-4 py-16 self-center",
 })

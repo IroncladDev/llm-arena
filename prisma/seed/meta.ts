@@ -2,7 +2,7 @@ import { MetaPropertyType } from "@prisma/client"
 import {
   animals,
   languages,
-  uniqueNamesGenerator
+  uniqueNamesGenerator,
 } from "unique-names-generator"
 import { prisma } from "./client"
 
@@ -11,14 +11,14 @@ export default async function seedMeta() {
     uniqueNamesGenerator({
       dictionaries: [languages, animals],
       separator: "_",
-      style: "lowerCase"
+      style: "lowerCase",
     })
 
   await prisma.metaProperty.createMany({
     data: new Array(20).fill(null).map(() => ({
       name: generateName(),
-      type: MetaPropertyType.Number
-    }))
+      type: MetaPropertyType.Number,
+    })),
   })
 
   const allProperties = await prisma.metaProperty.findMany()
@@ -27,7 +27,7 @@ export default async function seedMeta() {
   const addRandomField = async (llmId: number) => {
     const llm = await prisma.lLM.findFirst({
       where: { id: llmId },
-      include: { fields: true }
+      include: { fields: true },
     })
 
     const property =
@@ -41,8 +41,8 @@ export default async function seedMeta() {
       data: {
         value: String(value),
         metaPropertyId: property.id,
-        llmId: llmId
-      }
+        llmId: llmId,
+      },
     })
   }
 

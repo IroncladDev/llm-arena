@@ -6,13 +6,13 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select"
 import Text from "@/components/ui/text"
 import {
   Tooltip,
   TooltipContent,
-  TooltipTrigger
+  TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { MetaProperty, MetaPropertyType } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
@@ -26,12 +26,16 @@ export function MetaFieldRow({
   onChange,
   onDelete,
   metadata,
-  field: { value, name, type, property, note }
+  field: { value, name, type, property, note },
+  canChangeName = true,
+  canChangeType = true,
 }: {
   onChange: (args: Partial<MetaField>) => void
-  onDelete: () => void
+  onDelete?: () => void
   metadata: Array<MetaField>
   field: MetaField
+  canChangeName?: boolean
+  canChangeType?: boolean
 }) {
   const valueRef = useRef<HTMLInputElement>(null)
   const selectRef = useRef<HTMLButtonElement>(null)
@@ -43,11 +47,11 @@ export function MetaFieldRow({
     queryKey: ["metadataProperties", name],
     queryFn: async () => {
       const res = await fetch(
-        "/api/meta-search?query=" + encodeURIComponent(name)
+        "/api/meta-search?query=" + encodeURIComponent(name),
       )
 
       return await res.json()
-    }
+    },
   })
 
   const items = useMemo(() => {
@@ -56,11 +60,11 @@ export function MetaFieldRow({
       name,
       type,
       useCount: 0,
-      createdAt: new Date()
+      createdAt: new Date(),
     }
 
     const filteredResults = results?.filter(
-      x => !metadata.some(y => y.property?.id === x.id)
+      x => !metadata.some(y => y.property?.id === x.id),
     )
 
     if (filteredResults && name.length > 2) {
@@ -85,7 +89,7 @@ export function MetaFieldRow({
     getMenuProps,
     getInputProps,
     highlightedIndex,
-    getItemProps
+    getItemProps,
   } = useCombobox({
     items,
     defaultHighlightedIndex: 0,
@@ -96,7 +100,7 @@ export function MetaFieldRow({
           .toLowerCase()
           .replace(/[\s-]+/g, "_")
           .replace(/[^\w_]|_/g, match => (match === "_" ? "_" : ""))
-          .replace(/_+/g, "_")
+          .replace(/_+/g, "_"),
       })
     },
     itemToString: item => (item ? item.name : ""),
@@ -106,14 +110,14 @@ export function MetaFieldRow({
           onChange({
             name,
             type: selectedItem.type,
-            property: null
+            property: null,
           })
           selectRef.current?.focus()
         } else {
           onChange({
             name: selectedItem.name,
             type: selectedItem.type,
-            property: selectedItem
+            property: selectedItem,
           })
 
           if (selectedItem.type === MetaPropertyType.Boolean) {
@@ -125,7 +129,7 @@ export function MetaFieldRow({
           }
         }
       }
-    }
+    },
   })
 
   const handleValueChange = (v: MetaPropertyType) => {
@@ -138,7 +142,7 @@ export function MetaFieldRow({
           ? Boolean(value)
           : v === MetaPropertyType.Number
             ? Number(value) || 0
-            : String(value)
+            : String(value),
     })
   }
 
@@ -157,6 +161,7 @@ export function MetaFieldRow({
             placeholder="key_name"
             required
             groupItem
+            disabled={!canChangeName}
           />
           {typeof note === "string" ? null : (
             <Tooltip>
@@ -203,7 +208,7 @@ export function MetaFieldRow({
         <InputContainer>
           <Select
             value={property ? property.type : type}
-            disabled={!!property}
+            disabled={!!property || !canChangeType}
             onValueChange={handleValueChange}
           >
             <SelectTypeTrigger ref={selectRef}>
@@ -238,7 +243,7 @@ export function MetaFieldRow({
             ref={valueRef}
             onChange={e =>
               onChange({
-                value: e.target.value
+                value: e.target.value,
               })
             }
             hidden={type !== MetaPropertyType.String}
@@ -253,14 +258,16 @@ export function MetaFieldRow({
             hidden={type !== MetaPropertyType.Number}
           />
         </InputContainer>
-        <Button
-          className="border border-outline-dimmest rounded-none h-full"
-          size="icon"
-          type="button"
-          onClick={onDelete}
-        >
-          <XIcon className="w-4 h-4 text-foreground-dimmer" />
-        </Button>
+        {typeof onDelete === "function" && (
+          <Button
+            className="border border-outline-dimmest rounded-none h-full"
+            size="icon"
+            type="button"
+            onClick={onDelete}
+          >
+            <XIcon className="w-4 h-4 text-foreground-dimmer" />
+          </Button>
+        )}
       </MetaFieldContainer>
       {typeof note === "string" && (
         <NoteContainer>
@@ -299,86 +306,86 @@ const {
   DownshiftEmpty,
   ItemsContainer,
   Item,
-  NumberValueInput
+  NumberValueInput,
 } = {
   MetaFieldContainer: styled("div", {
-    base: "flex items-center w-full relative border-x first:border-t last:border-b border-outline-dimmest"
+    base: "flex items-center w-full relative border-x first:border-t last:border-b border-outline-dimmest",
   }),
   InputContainer: styled("div", {
     base: "grow shrink-0 basis-0 w-full !inline-block relative",
     variants: {
       group: {
-        true: "group"
-      }
-    }
+        true: "group",
+      },
+    },
   }),
   DownshiftPopover: styled("div", {
-    base: "w-full max-w-xs rounded-lg border-2 border-outline-dimmer absolute top-12 left-0 bg-default z-10 shadow-lg z-30"
+    base: "w-full max-w-xs rounded-lg border-2 border-outline-dimmer absolute top-12 left-0 bg-default z-10 shadow-lg z-30",
   }),
   ItemsContainer: styled("ul", {
     base: "flex-col hidden",
     variants: {
       visible: {
-        true: "flex"
-      }
-    }
+        true: "flex",
+      },
+    },
   }),
   Item: styled("li", {
     base: "flex gap-2 justify-between px-2 py-1 first:rounded-t-md last:rounded-b-md",
     variants: {
       highlighted: {
-        true: "bg-higher"
-      }
-    }
+        true: "bg-higher",
+      },
+    },
   }),
   DownshiftEmpty: styled("div", {
     base: "gap-2 p-2 items-center justify-center hidden",
     variants: {
       visible: {
-        true: "flex"
-      }
-    }
+        true: "flex",
+      },
+    },
   }),
   NoteContainer: styled("div", {
-    base: "flex w-full border-y border-l border-outline-dimmest"
+    base: "flex w-full border-y border-l border-outline-dimmest",
   }),
   NoteContent: styled("div", {
-    base: "flex justify-start h-6 relative w-[calc(100%/3+32px/3*2)] border-x border-outline-dimmest"
+    base: "flex justify-start h-6 relative w-[calc(100%/3+32px/3*2)] border-x border-outline-dimmest",
   }),
   Input: styled(InputComponent, {
     base: "grow shrink-0 basis-0 rounded-none border",
     variants: {
       groupItem: {
-        true: "group/item"
+        true: "group/item",
       },
       hidden: {
-        true: "hidden"
-      }
-    }
+        true: "hidden",
+      },
+    },
   }),
   SelectTypeTrigger: styled(SelectTrigger, {
     base: "grow shrink-0 basis-0 rounded-none border w-full",
     variants: {
       hidden: {
-        true: "hidden"
-      }
-    }
+        true: "hidden",
+      },
+    },
   }),
   AddNoteButton: styled("button", {
-    base: "absolute right-2 top-1/2 -translate-y-1/2 flex p-1 rounded text-foreground-dimmest hidden group-focus-within:block z-10"
+    base: "absolute right-2 top-1/2 -translate-y-1/2 flex p-1 rounded text-foreground-dimmest hidden group-focus-within:block group-hover:block z-10",
   }),
   NoteInput: styled(InputComponent, {
-    base: "grow shrink-0 basis-0 rounded-none border h-full text-xs text-foreground-dimmer border-0 outline outline-outline-dimmest focus:outline-accent-dimmer z-20"
+    base: "grow shrink-0 basis-0 rounded-none border h-full text-xs text-foreground-dimmer border-0 outline outline-outline-dimmest focus:outline-accent-dimmer z-20",
   }),
   RemoveNoteButton: styled(Button, {
-    base: "rounded-none h-full z-10 border-r border-l-2 border-y-0 hover:border-outline-dimmest"
+    base: "rounded-none h-full z-10 border-r border-l-2 border-y-0 hover:border-outline-dimmest",
   }),
   NumberValueInput: styled(NumberInput, {
     base: "border rounded-none grow shrink-0 basis-0 w-full",
     variants: {
       hidden: {
-        true: "hidden"
-      }
-    }
-  })
+        true: "hidden",
+      },
+    },
+  }),
 }

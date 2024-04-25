@@ -5,7 +5,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Flex from "@/components/ui/flex"
 import {
@@ -13,13 +13,13 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select"
 import {
   Slider,
   SliderRange,
   SliderThumb,
-  SliderTrack
+  SliderTrack,
 } from "@/components/ui/slider"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
@@ -34,7 +34,7 @@ import {
   PencilIcon,
   ShareIcon,
   XIcon,
-  icons
+  icons,
 } from "lucide-react"
 import { createElement, useEffect, useState } from "react"
 import { styled } from "react-tailwind-variants"
@@ -48,7 +48,7 @@ import {
   ViewEnum,
   filterData,
   themeData,
-  viewData
+  viewData,
 } from "./types"
 
 export default function Sidebar({
@@ -72,7 +72,7 @@ export default function Sidebar({
     padding,
     spacing,
     ommitted,
-    setOmmittedField
+    setOmmittedField,
   } = useURLState()
 
   const [hasActed, setHasActed] = useState(false)
@@ -94,8 +94,8 @@ export default function Sidebar({
 
       await navigator.clipboard.write([
         new ClipboardItem({
-          "image/png": blob
-        })
+          "image/png": blob,
+        }),
       ])
 
       setHasActed(true)
@@ -165,7 +165,7 @@ export default function Sidebar({
               <SelectItem key={key} value={key}>
                 <Flex gap={2} align="center">
                   {createElement(icons[option.icon], {
-                    className: "w-4 h-4"
+                    className: "w-4 h-4",
                   })}
                   <Text>{option.label}</Text>
                 </Flex>
@@ -202,7 +202,7 @@ export default function Sidebar({
                 onSelect={() =>
                   setFilterValue(
                     key as FilterEnum,
-                    !filters.includes(key as FilterEnum)
+                    !filters.includes(key as FilterEnum),
                   )
                 }
                 key={i}
@@ -409,27 +409,27 @@ const {
   ThemeColor,
   ShareOption,
   OmmittedField,
-  LLMListItem
+  LLMListItem,
 } = {
   SidebarContainer: styled("div", {
     base: "flex flex-col gap-4 p-4 bg-default border-r-2 border-outline-dimmer max-md:border-r-0 md:max-w-[320px] max-w-screen max-md:absolute max-md:inset-0 h-screen overflow-y-auto grow z-10",
     variants: {
       open: {
         true: "",
-        false: "max-md:hidden"
-      }
-    }
+        false: "max-md:hidden",
+      },
+    },
   }),
   ThemeColor: styled("div", {
-    base: "w-4 h-4 rounded-full shrink-0"
+    base: "w-4 h-4 rounded-full shrink-0",
   }),
   ShareOption: styled(DropdownMenuItem, {
-    base: "flex gap-2 items-center pl-2"
+    base: "flex gap-2 items-center pl-2",
   }),
   OmmittedField: styled("button", {
-    base: "flex gap-1 items-center border border-outline-dimmer rounded-md px-2 py-1 hover:border-accent-dimmer transition-colors text-foreground-dimmer hover:text-accent"
+    base: "flex gap-1 items-center border border-outline-dimmer rounded-md px-2 py-1 hover:border-accent-dimmer transition-colors text-foreground-dimmer hover:text-accent",
   }),
   LLMListItem: styled("div", {
-    base: "flex items-center gap-2 border-2 border-outline-dimmest rounded-lg px-2 py-1"
-  })
+    base: "flex items-center gap-2 border-2 border-outline-dimmest rounded-lg px-2 py-1",
+  }),
 }

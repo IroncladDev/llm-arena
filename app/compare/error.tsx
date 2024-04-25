@@ -9,7 +9,7 @@ import Link from "next/link"
 import { styled } from "react-tailwind-variants"
 
 export default function Error({
-  error: { message }
+  error: { message },
 }: {
   error: Error & { digest?: string }
 }) {
@@ -22,8 +22,8 @@ export default function Error({
           tokens.colors.default,
           tokens.colors.default + " 25%",
           tokens.colors.transparent + " 70%",
-          tokens.colors.transparent
-        )
+          tokens.colors.transparent,
+        ),
       }}
     >
       <Content>
@@ -43,6 +43,6 @@ export default function Error({
 
 const { Content } = {
   Content: styled("div", {
-    base: "flex flex-col gap-4 p-6 border-2 rounded-xl border-outline-dimmest bg-root/50 shadow-xl max-w-[360px] w-full items-center"
-  })
+    base: "flex flex-col gap-4 p-6 border-2 rounded-xl border-outline-dimmest bg-root/50 shadow-xl max-w-[360px] w-full items-center",
+  }),
 }

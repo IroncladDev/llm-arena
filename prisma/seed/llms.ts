@@ -5,29 +5,29 @@ import {
   animals,
   languages,
   starWars,
-  uniqueNamesGenerator
+  uniqueNamesGenerator,
 } from "unique-names-generator"
 import { prisma } from "./client"
 
 export default async function seedLLMs() {
   const contributors = await prisma.user.findMany({
     where: {
-      role: UserRole.contributor
-    }
+      role: UserRole.contributor,
+    },
   })
 
   const generateName = () =>
     uniqueNamesGenerator({
       dictionaries: [adjectives, animals],
       separator: " ",
-      style: "capital"
+      style: "capital",
     }) + ` v${Math.floor(Math.random() * 10)}.${Math.floor(Math.random() * 10)}`
 
   const generateDescription = () =>
     uniqueNamesGenerator({
       dictionaries: [adjectives, languages, starWars],
       separator: " ",
-      style: "lowerCase"
+      style: "lowerCase",
     })
 
   const generateVotes = () => {
@@ -38,7 +38,7 @@ export default async function seedLLMs() {
         Math.random() > 0.5 ? VoteStatus.reject : VoteStatus.approve
 
       const commentText = uniqueNamesGenerator({
-        dictionaries: [adjectives]
+        dictionaries: [adjectives],
       })
 
       return {
@@ -50,7 +50,7 @@ export default async function seedLLMs() {
             ? commentText
             : Math.random() > 0.5
               ? commentText
-              : undefined
+              : undefined,
       }
     }) as Array<Vote>
 
@@ -69,9 +69,9 @@ export default async function seedLLMs() {
           userId: contributor.id,
           status,
           votes: {
-            create: votes
-          }
-        }
+            create: votes,
+          },
+        },
       })
     }
   }

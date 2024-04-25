@@ -5,14 +5,14 @@ export const Textarea = styled("textarea", {
   variants: {
     variant: {
       default: "bg-default text-foreground border-2 border-outline-dimmest",
-      elevated: "bg-higher text-foreground border-2 border-outline-dimmer"
+      elevated: "bg-higher text-foreground border-2 border-outline-dimmer",
     },
     size: {
-      default: "px-4 py-2"
-    }
+      default: "px-4 py-2",
+    },
   },
   defaultVariants: {
     variant: "default",
-    size: "default"
-  }
+    size: "default",
+  },
 })

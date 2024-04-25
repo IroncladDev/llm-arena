@@ -9,7 +9,7 @@ import { useCallback } from "react"
 import { styled } from "react-tailwind-variants"
 
 export default function Header({
-  percentage
+  percentage,
 }: {
   percentage: MotionValue<number>
 }) {
@@ -23,33 +23,33 @@ export default function Header({
       gr.radial(
         `circle at 50% ${lightY}%`,
         tokens.colors.red[500] + "35",
-        "transparent"
+        "transparent",
       ),
       gr.rLinear(
         -5 + rotateFactor,
         ...gr.stack(
           ["transparent", 200 + sizeFactor],
-          [tokens.colors.outline.dimmest, 202 + sizeFactor]
-        )
+          [tokens.colors.outline.dimmest, 202 + sizeFactor],
+        ),
       ),
       gr.rLinear(
         -95 + rotateFactor,
         ...gr.stack(
           ["transparent", 200 + sizeFactor],
-          [tokens.colors.outline.dimmest, 202 + sizeFactor]
-        )
-      )
+          [tokens.colors.outline.dimmest, 202 + sizeFactor],
+        ),
+      ),
     )
   }, [])
 
   const smoothPercentage = useSpring(percentage, {
-    mass: 0.05
+    mass: 0.05,
   })
 
   const background = useTransform(
     smoothPercentage,
     [0, 1],
-    [backgroundImage(0), backgroundImage(1)]
+    [backgroundImage(0), backgroundImage(1)],
   )
   const translateY = useTransform(smoothPercentage, [0, 1], ["0%", "-100%"])
 
@@ -82,9 +82,9 @@ export default function Header({
 
 const { Content, DownButton } = {
   Content: styled(Flex, {
-    base: "max-w-screen-md max-md:max-w-screen max-md:p-4 self-center"
+    base: "max-w-screen-md max-md:max-w-screen max-md:p-4 self-center",
   }),
   DownButton: styled(Button, {
-    base: "h-16 w-16 rounded-full"
-  })
+    base: "h-16 w-16 rounded-full",
+  }),
 }

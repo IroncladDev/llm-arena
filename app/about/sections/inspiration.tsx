@@ -15,14 +15,14 @@ export default function Inspiration() {
             tokens.colors.accent.dimmest + "45",
             tokens.colors.accent.dimmest + "15 20%",
             tokens.colors.transparent + " 50%",
-            tokens.colors.transparent
+            tokens.colors.transparent,
           ),
           gr.radial(
             "circle at 100% 50%",
             tokens.colors.accent.dimmest + "45",
             tokens.colors.accent.dimmest + "15 20%",
             tokens.colors.transparent + " 50%",
-            tokens.colors.transparent
+            tokens.colors.transparent,
           ),
           gr.linear(
             0,
@@ -32,9 +32,9 @@ export default function Inspiration() {
             tokens.colors.accent.dimmest + "45",
             tokens.colors.accent.dimmest + "15",
             tokens.colors.root + " 70%",
-            tokens.colors.root
-          )
-        )
+            tokens.colors.root,
+          ),
+        ),
       }}
       className="border-t-2 border-default"
     >

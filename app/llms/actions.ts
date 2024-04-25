@@ -11,39 +11,37 @@ import { EmbedBuilder, WebhookClient } from "discord.js"
 import { z } from "zod"
 
 const webhook = new WebhookClient({
-  url: process.env.DISCORD_WEBHOOK_URL_PUBLIC
+  url: process.env.DISCORD_WEBHOOK_URL_PUBLIC,
 })
 
 const castVoteInput = z
   .object({
-    llmId: z.string(),
+    llmId: z.number(),
     comment: z.string().nullish(),
-    action: z.nativeEnum(VoteStatus)
+    action: z.nativeEnum(VoteStatus),
   })
   .superRefine((data, ctx) => {
     if (data.action === VoteStatus.reject && !data.comment) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "required when rejecting an LLM",
-        path: ["comment"]
-      })
-    }
-
-    if (isNaN(Number(data.llmId))) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Invalid ID",
-        path: ["llmId"]
+        path: ["comment"],
       })
     }
   })
 
-type CastVoteReturn = {
-  success: boolean
-  message?: string
-} | null
+type CastVoteReturn =
+  | {
+      success: true
+    }
+  | {
+      success: false
+      message: string
+    }
 
-export async function castVoteAction(_prevState: CastVoteReturn, e: FormData) {
+export async function castVote(
+  input: z.infer<typeof castVoteInput>,
+): Promise<CastVoteReturn> {
   const res = await getSession()
 
   try {
@@ -52,19 +50,15 @@ export async function castVoteAction(_prevState: CastVoteReturn, e: FormData) {
     const { user } = res
     requireContributorOrAdmin(user)
 
-    const { llmId, comment, action } = castVoteInput.parse(
-      Object.fromEntries(e.entries())
-    )
-
-    const id = Number(llmId)
+    const { llmId, comment, action } = castVoteInput.parse(input)
 
     const llm = await prisma.lLM.findFirst({
       where: {
-        id
+        id: llmId,
       },
       include: {
-        votes: true
-      }
+        votes: true,
+      },
     })
 
     if (!llm) throw new Error("LLM not found")
@@ -74,9 +68,9 @@ export async function castVoteAction(_prevState: CastVoteReturn, e: FormData) {
 
     const existingVote = await prisma.vote.findFirst({
       where: {
-        llmId: id,
-        userId: user.id
-      }
+        llmId,
+        userId: user.id,
+      },
     })
 
     if (existingVote) throw new Error("You have already voted on this LLM")
@@ -84,10 +78,10 @@ export async function castVoteAction(_prevState: CastVoteReturn, e: FormData) {
     const newVote = await prisma.vote.create({
       data: {
         comment,
-        llmId: id,
+        llmId,
         userId: user.id,
-        status: action
-      }
+        status: action,
+      },
     })
 
     if (!newVote) throw new Error("Failed to cast vote")
@@ -96,11 +90,11 @@ export async function castVoteAction(_prevState: CastVoteReturn, e: FormData) {
 
     await prisma.lLM.update({
       where: {
-        id
+        id: llmId,
       },
       data: {
-        status: consensus.status
-      }
+        status: consensus.status,
+      },
     })
 
     if (consensus.status !== LLMStatus.pending) {
@@ -110,24 +104,24 @@ export async function castVoteAction(_prevState: CastVoteReturn, e: FormData) {
         .setTitle(`[LLM ${consensus.status}] ${llm.name}`)
         .setURL(new URL("/llms?llm=" + llm.id, siteUrl).toString())
         .setDescription(
-          `${consensus.status} after ${allVotes.length} votes. ${allVotes.filter(v => v.status === VoteStatus.approve).length} approvals, ${allVotes.filter(v => v.status === VoteStatus.reject).length} rejections.`
+          `${consensus.status} after ${allVotes.filter(v => v.status === VoteStatus.approve).length} approvals, ${allVotes.filter(v => v.status === VoteStatus.reject).length} rejections.`,
         )
         .setColor(consensus.status === "approved" ? 0x34d399 : 0xef4444)
 
       await webhook.send({
-        embeds: [embed]
+        embeds: [embed],
       })
     }
 
     return {
-      success: true
+      success: true,
     }
   } catch (e) {
     console.error(e)
 
     return {
       success: false,
-      message: formatError(e)
+      message: formatError(e),
     }
   }
 }

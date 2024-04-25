@@ -6,8 +6,8 @@ const authOptions: AuthOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!
-    })
+      clientSecret: process.env.GITHUB_SECRET!,
+    }),
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
@@ -17,8 +17,8 @@ const authOptions: AuthOptions = {
 
       const existingUser = await prisma.user.findFirst({
         where: {
-          handle
-        }
+          handle,
+        },
       })
 
       if (existingUser) return true
@@ -27,8 +27,8 @@ const authOptions: AuthOptions = {
         data: {
           handle,
           provider: account.provider as "github",
-          email: user.email as string
-        }
+          email: user.email as string,
+        },
       })
 
       if (newUser) {
@@ -36,8 +36,8 @@ const authOptions: AuthOptions = {
       } else {
         return false
       }
-    }
-  }
+    },
+  },
 }
 
 const handler = NextAuth(authOptions)
