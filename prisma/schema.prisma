@@ -37,8 +37,8 @@ model Vote {
   createdAt DateTime   @default(now())
 
   // Relations
-  user User @relation(fields: [userId], references: [id])
-  llm  LLM  @relation(fields: [llmId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  llm  LLM  @relation(fields: [llmId], references: [id], onDelete: Cascade)
 }
 
 model LLM {
@@ -51,7 +51,7 @@ model LLM {
 
   // Relations
   votes          Vote[]
-  user           User            @relation(fields: [userId], references: [id])
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   fields         Field[]
   changeRequests ChangeRequest[]
 }
@@ -77,8 +77,8 @@ model Field {
   note           String?
 
   // Relations
-  metaProperty   MetaProperty    @relation(fields: [metaPropertyId], references: [id])
-  llm            LLM             @relation(fields: [llmId], references: [id])
+  metaProperty   MetaProperty    @relation(fields: [metaPropertyId], references: [id], onDelete: Cascade)
+  llm            LLM             @relation(fields: [llmId], references: [id], onDelete: Cascade)
   ChangeRequests ChangeRequest[]
 }
 
@@ -96,10 +96,10 @@ model ChangeRequest {
   status            LLMStatus         @default(pending)
 
   // Relations
-  user         User                @relation(fields: [userId], references: [id])
-  llm          LLM                 @relation(fields: [llmId], references: [id])
-  field        Field?              @relation(fields: [fieldId], references: [id])
-  metaProperty MetaProperty        @relation(fields: [metaPropertyId], references: [id])
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  llm          LLM                 @relation(fields: [llmId], references: [id], onDelete: Cascade)
+  field        Field?              @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  metaProperty MetaProperty        @relation(fields: [metaPropertyId], references: [id], onDelete: Cascade)
   votes        ChangeRequestVote[]
 }
 
@@ -111,8 +111,8 @@ model ChangeRequestVote {
   createdAt       DateTime   @default(now())
 
   // Relations
-  user          User          @relation(fields: [userId], references: [id])
-  changeRequest ChangeRequest @relation(fields: [changeRequestId], references: [id])
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  changeRequest ChangeRequest @relation(fields: [changeRequestId], references: [id], onDelete: Cascade)
 }
 
 enum ChangeRequestType {

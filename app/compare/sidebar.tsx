@@ -234,7 +234,13 @@ export default function Sidebar({
               <SelectItem key={key} value={key}>
                 <Flex gap={2} align="center">
                   <ThemeColor
-                    style={{ background: gr.linear(0, ...option.foreground) }}
+                    style={{
+                      background: gr.linear(
+                        0,
+                        option.foreground[0],
+                        option.foreground[1],
+                      ),
+                    }}
                   />
                   <Text>{option.label}</Text>
                 </Flex>
@@ -340,7 +346,11 @@ export default function Sidebar({
             <Text className="grow" color="dimmer">
               {item.name}
             </Text>
-            <button onClick={() => setLLMs(llms.filter(x => x.id !== item.id))}>
+            <button
+              onClick={() => setLLMs(llms.filter(x => x.id !== item.id))}
+              disabled={llms.length < 3}
+              className="disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <XIcon className="w-4 h-4 text-foreground-dimmer" />
             </button>
           </LLMListItem>

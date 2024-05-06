@@ -40,7 +40,7 @@ interface ControlOption {
 }
 
 interface ThemeOption {
-  foreground: [string, string]
+  foreground: [string, string, string]
   background: Array<string>
   label: string
 }
@@ -81,7 +81,11 @@ export const filterData: Record<FilterEnum, ControlOption> = {
 
 export const themeData: Record<ThemeEnum, ThemeOption> = {
   [ThemeEnum.crimson]: {
-    foreground: [tokens.colors.accent.dimmer, tokens.colors.accent.dimmest],
+    foreground: [
+      tokens.colors.accent.dimmer,
+      tokens.colors.accent.dimmest,
+      tokens.colors.accent.default,
+    ],
     background: [
       "circle at 75% -10%",
       tokens.colors.accent.dimmest,
@@ -90,11 +94,15 @@ export const themeData: Record<ThemeEnum, ThemeOption> = {
     label: "Crimson",
   },
   [ThemeEnum.amber]: {
-    foreground: [tokens.colors.amber[500], tokens.colors.amber[600]],
+    foreground: [
+      tokens.colors.amber[500],
+      tokens.colors.amber[600],
+      tokens.colors.amber[300],
+    ],
     background: [
       "circle at 50% 0%",
-      tokens.colors.yellow[600],
-      tokens.colors.yellow[700] + " 30%",
+      tokens.colors.yellow[700],
+      tokens.colors.yellow[800] + " 30%",
       tokens.colors.yellow[900] + " 50%",
       tokens.colors.root + " 90%",
       tokens.colors.root,
@@ -102,12 +110,20 @@ export const themeData: Record<ThemeEnum, ThemeOption> = {
     label: "Amber",
   },
   [ThemeEnum.evergreen]: {
-    foreground: [tokens.colors.green[500], tokens.colors.green[700]],
+    foreground: [
+      tokens.colors.green[500],
+      tokens.colors.green[700],
+      tokens.colors.green[300],
+    ],
     background: [tokens.colors.emerald[800], tokens.colors.emerald[950]],
     label: "Evergreen",
   },
   [ThemeEnum.cerulean]: {
-    foreground: [tokens.colors.teal[500], tokens.colors.teal[700]],
+    foreground: [
+      tokens.colors.teal[500],
+      tokens.colors.teal[700],
+      tokens.colors.teal[300],
+    ],
     background: [
       "circle at 50% 100%",
       tokens.colors.teal[800],
@@ -118,7 +134,11 @@ export const themeData: Record<ThemeEnum, ThemeOption> = {
     label: "Cerulean",
   },
   [ThemeEnum.amethyst]: {
-    foreground: [tokens.colors.indigo[500], tokens.colors.indigo[700]],
+    foreground: [
+      tokens.colors.indigo[500],
+      tokens.colors.indigo[700],
+      tokens.colors.indigo[300],
+    ],
     background: [
       "circle at 10% 110%",
       tokens.colors.violet[800] + "a5",
@@ -130,7 +150,11 @@ export const themeData: Record<ThemeEnum, ThemeOption> = {
     label: "Amethyst",
   },
   [ThemeEnum.midnight]: {
-    foreground: [tokens.colors.outline.default, tokens.colors.outline.dimmer],
+    foreground: [
+      tokens.colors.outline.default,
+      tokens.colors.outline.dimmer,
+      tokens.colors.foreground.dimmer,
+    ],
     background: [
       "circle at 75% -10%",
       tokens.colors.highest,
