@@ -1,9 +1,9 @@
 "use client"
 
 import { useCurrentUser } from "@/components/providers/CurrentUserProvider"
+import Text from "@/components/ui/text"
 import Link from "next/link"
 import { styled } from "react-tailwind-variants"
-import Text from "@/components/ui/text"
 
 export async function FooterLinks() {
   const user = useCurrentUser()

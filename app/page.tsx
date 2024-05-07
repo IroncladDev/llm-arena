@@ -4,10 +4,9 @@ import { Container } from "@/components/container"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
-import Link from "next/link"
 import { styled } from "react-tailwind-variants"
-import Selector from "./home/selector"
 import { FooterLinks } from "./home/footer-links"
+import Selector from "./home/selector"
 
 export default function Page() {
   return (
