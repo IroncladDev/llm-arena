@@ -2,6 +2,7 @@ import CompareItem from "@/app/compare/item"
 import { Container } from "@/components/container"
 import Flex, { MotionFlex } from "@/components/ui/flex"
 import Text from "@/components/ui/text"
+import useClientRect from "@/hooks/useElementSize"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
 import { MetaPropertyType } from "@prisma/client"
@@ -13,11 +14,24 @@ export default function Intro({
 }: {
   percentage: MotionValue<number>
 }) {
+  const [widgetRef, widgetContainer] = useClientRect<HTMLDivElement>()
+  const [gutterRef, widgetGutter] = useClientRect<HTMLDivElement>()
   const smoothPercentage = useSpring(percentage, {
     mass: 0.05,
   })
 
-  const slideWidgetsX = useTransform(smoothPercentage, [0, 1], ["0", "-100%"])
+  const slideWidgetsX = useTransform(
+    smoothPercentage,
+    [0, 1],
+    [
+      "0%",
+      "-" +
+        (widgetContainer && widgetGutter
+          ? widgetContainer.width - widgetGutter.width
+          : 0) +
+        "px",
+    ],
+  )
 
   return (
     <Container
@@ -48,13 +62,14 @@ export default function Intro({
             <strong className="text-foreground">widgets</strong>.
           </Text>
         </Flex>
-        <WidgetGutter>
+        <WidgetGutter ref={gutterRef}>
           <WidgetContainer
             gap={4}
             center
             style={{
               translateX: slideWidgetsX,
             }}
+            ref={widgetRef}
           >
             <CompareItem
               field={{
@@ -152,7 +167,7 @@ export default function Intro({
 
 const { WidgetGutter, WidgetContainer } = {
   WidgetGutter: styled("div", {
-    base: "w-full px-4 h-[256px] relative",
+    base: "w-full h-[256px] relative",
   }),
   WidgetContainer: styled(MotionFlex, {
     base: "absolute top-0 left-0 *:shrink-0",

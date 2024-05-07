@@ -47,7 +47,7 @@ const NumberInput = React.forwardRef<
       {!isValid && (
         <Tooltip>
           <TooltipTrigger asChild>
-            <AlertButton>
+            <AlertButton type="button">
               <AlertTriangleIcon className="w-4 h-4" />
             </AlertButton>
           </TooltipTrigger>

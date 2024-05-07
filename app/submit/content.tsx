@@ -216,9 +216,11 @@ const SubmitButton = () => {
   const { pending } = useFormStatus()
 
   return (
-    <Button type="submit" className="w-full" disabled={pending}>
-      Submit
-    </Button>
+    <div className="px-2">
+      <Button type="submit" className="w-full" disabled={pending}>
+        Submit
+      </Button>
+    </div>
   )
 }
 
