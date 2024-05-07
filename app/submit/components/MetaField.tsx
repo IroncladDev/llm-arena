@@ -222,41 +222,40 @@ export function MetaFieldRow({
           </Select>
         </InputContainer>
         <InputContainer>
-          <Select
-            value={value ? "true" : "false"}
-            onValueChange={value => onChange({ value: value === "true" })}
-            required
-          >
-            <SelectTypeTrigger
-              ref={selectValueRef}
-              hidden={type !== MetaPropertyType.Boolean}
+          {type === MetaPropertyType.Boolean ? (
+            <Select
+              value={value ? "true" : "false"}
+              onValueChange={value => onChange({ value: value === "true" })}
+              required
             >
-              <SelectValue placeholder="true" />
-            </SelectTypeTrigger>
-            <SelectContent>
-              <SelectItem value="true">true</SelectItem>
-              <SelectItem value="false">false</SelectItem>
-            </SelectContent>
-          </Select>
-          <Input
-            value={String(value)}
-            ref={valueRef}
-            onChange={e =>
-              onChange({
-                value: e.target.value,
-              })
-            }
-            hidden={type !== MetaPropertyType.String}
-            placeholder="value"
-            required
-          />
-          <NumberValueInput
-            value={String(value)}
-            onChange={({ value }) => onChange({ value })}
-            ref={numberInputRef}
-            required
-            hidden={type !== MetaPropertyType.Number}
-          />
+              <SelectTypeTrigger ref={selectValueRef}>
+                <SelectValue placeholder="true" />
+              </SelectTypeTrigger>
+              <SelectContent>
+                <SelectItem value="true">true</SelectItem>
+                <SelectItem value="false">false</SelectItem>
+              </SelectContent>
+            </Select>
+          ) : type === MetaPropertyType.String ? (
+            <Input
+              value={String(value)}
+              ref={valueRef}
+              onChange={e =>
+                onChange({
+                  value: e.target.value,
+                })
+              }
+              placeholder="value"
+              required
+            />
+          ) : (
+            <NumberValueInput
+              value={String(value)}
+              onChange={({ value }) => onChange({ value })}
+              ref={numberInputRef}
+              required
+            />
+          )}
         </InputContainer>
         {typeof onDelete === "function" && (
           <Button

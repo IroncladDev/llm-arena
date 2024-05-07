@@ -42,7 +42,7 @@ export default function Function({
                     gr.linear(0, tokens.colors.root + "85", "transparent"),
                     "url(/images/1-data.png)",
                   ),
-                  backgroundColor: tokens.colors.default,
+                  backgroundColor: tokens.colors.root,
                 }}
               />
             </Step>
@@ -60,7 +60,7 @@ export default function Function({
                     gr.linear(0, tokens.colors.root + "85", "transparent"),
                     "url(/images/2-src.png)",
                   ),
-                  backgroundColor: tokens.colors.default,
+                  backgroundColor: tokens.colors.root,
                 }}
               />
             </Step>
@@ -94,6 +94,24 @@ export default function Function({
                   backgroundImage: gr.merge(
                     gr.linear(0, tokens.colors.root + "85", "transparent"),
                     "url(/images/4-comparison.png)",
+                  ),
+                  backgroundColor: tokens.colors.root,
+                }}
+              />
+            </Step>
+            <Step>
+              <Text size="h2" weight="semibold">
+                5. Future Improvements
+              </Text>
+              <Text size="lg" color="dimmer" multiline paragraph>
+                Contributors can request and vote on Change Requests to ensure
+                that the data you&apos;re viewing is always accurate.
+              </Text>
+              <Preview
+                style={{
+                  backgroundImage: gr.merge(
+                    gr.linear(0, tokens.colors.root + "85", "transparent"),
+                    "url(/images/5-changes.png)",
                   ),
                   backgroundColor: tokens.colors.root,
                 }}

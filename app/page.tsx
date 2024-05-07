@@ -4,8 +4,8 @@ import { Container } from "@/components/container"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
 import { tokens } from "@/tailwind.config"
-import Link from "next/link"
 import { styled } from "react-tailwind-variants"
+import { FooterLinks } from "./home/footer-links"
 import Selector from "./home/selector"
 
 export default function Page() {
@@ -37,22 +37,7 @@ export default function Page() {
           ),
         }}
       >
-        <FooterLinks>
-          <FooterLink size="base" asChild>
-            <Link href="/about">About</Link>
-          </FooterLink>
-          <FooterLink color="dimmest" size="base" asChild>
-            <Link href="/contribute">Contribute</Link>
-          </FooterLink>
-          <FooterLink color="dimmest" size="base" asChild>
-            <Link href="/login">Login</Link>
-          </FooterLink>
-          <FooterLink color="dimmest" size="base" asChild>
-            <a href="https://github.com/IroncladDev/llm-arena" target="_blank">
-              Github
-            </a>
-          </FooterLink>
-        </FooterLinks>
+        <FooterLinks />
         <Text color="dimmest">
           Made by{" "}
           <AuthorLink href="https://connerow.dev" target="_blank">
@@ -68,14 +53,7 @@ export default function Page() {
   )
 }
 
-const {
-  Content,
-  SelectorContainer,
-  Footer,
-  FooterLink,
-  FooterLinks,
-  AuthorLink,
-} = {
+const { Content, SelectorContainer, Footer, AuthorLink } = {
   Content: styled(Container, {
     base: "flex flex-col h-screen",
   }),
@@ -84,12 +62,6 @@ const {
   }),
   Footer: styled("footer", {
     base: "flex flex-col gap-6 items-center w-full p-8",
-  }),
-  FooterLinks: styled("div", {
-    base: "flex gap-8 items-center justify-center w-full",
-  }),
-  FooterLink: styled(Text, {
-    base: "text-accent-dimmer hover:text-accent transition-colors",
   }),
   AuthorLink: styled("a", {
     base: "text-accent-dimmer hover:text-accent transition-colors",
