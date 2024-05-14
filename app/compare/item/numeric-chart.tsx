@@ -101,7 +101,9 @@ function RowItem({
               N/A
             </Text>
           ) : isBarTooSmall ? (
-            <Text style={{ color: fg3 }}>{abbrNumber(value as number)}</Text>
+            <Text style={{ color: fg3 }} size="xs">
+              {abbrNumber(value as number)}
+            </Text>
           ) : null}
         </BarContainer>
       </Table.Cell>

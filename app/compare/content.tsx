@@ -3,12 +3,20 @@
 import { Container } from "@/components/container"
 import { Button } from "@/components/ui/button"
 import Flex from "@/components/ui/flex"
+import { Sheet, SheetContent } from "@/components/ui/sheet"
 import Text from "@/components/ui/text"
 import useClientRect from "@/hooks/useElementSize"
-import { ArrowRightIcon, MenuIcon, PencilIcon } from "lucide-react"
+import {
+  ArrowRightIcon,
+  ExternalLinkIcon,
+  MenuIcon,
+  PencilIcon,
+  XIcon,
+} from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { styled } from "react-tailwind-variants"
+import FieldTable from "../llms/components/FieldTable"
 import { name, title } from "../metadata"
 import LLMContainer from "./llms"
 import Sidebar from "./sidebar"
@@ -25,6 +33,7 @@ export default function Content({
   const [llms, setLLMs] = useState(initialLLMs)
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [containerRef, containerRect] = useClientRect<HTMLDivElement>()
+  const [selectedLLM, setSelectedLLM] = useState<LLMWithMetadata | null>(null)
 
   useEffect(() => {
     if (mode === ModeEnum.edit) {
@@ -51,6 +60,7 @@ export default function Content({
             })
             setLLMs(items)
           }}
+          setSelectedLLM={setSelectedLLM}
         />
       )}
       <ContentContainer>
@@ -93,6 +103,48 @@ export default function Content({
           </SidebarButton>
         )}
       </ContentContainer>
+      <Sheet
+        open={Boolean(selectedLLM)}
+        onOpenChange={open => setSelectedLLM(open ? selectedLLM : null)}
+      >
+        <SheetContent>
+          <Flex gap={2} align="center" justify="between">
+            <Text size="lg" weight="semibold" className="grow">
+              {selectedLLM?.name}
+            </Text>
+            <Button
+              variant="outline"
+              onClick={() => setSelectedLLM(null)}
+              size="icon"
+            >
+              <XIcon className="w-4 h-4" />
+            </Button>
+          </Flex>
+          <Flex col gap={2}>
+            <Text weight="medium">Metadata Fields</Text>
+            <FieldTable fields={selectedLLM?.fields || []} />
+          </Flex>
+          <Flex col gap={2}>
+            <Text weight="medium">Source Description</Text>
+            <Text multiline markdown color="dimmer">
+              {selectedLLM?.sourceDescription}
+            </Text>
+          </Flex>
+          <Flex col gap={2}>
+            <Text color="dimmest" size="xs">
+              Uploaded by{" "}
+              <a
+                href={`https://github.com/${selectedLLM?.user.handle}`}
+                target="_blank"
+                className="text-accent-dimmer border-b border-accent-dimmer"
+              >
+                {selectedLLM?.user.handle}
+                <ExternalLinkIcon className="w-3 h-3 inline-block ml-1 mb-1 align-middle" />
+              </a>
+            </Text>
+          </Flex>
+        </SheetContent>
+      </Sheet>
     </Container>
   )
 }

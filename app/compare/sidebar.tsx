@@ -56,12 +56,14 @@ export default function Sidebar({
   containerRef,
   llms,
   setLLMs,
+  setSelectedLLM,
   ...props
 }: React.ComponentPropsWithoutRef<typeof SidebarContainer> & {
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>
   containerRef: React.RefObject<HTMLDivElement>
   llms: Array<LLMWithMetadata>
   setLLMs: (items: Array<LLMWithMetadata>) => void
+  setSelectedLLM: React.Dispatch<React.SetStateAction<LLMWithMetadata | null>>
 }) {
   const {
     view,
@@ -341,17 +343,20 @@ export default function Sidebar({
           id="llm-sidebar-search"
         />
         {llms.map(item => (
-          <LLMListItem key={item.id}>
+          <LLMListItem key={item.id} onClick={() => setSelectedLLM(item)}>
             <LLMIcon size="sm" />
             <Text className="grow" color="dimmer">
               {item.name}
             </Text>
             <button
-              onClick={() => setLLMs(llms.filter(x => x.id !== item.id))}
+              onClick={e => {
+                e.stopPropagation()
+                setLLMs(llms.filter(x => x.id !== item.id))
+              }}
               disabled={llms.length < 3}
-              className="disabled:opacity-50 disabled:cursor-not-allowed"
+              className="disabled:opacity-50 disabled:cursor-not-allowed text-foreground-dimmer hover:text-foreground"
             >
-              <XIcon className="w-4 h-4 text-foreground-dimmer" />
+              <XIcon className="w-4 h-4" />
             </button>
           </LLMListItem>
         ))}
@@ -440,6 +445,6 @@ const {
     base: "flex gap-1 items-center border border-outline-dimmer rounded-md px-2 py-1 hover:border-accent-dimmer transition-colors text-foreground-dimmer hover:text-accent",
   }),
   LLMListItem: styled("div", {
-    base: "flex items-center gap-2 border-2 border-outline-dimmest rounded-lg px-2 py-1",
+    base: "flex items-center gap-2 border-2 border-outline-dimmest rounded-lg px-2 py-1 cursor-pointer hover:border-outline-dimmer hover:bg-highest transition-colors",
   }),
 }

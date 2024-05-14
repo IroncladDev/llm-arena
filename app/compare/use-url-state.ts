@@ -12,9 +12,12 @@ export function useURLState() {
     llms,
     theme = ThemeEnum.crimson,
     view = ViewEnum.grid,
-    filter = [FilterEnum.number, FilterEnum.string, FilterEnum.boolean].join(
-      ",",
-    ),
+    filter = [
+      FilterEnum.number,
+      FilterEnum.string,
+      FilterEnum.boolean,
+      FilterEnum.nullFields,
+    ].join(","),
     mode = ModeEnum.view,
     padding = "24",
     spacing = "16",
