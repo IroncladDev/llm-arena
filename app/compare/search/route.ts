@@ -45,6 +45,9 @@ export async function GET(req: Request) {
         ].filter(Boolean) as Array<Prisma.LLMWhereInput>,
       },
       take: 10,
+      orderBy: {
+        createdAt: "desc",
+      },
       include: {
         fields: {
           include: {
