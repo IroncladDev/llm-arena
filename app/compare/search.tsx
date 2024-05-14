@@ -1,3 +1,4 @@
+import Flex from "@/components/ui/flex"
 import { Input } from "@/components/ui/input"
 import Text from "@/components/ui/text"
 import { useQuery } from "@tanstack/react-query"
@@ -76,11 +77,13 @@ const LLMSearch = forwardRef<
               highlighted={highlightedIndex === index}
               {...getItemProps({ item, index })}
             >
-              <ItemInfo>
+              <Flex align="center" gap={2} grow noBasis className="min-w-0">
                 <ItemIcon selected={llms.some(x => x.id === item.id)} />
                 <Text color="dimmer">{item.name}</Text>
-              </ItemInfo>
-              <Text color="dimmest">{item.fields.length} fields</Text>
+              </Flex>
+              <Text color="dimmest" className="shrink-0 min-w-0">
+                {item.fields.length} fields
+              </Text>
             </Item>
           ))}
         </ItemsContainer>
@@ -96,64 +99,54 @@ const LLMSearch = forwardRef<
 })
 LLMSearch.displayName = "LLMSearch"
 
-const {
-  Search,
-  DownshiftPopover,
-  ItemsContainer,
-  Item,
-  ItemInfo,
-  ItemIcon,
-  EmptyState,
-} = {
-  Search: styled("div", {
-    base: "flex relative basis-0 w-full min-w-0 grow",
-  }),
-  DownshiftPopover: styled("div", {
-    base: "w-full rounded-lg border-2 border-outline-dimmer/75 absolute top-12 left-0 bg-default z-10 shadow-lg",
-    variants: {
-      inputSize: {
-        default: "top-12",
-        lg: "top-14",
+const { Search, DownshiftPopover, ItemsContainer, Item, ItemIcon, EmptyState } =
+  {
+    Search: styled("div", {
+      base: "flex relative basis-0 w-full min-w-0 grow",
+    }),
+    DownshiftPopover: styled("div", {
+      base: "w-full rounded-lg border-2 border-outline-dimmer/75 absolute top-12 left-0 bg-default z-10 shadow-lg",
+      variants: {
+        inputSize: {
+          default: "top-12",
+          lg: "top-14",
+        },
+        loading: {
+          true: "animate-pulse",
+        },
       },
-      loading: {
-        true: "animate-pulse",
+      defaultVariants: {
+        inputSize: "default",
       },
-    },
-    defaultVariants: {
-      inputSize: "default",
-    },
-  }),
-  ItemsContainer: styled("ul", {
-    base: "flex-col hidden",
-    variants: {
-      visible: {
-        true: "flex",
+    }),
+    ItemsContainer: styled("ul", {
+      base: "flex-col hidden",
+      variants: {
+        visible: {
+          true: "flex",
+        },
       },
-    },
-  }),
-  Item: styled("li", {
-    base: "flex gap-2 justify-between p-2 first:rounded-t-md last:rounded-b-md",
-    variants: {
-      highlighted: {
-        true: "bg-higher",
+    }),
+    Item: styled("li", {
+      base: "flex gap-2 justify-between p-2 first:rounded-t-md last:rounded-b-md min-w-0 overflow-hidden",
+      variants: {
+        highlighted: {
+          true: "bg-higher",
+        },
       },
-    },
-  }),
-  ItemInfo: styled("div", {
-    base: "flex gap-2 items-center",
-  }),
-  ItemIcon: styled(Hexagon, {
-    base: "w-4 h-4",
-    variants: {
-      selected: {
-        true: "text-accent-dimmer fill-accent-dimmest/50",
-        false: "text-foreground-dimmest",
+    }),
+    ItemIcon: styled(Hexagon, {
+      base: "w-4 h-4",
+      variants: {
+        selected: {
+          true: "text-accent-dimmer fill-accent-dimmest/50",
+          false: "text-foreground-dimmest",
+        },
       },
-    },
-  }),
-  EmptyState: styled("div", {
-    base: "flex justify-center items-center p-4",
-  }),
-}
+    }),
+    EmptyState: styled("div", {
+      base: "flex justify-center items-center p-4",
+    }),
+  }
 
 export default LLMSearch
