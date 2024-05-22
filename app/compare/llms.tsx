@@ -18,8 +18,17 @@ const LLMContainer = forwardRef<
   HTMLDivElement,
   { llms: Array<LLMWithMetadata>; rect?: DOMRect }
 >(({ llms, rect }, ref) => {
-  const { view, filter, theme, padding, spacing, ommitted, width, set } =
-    useURLState()
+  const {
+    view,
+    filter,
+    theme,
+    padding,
+    spacing,
+    ommitted,
+    width,
+    set,
+    hideHeader,
+  } = useURLState()
 
   const [container, box] = useClientRect<HTMLDivElement>()
 
@@ -94,42 +103,45 @@ const LLMContainer = forwardRef<
           >
             <DragHandleBar />
           </DragHandle>
-          <MotionFlex
-            style={{
-              paddingTop: springPadding,
-              paddingLeft: springPadding,
-              paddingRight: springPadding,
-              // not animating since it would cause issues with animating the gap
-              paddingBottom: spacing,
-            }}
-          >
-            <HeaderWidget
+          {hideHeader ? null : (
+            <MotionFlex
               style={{
-                borderColor: fg2 + "65",
+                paddingTop: springPadding,
+                paddingLeft: springPadding,
+                paddingRight: springPadding,
+                // not animating since it would cause issues with animating the gap
+                paddingBottom: spacing,
               }}
             >
-              <Text size="lg" weight="bold" center multiline asChild>
-                <h1>
-                  {llms.map((x, i) => (
-                    <Fragment key={x.id}>
-                      {x.name}
-                      {i < llms.length - 1 ? (
-                        <span className="text-foreground-dimmer font-medium">
-                          {" vs "}
-                        </span>
-                      ) : null}
-                    </Fragment>
-                  ))}
-                </h1>
-              </Text>
-            </HeaderWidget>
-          </MotionFlex>
+              <HeaderWidget
+                style={{
+                  borderColor: fg2 + "65",
+                }}
+              >
+                <Text size="lg" weight="bold" center multiline asChild>
+                  <h1>
+                    {llms.map((x, i) => (
+                      <Fragment key={x.id}>
+                        {x.name}
+                        {i < llms.length - 1 ? (
+                          <span className="text-foreground-dimmer font-medium">
+                            {" vs "}
+                          </span>
+                        ) : null}
+                      </Fragment>
+                    ))}
+                  </h1>
+                </Text>
+              </HeaderWidget>
+            </MotionFlex>
+          )}
           <ItemsContainer
             view={view}
             style={{
               paddingLeft: springPadding,
               paddingRight: springPadding,
               paddingBottom: springPadding,
+              paddingTop: hideHeader ? springPadding : undefined,
               // gap can't be animated, using the direct state value
               gap: spacing,
             }}

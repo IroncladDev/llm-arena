@@ -23,6 +23,7 @@ export function useURLState() {
     spacing = "16",
     width = "1600",
     omit,
+    hideHeader = "false",
   }: OptionsType = Object.fromEntries(
     searchParams.entries(),
   ) as unknown as OptionsType
@@ -91,6 +92,7 @@ export function useURLState() {
     omit,
     ommitted,
     setOmmittedField,
+    hideHeader: hideHeader !== "false",
     padding: Number(padding),
     spacing: Number(spacing),
     width: Number(width),

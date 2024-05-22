@@ -8,7 +8,7 @@ import useClientRect from "@/hooks/useElementSize"
 import gr from "@/lib/gradients"
 import { colors, tokens } from "@/tailwind.config"
 import { useMotionValue, useSpring } from "framer-motion"
-import { GithubIcon, Loader2Icon } from "lucide-react"
+import { ExternalLinkIcon, Loader2Icon, PlusIcon } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
@@ -95,9 +95,8 @@ export default function ContributorLoginPage() {
           Apply as a Contributor
         </Text>
         <Text color="dimmer" multiline>
-          Your contribution request will be reviewed by an administrator
-          shortly. Once reviewed, you will be notified with further instructions
-          via email.
+          As a Contributor, you will be able to upload LLMs, vote on other
+          proposed LLMs, and help keep the information on LLM Arena up to date.
         </Text>
         <Button
           onClick={async () => {
@@ -120,12 +119,15 @@ export default function ContributorLoginPage() {
           {loading ? (
             <Loader2Icon className="w-4 h-4 animate-spin" />
           ) : (
-            <GithubIcon className="w-4 h-4" />
+            <PlusIcon className="w-4 h-4" />
           )}
-          <span>Join the waitlist</span>
+          <span>Apply to Contribute</span>
         </Button>
         <Button className="grow" asChild>
-          <Link href="/contribute">Read More</Link>
+          <a href="/contribute" target="_blank">
+            <span>Read More</span>
+            <ExternalLinkIcon className="w-4 h-4" />
+          </a>
         </Button>
         <Button variant="outline" className="grow" asChild>
           <Link href="/">No thanks</Link>

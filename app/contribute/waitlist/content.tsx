@@ -76,8 +76,8 @@ export default function WaitlistPage({ position }: { position: number }) {
         </Text>
 
         <Text color="dimmer" multiline>
-          You are #{position} on the waitlist. You&apos;ll receive an email when
-          you can start contributing.
+          You are #{position} on the waitlist. You will be notified by email
+          shortly once an administrator approves your contribution request.
         </Text>
 
         <Button variant="highlightElevated" className="grow" asChild>
