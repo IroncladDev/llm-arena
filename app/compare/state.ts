@@ -45,6 +45,7 @@ export const optionsSchema = z.object({
   padding: z.string().optional(),
   spacing: z.string().optional(),
   width: z.string().optional(),
+  hideHeader: z.enum(["true", "false"]).optional(),
 })
 
 export type OptionsType = z.infer<typeof optionsSchema>

@@ -68,7 +68,11 @@ const LLMSearch = forwardRef<
 
   return (
     <Search>
-      <Input size={size} {...getInputProps({ ref, ...props })} />
+      <Input
+        size={size}
+        {...getInputProps({ ref, ...props })}
+        disabled={llms.length >= 10}
+      />
       <DownshiftPopover hidden={!isOpen} inputSize={size} loading={isLoading}>
         <ItemsContainer visible={items.length > 0} {...getMenuProps()}>
           {items.map((item, index) => (

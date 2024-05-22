@@ -12,6 +12,7 @@ import {
   PlusIcon,
   XIcon,
 } from "lucide-react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { styled } from "react-tailwind-variants"
@@ -46,13 +47,19 @@ export default function Selector() {
           {name}
         </Text>
         <Text color="dimmer">
-          Select two or more LLMs to see a side-by-side comparison
+          Select 2-10 LLMs to see a side-by-side comparison
         </Text>
       </Flex>
       <LLMSearch
         llms={llms}
         setLLMs={setLLMs}
-        placeholder={llms.length === 0 ? "Add an LLM" : "Add another LLM"}
+        placeholder={
+          llms.length === 0
+            ? "Add an LLM"
+            : llms.length < 10
+              ? "Add another LLM"
+              : "Max 10 LLMs"
+        }
         size="lg"
         id="llm-search-input"
         ref={llmSearchRef}
@@ -119,6 +126,14 @@ export default function Selector() {
         See Comparison
         <ArrowRightIcon className="w-6 h-6" />
       </Button>
+      <Flex>
+        <Text color="dimmer">
+          Can&apos;t find an LLM?{" "}
+          <Link className="text-accent-dimmer" href="/contribute/join">
+            Add it
+          </Link>
+        </Text>
+      </Flex>
       <Sheet
         open={Boolean(selectedLLM)}
         onOpenChange={open => setSelectedLLM(open ? selectedLLM : null)}

@@ -1,5 +1,6 @@
 import LLMIcon from "@/components/llm-icon"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -75,6 +76,7 @@ export default function Sidebar({
     spacing,
     ommitted,
     setOmmittedField,
+    hideHeader,
   } = useURLState()
 
   const [hasActed, setHasActed] = useState(false)
@@ -311,6 +313,21 @@ export default function Sidebar({
           </Text>
         </Flex>
       </Flex>
+      <Flex col gap={1}>
+        <Flex gap={2} align="center">
+          <Text weight="medium" color="dimmer">
+            Hide Header
+          </Text>
+          <Checkbox
+            checked={hideHeader}
+            onCheckedChange={checked => {
+              set({
+                hideHeader: checked ? "true" : "false",
+              })
+            }}
+          />
+        </Flex>
+      </Flex>
       {ommitted.length > 0 && (
         <Flex col gap={1}>
           <Text weight="medium" color="dimmer">
@@ -339,7 +356,7 @@ export default function Sidebar({
           llms={llms}
           setLLMs={setLLMs}
           variant="elevated"
-          placeholder="Add another LLM"
+          placeholder={llms.length < 10 ? "Add another LLM" : "Max 10 LLMs"}
           id="llm-sidebar-search"
         />
         {llms.map(item => (
