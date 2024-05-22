@@ -92,7 +92,9 @@ export default function Selector() {
                   </CloseButton>
                 </IconContainer>
                 <SpecsContainer>
-                  <Text color="dimmer">{llm.name}</Text>
+                  <Text color="dimmer" multiline center>
+                    {llm.name}
+                  </Text>
                   <Text color="dimmest" size="xs">
                     {llm.fields.length} fields
                   </Text>
