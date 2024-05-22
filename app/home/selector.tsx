@@ -1,3 +1,5 @@
+"use client"
+
 import LLMIcon from "@/components/llm-icon"
 import { Button } from "@/components/ui/button"
 import Flex from "@/components/ui/flex"

@@ -5,7 +5,7 @@ import Text from "@/components/ui/text"
 import Link from "next/link"
 import { styled } from "react-tailwind-variants"
 
-export async function FooterLinks() {
+export function FooterLinks() {
   const user = useCurrentUser()
 
   return (

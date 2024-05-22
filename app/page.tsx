@@ -1,5 +1,3 @@
-"use client"
-
 import { Container } from "@/components/container"
 import Text from "@/components/ui/text"
 import gr from "@/lib/gradients"
